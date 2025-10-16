@@ -1,0 +1,170 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Top 10 points of entry (POE) by total arrivals for a selected year; bars colored by entry type (Land/Sea/Air).",
+  "width": "container",
+  "height": 440,
+  "data": {
+    "url": "arrivals_record.csv",
+    "format": { "type": "csv" }
+  },
+  "params": [
+    {
+      "name": "yearSel",
+      "value": 2023,
+      "bind": {
+        "input": "select",
+        "name": "Year: ",
+        "options": [2020, 2021, 2022, 2023]
+      }
+    }
+  ],
+  "transform": [
+    { "calculate": "year(toDate(datum.date))", "as": "Year" },
+    {
+      "aggregate": [
+        { "op": "sum", "field": "arrivals", "as": "TotalArrivals" }
+      ],
+      "groupby": ["Year", "poe"]
+    },
+    {
+      "lookup": "poe",
+      "from": {
+        "data": {
+          "url": "points_of_entry.csv",
+          "format": { "type": "csv" }
+        },
+        "key": "poe",
+        "fields": ["type"]
+      }
+    },
+    { "filter": "datum.Year == yearSel" },
+    {
+      "window": [{ "op": "rank", "as": "rank" }],
+      "sort": [{ "field": "TotalArrivals", "order": "descending" }],
+      "groupby": ["Year"]
+    },
+    { "filter": "datum.rank <= 10" }
+  ],
+  "layer": [
+    {
+      "mark": { "type": "bar" },
+      "encoding": {
+        "y": {
+          "field": "poe",
+          "type": "nominal",
+          "title": "Point of Entry",
+          "sort": "-x"
+        },
+        "x": {
+          "field": "TotalArrivals",
+          "type": "quantitative",
+          "title": "Total Arrivals",
+          "axis": { "format": "~s" }
+        },
+        "color": {
+          "field": "type",
+          "type": "nominal",
+          "title": "Entry Type",
+          "scale": { "domain": ["Land", "Sea", "Air"],
+        "range": ["#E69F00", "#3da7d4", "#008a57"]  }
+        },
+        "tooltip": [
+          { "field": "poe", "type": "nominal", "title": "Point of Entry" },
+          { "field": "type", "type": "nominal", "title": "Entry Type" },
+          { "field": "Year", "type": "quantitative" },
+          { "field": "TotalArrivals", "type": "quantitative", "format": ",", "title": "Arrivals" }
+        ]
+      }
+    },
+    {
+      "transform": [
+        { "filter": "datum.rank == 1" },
+        { "calculate": "'Top POE (' + toString(yearSel) + ')'", "as": "AnnTitle" },
+        { "calculate": "format(datum.TotalArrivals, ',.0f') + ' arrivals • ' + datum.type", "as": "AnnSub" },
+        {
+          "calculate": "datum.poe == 'Bangunan Sultan Iskandar' ? 'It is the busiest land crossing linking Malaysia and Singapore.' : 'It is main land connection between Malaysia and Thailand.'",
+          "as": "descLine"
+        }
+      ],
+      "layer": [
+        {
+        "mark": {
+            "type": "rect",
+            "cornerRadius": 10,
+            "color": "white",
+            "opacity": 0.95,
+            "stroke": "#ddd"
+        },
+        "encoding": {
+            "x": {"value": 580},
+            "y": {"value": 50},
+            "x2": {"value": 940},
+            "y2": {"value": 150}
+        }
+        },
+        {
+          "mark": {
+            "type": "text",
+            "fontSize": 12,
+            "fontWeight": "normal",
+            "align": "left",
+            "baseline": "top"
+          },
+          "encoding": {
+            "x": { "value": 600 },
+            "y": { "value": 66 },
+            "text": { "field": "AnnTitle" }
+          }
+        },
+        {
+          "mark": {
+            "type": "text",
+            "fontSize": 14,
+            "fontWeight": "bold",
+            "align": "left",
+            "baseline": "top",
+            "fill": "#113466"
+          },
+          "encoding": {
+            "x": { "value": 600 },
+            "y": { "value": 84 },
+            "text": { "field": "poe" }
+          }
+        },
+        {
+          "mark": {
+            "type": "text",
+            "fontSize": 12,
+            "fontWeight": "normal",
+            "align": "left",
+            "baseline": "top"
+          },
+          "encoding": {
+            "x": { "value": 600 },
+            "y": { "value": 102 },
+            "text": { "field": "AnnSub" }
+          }
+        },
+        {
+          "mark": {
+            "type": "text",
+            "fontSize": 12,
+            "fontWeight": "normal",
+            "align": "left",
+            "baseline": "top"
+          },
+          "encoding": {
+            "x": { "value": 600 },
+            "y": { "value": 120 },
+            "text": { "field": "descLine" }
+          }
+        }
+      ]
+    }
+  ],
+  "config": {
+    "view": { "stroke": "transparent" },
+    "axis": { "labelFontSize": 12, "titleFontSize": 12 },
+    "bar": { "cornerRadiusEnd": 2 }
+  }
+}
