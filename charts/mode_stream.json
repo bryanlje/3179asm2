@@ -2,9 +2,11 @@
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "title": "Mode Share Over Time (Stream Graph)",
   "data": {"url": "data/arrivals_record.csv"},
+  "width": 680,
+  "height": 350,
   "params": [
     {"name": "Gender", "value": "All", "bind": {"input": "select", "options": ["All","Male","Female"]}},
-    {"name": "From", "value": "2023-01-01", "bind": {"input": "date"}},
+    {"name": "From", "value": "2020-01-01", "bind": {"input": "date"}},
     {"name": "To", "value": "2024-12-31", "bind": {"input": "date"}},
     {
       "name": "ModeLegend",
