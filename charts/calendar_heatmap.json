@@ -1,0 +1,101 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {"text": "Monthly Arrivals (Year × Month Heatmap)", "anchor": "start"},
+  "width": 920,
+  "height": 420,
+  "background": "white",
+  "padding": 10,
+
+  "data": {
+    "url": "data/arrivals_soe.csv",
+    "format": {"type": "csv"}
+  },
+
+  "params": [
+    {
+      "name": "Gender",
+      "value": "All",
+      "bind": {"input": "select", "options": ["All", "Male", "Female"]}
+    },
+    { "name": "From", "value": "2020-01-01", "bind": {"input": "date"} },
+    { "name": "To",   "value": "2024-12-31", "bind": {"input": "date"} },
+
+    { "name": "SOE", "value": "", "bind": {"input": "text"} },
+    { "name": "Country", "value": "", "bind": {"input": "text"} }
+  ],
+
+  "transform": [
+    {
+      "calculate": "Gender === 'Male' ? datum.arrivals_male : (Gender === 'Female' ? datum.arrivals_female : datum.arrivals)",
+      "as": "arrivals_sel"
+    },
+    { "filter": "toDate(datum.date) >= toDate(From) && toDate(datum.date) <= toDate(To)" },
+    {
+      "filter": "(SOE === '' || datum.soe === SOE) && (Country === '' || datum.country === Country)"
+    },
+    { "timeUnit": "yearmonth", "field": "date", "as": "ym" },
+    {
+      "aggregate": [
+        { "op": "sum", "field": "arrivals_sel", "as": "arrivals_sum" }
+      ],
+      "groupby": ["ym"]
+    }
+  ],
+
+  "mark": {"type": "rect", "stroke": "#f0f0f0", "strokeWidth": 1, "cornerRadius": 2},
+
+  "encoding": {
+    "y": {
+      "timeUnit": "year",
+      "field": "ym",
+      "type": "ordinal",
+      "title": "Year",
+      "sort": "ascending",
+      "axis": {"ticks": false, "domain": false, "labelFontSize": 12, "titleFontSize": 12}
+    },
+    "x": {
+      "timeUnit": "month",
+      "field": "ym",
+      "type": "ordinal",
+      "title": "Month",
+      "sort": "ascending",
+      "axis": {
+        "labelAngle": 0,
+        "labelFontSize": 12,
+        "titleFontSize": 12,
+        "format": "%b",
+        "ticks": false,
+        "domain": false
+      },
+      "scale": {"paddingInner": 0.05, "paddingOuter": 0.05}
+    },
+    "color": {
+      "field": "arrivals_sum",
+      "type": "quantitative",
+      "title": "Arrivals",
+      "scale": {
+        "scheme": "yelloworangered",
+        "nice": true
+      },
+      "legend": {
+        "title": "Arrivals",
+        "format": "~s",
+        "gradientLength": 180,
+        "orient": "right",
+        "labelFontSize": 12,
+        "titleFontSize": 12
+      }
+    },
+    "tooltip": [
+      { "timeUnit": "yearmonth", "field": "ym", "type": "temporal", "title": "Month" },
+      { "field": "arrivals_sum", "type": "quantitative", "title": "Arrivals", "format": "," }
+    ]
+  },
+
+  "config": {
+    "view": {"stroke": null},
+    "axis": {"labelColor": "black", "titleColor": "black"},
+    "legend": {"labelColor": "black", "titleColor": "black"},
+    "title": {"color": "black", "fontSize": 18}
+  }
+}

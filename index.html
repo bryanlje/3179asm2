@@ -6,10 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Entry Points of Tourists in Malaysia</title>
     
-    <script src="https://cdn.jsdelivr.net/npm/vega@5.20.2"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vega-lite@5.1.0"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vega-embed@6.17.0"></script>
-    <script src="vega_lite.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega@5.20.2" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-lite@5.1.0" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-embed@6.17.0" defer></script>
+    <script src="vega_lite.js" defer></script>
   
   <!-- link to the CSS file -->
   <link rel="stylesheet" type="text/css" href="styles.css" media="all">
@@ -18,16 +18,17 @@
 
 <body>
     <h1>Tourism in Malaysia: Entry Points</h1>
-    <div id="symbol_map"></div>
+    <div id="arrivals_symbol_map"></div>
 
     <h2 id="bar-chart-title">Top 10 Points of Entry (by Year)</h2>
     <p id="bar-chart-caption"></p>
-    <div id="top10_poe_bar"></div>
+    <div id="poe_bar"></div>
 
-    <script>
-      vegaEmbed('#top10_poe_bar', 'top10_poe_bar.json', { actions: false });
-    </script>
+    <div id="calendar_heatmap"></div>
 
+    <div id="poe_bump"></div>
+
+    <div id="mode_stream"></div>
 
 </body>
 

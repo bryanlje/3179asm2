@@ -4,7 +4,7 @@
   "width": "container",
   "height": 440,
   "data": {
-    "url": "https://raw.githubusercontent.com/bryanlje/3179week9hw/main/arrivals_record.csv",
+    "url": "https://raw.githubusercontent.com/bryanlje/3179asm2/main/data/arrivals_record.csv",
     "format": { "type": "csv" }
   },
   "params": [
@@ -30,7 +30,7 @@
       "lookup": "poe",
       "from": {
         "data": {
-          "url": "https://raw.githubusercontent.com/bryanlje/3179week9hw/main/points_of_entry.csv",
+          "url": "https://raw.githubusercontent.com/bryanlje/3179asm2/main/data/points_of_entry.csv",
           "format": { "type": "csv" }
         },
         "key": "poe",

@@ -1,0 +1,79 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": "Top-12 Points of Entry — Monthly Sparklines",
+  "data": {"url": "https://raw.githubusercontent.com/bryanlje/3179asm2/main/data/arrivals_record.csv"},
+  "params": [
+    {"name": "Gender", "value": "All", "bind": {"input": "select", "options": ["All","Male","Female"]}},
+    {"name": "Mode", "value": "All", "bind": {"input": "select", "options": ["All","Air","Land","Sea"]}},
+    {"name": "From", "value": "2023-01-01", "bind": {"input": "date"}},
+    {"name": "To", "value": "2024-12-31", "bind": {"input": "date"}}
+  ],
+  "transform": [
+    {
+      "calculate": "Gender === 'Male' ? datum.arrivals_male : (Gender === 'Female' ? datum.arrivals_female : datum.arrivals)",
+      "as": "arrivals_sel"
+    },
+    {"filter": "toDate(datum.date) >= toDate(From) && toDate(datum.date) <= toDate(To)"},
+    {
+      "lookup": "poe",
+      "from": {"data": {"url": "data/points_of_entry.csv"}, "key": "poe", "fields": ["type"]}
+    },
+    {"filter": "Mode === 'All' || datum.type === Mode"},
+    {"timeUnit": "yearmonth", "field": "date", "as": "ym"},
+    {
+      "aggregate": [
+        {"op": "sum", "field": "arrivals_sel", "as": "arrivals_month"}
+      ],
+      "groupby": ["poe","ym"]
+    },
+    {
+      "joinaggregate": [
+        {"op": "sum", "field": "arrivals_month", "as": "poe_total"}
+      ],
+      "groupby": ["poe"]
+    },
+    {
+      "window": [{"op": "dense_rank", "as": "poe_rank"}],
+      "sort": [{"field": "poe_total", "order": "descending"}]
+    },
+    {"filter": "datum.poe_rank <= 12"}
+  ],
+  "facet": {
+    "field": "poe",
+    "type": "nominal",
+    "sort": {"field": "poe_total", "order": "descending"},
+    "title": null
+  },
+  "columns": 4,
+  "spec": {
+    "width": 180,
+    "height": 70,
+    "layer": [
+      {
+        "mark": {"type": "line", "interpolate": "monotone"},
+        "encoding": {
+          "x": {"field": "ym", "type": "temporal", "axis": null},
+          "y": {"field": "arrivals_month", "type": "quantitative", "axis": null},
+          "tooltip": [
+            {"field": "poe"},
+            {"field": "ym", "type": "temporal", "title": "Month"},
+            {"field": "arrivals_month", "title": "Arrivals", "format": ","},
+            {"field": "poe_total", "title": "POE Total", "format": ","},
+            {"field": "poe_rank", "title": "Rank"}
+          ]
+        }
+      },
+      {
+        "mark": {"type": "rule", "strokeDash": [2,2], "opacity": 0.5},
+        "encoding": {
+          "y": {"aggregate": "mean", "field": "arrivals_month", "type": "quantitative"}
+        }
+      }
+    ]
+  },
+  "config": {
+    "axis": {"labelColor": "black", "titleColor": "black"},
+    "legend": {"labelColor": "black", "titleColor": "black"},
+    "view": {"stroke": "#e6e6e6"}
+  }
+}
