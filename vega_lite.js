@@ -1,10 +1,12 @@
 const charts = [
-  ["#arrivals_symbol_map",  "charts/arrivals_symbol_map.json"],
-  ["#poe_bar",              "charts/poe_bar.json"],
-  ["#calendar_heatmap",     "charts/calendar_heatmap.json"],
-  ["#poe_bump",             "charts/poe_bump.json"],
-  ["#mode_stream",          "charts/mode_stream.json"],
-  ["#state_choropleth",     "charts/state_choropleth.json"]
+  ["#arrivals_symbol_map",      "charts/arrivals_symbol_map.json"],
+  ["#poe_bar",                  "charts/poe_bar.json"],
+  ["#calendar_heatmap",         "charts/calendar_heatmap.json"],
+  ["#poe_bump",                 "charts/poe_bump.json"],
+  ["#mode_stream",              "charts/mode_stream.json"],
+  ["#state_choropleth",         "charts/state_choropleth.json"],
+  ["#arrivals_tourism_scatter", "charts/arrivals_tourism_scatter.json"],
+  ["#countries_bar",            "charts/countries_bar.json"]
 ];
 
 for (const [sel, spec] of charts) {

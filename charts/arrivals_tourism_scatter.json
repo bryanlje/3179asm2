@@ -1,0 +1,122 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "Arrivals Share vs Tourism Revenue Share by State",
+    "subtitle": "Dot = state • Size = tourism revenue (RM mil) • Color = Rev/Arrival (× natl avg)",
+    "anchor": "start"
+  },
+  "width": 980,
+  "height": 520,
+  "background": "white",
+  "config": {
+    "axis": {"labelColor": "black", "titleColor": "black"},
+    "legend": {"labelColor": "black", "titleColor": "black"},
+    "title": {"color": "black", "subtitleColor": "black"}
+  },
+
+  "params": [
+    {
+      "name": "YearSel",
+      "value": 2023,
+      "bind": {"input": "range", "min": 2020, "max": 2023, "step": 1}
+    }
+  ],
+
+  "data": {
+    "url": "data/arrivals_soe.csv",
+    "format": {
+      "type": "csv",
+      "parse": {"year": "number", "arrivals": "number"}
+    }
+  },
+
+  "transform": [
+    { "filter": "datum.year == YearSel" },
+
+    {
+      "aggregate": [{"op": "sum", "field": "arrivals", "as": "arrivals"}],
+      "groupby": ["soe", "year"]
+    },
+
+    { "calculate": "datum.soe + '|' + toString(YearSel)", "as": "join_key" },
+
+    {
+      "lookup": "join_key",
+      "from": {
+        "data": {
+          "url": "data/tourism_state_agg.csv",
+          "format": {
+            "type": "csv",
+            "parse": {"year": "number", "gdp_p5": "number"}
+          }
+        },
+        "key": "join_key",
+        "fields": ["gdp_p5", "state"]
+      }
+    },
+
+    { "filter": "datum.gdp_p5 != null && datum.arrivals > 0" },
+    { "filter": "datum.state != 'Supra'" },
+
+    {
+      "joinaggregate": [
+        {"op": "sum", "field": "arrivals", "as": "TotalArrivals"},
+        {"op": "sum", "field": "gdp_p5",   "as": "TotalRevenue"}
+      ]
+    },
+
+    { "calculate": "datum.arrivals / datum.TotalArrivals", "as": "arrivals_share" },
+    { "calculate": "datum.gdp_p5 / datum.TotalRevenue",    "as": "revenue_share" },
+    { "calculate": "datum.revenue_share / datum.arrivals_share", "as": "rev_per_arrival_ratio" }
+  ],
+
+  "layer": [
+    {
+      "data": {"values": [{"x": 0, "y": 0}, {"x": 0.6, "y": 0.6}]},
+      "mark": {"type": "line", "strokeDash": [4, 4], "opacity": 0.6, "color": "black"},
+      "encoding": {
+        "x": {"field": "x", "type": "quantitative"},
+        "y": {"field": "y", "type": "quantitative"}
+      }
+    },
+    {
+      "mark": {"type": "point", "filled": true, "stroke": "white", "strokeWidth": 0.8},
+      "encoding": {
+        "x": {
+          "field": "arrivals_share", "type": "quantitative",
+          "axis": {"title": "Arrivals share (state of entry)", "format": ".0%"},
+          "scale": {"nice": true}
+        },
+        "y": {
+          "field": "revenue_share", "type": "quantitative",
+          "axis": {"title": "Tourism revenue share", "format": ".0%"},
+          "scale": {
+            "nice": true
+          }
+        },
+        "size": {
+          "field": "gdp_p5", "type": "quantitative",
+          "title": "Tourism revenue (RM mil)",
+          "legend": {"format": ",.0f"},
+          "scale": {"range": [50, 1000]}
+        },
+        "color": {
+          "field": "rev_per_arrival_ratio",
+          "type": "quantitative",
+          "title": "Rev per arrival (x natl avg)",
+          "legend": {"format": ".2f"},
+          "scale": { "scheme": "viridis", "domainMid": 1 }
+        },
+        "tooltip": [
+          {"field": "soe", "type": "nominal", "title": "State"},
+          {"field": "year", "type": "quantitative", "title": "Year"},
+          {"field": "arrivals", "type": "quantitative", "title": "Arrivals", "format": ",.0f"},
+          {"field": "gdp_p5", "type": "quantitative", "title": "Tourism revenue (RM mil)", "format": ",.1f"},
+          {"field": "arrivals_share", "type": "quantitative", "title": "Arrivals share", "format": ".1%"},
+          {"field": "revenue_share", "type": "quantitative", "title": "Revenue share", "format": ".1%"},
+          {"field": "rev_per_arrival_ratio", "type": "quantitative", "title": "Rev/arrival (x natl avg)", "format": ".2f"}
+        ]
+      }
+    }
+  ]
+}

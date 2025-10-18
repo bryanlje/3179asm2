@@ -1,0 +1,121 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": "Who visits Malaysia the most?",
+  "width": 900,
+  "height": 560,
+  "data": { "url": "data/arrivals_record.csv" },
+  "params": [
+    {
+      "name": "Year",
+      "value": 2023,
+      "bind": { "input": "range", "min": 2020, "max": 2023, "step": 1 }
+    },
+    {
+      "name": "TopN",
+      "value": 5,
+      "bind": { "input": "range", "min": 3, "max": 10, "step": 1 }
+    },
+    {
+      "name": "Region",
+      "value": "All",
+      "bind": {
+        "input": "select",
+        "options": [
+          "All",
+          "ASEAN",
+          "East Asia",
+          "South Asia",
+          "Europe",
+          "Middle East",
+          "Pacific",
+          "Americas",
+          "Others"
+        ]
+      }
+    },
+    {
+      "name": "Mode",
+      "value": "All",
+      "bind": { "input": "select", "options": ["All", "Air", "Land", "Sea"] }
+    }
+  ],
+  "transform": [
+    {
+      "lookup": "poe",
+      "from": {
+        "data": { "url": "data/points_of_entry.csv" },
+        "key": "poe",
+        "fields": ["type"]
+      }
+    },
+    {
+      "lookup": "country",
+      "from": {
+        "data": { "url": "data/country_region.csv" },
+        "key": "country",
+        "fields": ["region"]
+      }
+    },
+    {
+      "calculate": "isValid(datum.region) ? datum.region : 'Others'",
+      "as": "region_safe"
+    },
+
+    { "calculate": "year(toDate(datum.date))", "as": "yr" },
+    { "filter": "datum.yr === Year" },
+    { "filter": "Region === 'All' || datum.region_safe === Region" },
+    { "filter": "Mode === 'All' || datum.type === Mode" },
+
+    {
+      "aggregate": [{ "op": "sum", "field": "arrivals", "as": "arrivals_sum" }],
+      "groupby": ["country", "type", "region_safe"]
+    },
+
+    {
+      "joinaggregate": [
+        { "op": "sum", "field": "arrivals_sum", "as": "country_total" }
+      ],
+      "groupby": ["country"]
+    },
+
+    {
+      "window": [{ "op": "dense_rank", "as": "rk" }],
+      "sort": [{ "field": "country_total", "order": "descending" }]
+    },
+
+    { "filter": "datum.rk <= TopN" }
+  ],
+  "mark": { "type": "bar" },
+  "encoding": {
+    "y": {
+      "field": "country",
+      "type": "nominal",
+      "sort": "-x",
+      "title": "Country"
+    },
+    "x": {
+      "aggregate": "sum",
+      "field": "arrivals_sum",
+      "type": "quantitative",
+      "title": "Arrivals (selected year)"
+    },
+    "color": { "field": "type", "type": "nominal", "title": "Mode" },
+    "tooltip": [
+      { "field": "country", "title": "Country" },
+      { "field": "region_safe", "title": "Region" },
+      {
+        "aggregate": "sum",
+        "field": "arrivals_sum",
+        "title": "Total arrivals",
+        "format": ","
+      },
+      { "field": "type", "title": "Segment mode" },
+      { "field": "arrivals_sum", "title": "Segment arrivals", "format": "," }
+    ]
+  },
+  "config": {
+    "axis": { "labelColor": "black", "titleColor": "black" },
+    "legend": { "labelColor": "black", "titleColor": "black" },
+    "view": { "stroke": "#e6e6e6" }
+  }
+}
