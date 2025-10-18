@@ -1,0 +1,441 @@
+{
+  "$schema": "https://vega.github.io/schema/vega/v5.json",
+  "description": "Arrivals flow: Region -> Mode -> State of Entry (grouped)",
+  "width": 800,
+  "height": 650,
+  "padding": 10,
+  "signals": [
+    { "name": "nodeWidth", "value": 50 },
+    { "name": "columnGap", "value": 500 },
+    { "name": "leftX", "update": "0" },
+    { "name": "midX", "update": "leftX + columnGap" },
+    { "name": "rightX", "update": "midX + columnGap" },
+    { "name": "TopStates", "value": 4 }
+  ],
+  "data": [
+    {
+      "name": "arrivals",
+      "url": "data/arrivals_record.csv",
+      "format": { "type": "csv" },
+      "transform": [
+        { "type": "formula", "expr": "toNumber(datum.arrivals)", "as": "value" }
+      ]
+    },
+    {
+      "name": "country_region",
+      "url": "data/country_region.csv",
+      "format": { "type": "csv" }
+    },
+    {
+      "name": "poe_map",
+      "url": "data/points_of_entry.csv",
+      "format": { "type": "csv" }
+    },
+    {
+      "name": "enriched",
+      "source": "arrivals",
+      "transform": [
+        {
+          "type": "lookup",
+          "from": "country_region",
+          "key": "country",
+          "fields": ["country"],
+          "values": ["region"],
+          "as": ["region"]
+        },
+        {
+          "type": "lookup",
+          "from": "poe_map",
+          "key": "poe",
+          "fields": ["poe"],
+          "values": ["state", "type"],
+          "as": ["state", "mode"]
+        },
+        { "type": "filter", "expr": "isValid(datum.value) && datum.value > 0" },
+        {
+          "type": "filter",
+          "expr": "isValid(datum.region) && isValid(datum.mode) && isValid(datum.state)"
+        }
+      ]
+    },
+    {
+      "name": "state_totals",
+      "source": "enriched",
+      "transform": [
+        {
+          "type": "aggregate",
+          "groupby": ["state"],
+          "ops": ["sum"],
+          "fields": ["value"],
+          "as": ["total"]
+        },
+        {
+          "type": "window",
+          "sort": { "field": "total", "order": "descending" },
+          "ops": ["rank"],
+          "as": ["rank"]
+        }
+      ]
+    },
+    {
+      "name": "enriched_grouped",
+      "source": "enriched",
+      "transform": [
+        {
+          "type": "formula",
+          "expr": "datum.region==='ASEAN' ? 'ASEAN' : 'Others'",
+          "as": "region_g"
+        },
+        {
+          "type": "lookup",
+          "from": "state_totals",
+          "key": "state",
+          "fields": ["state"],
+          "values": ["rank"],
+          "as": ["state_rank"]
+        },
+        {
+          "type": "formula",
+          "expr": "datum.state_rank <= TopStates ? datum.state : 'Others'",
+          "as": "state_g"
+        }
+      ]
+    },
+    {
+      "name": "links12",
+      "source": "enriched_grouped",
+      "transform": [
+        {
+          "type": "aggregate",
+          "groupby": ["region_g", "mode"],
+          "ops": ["sum"],
+          "fields": ["value"],
+          "as": ["value"]
+        },
+        {
+          "type": "formula",
+          "expr": "datum.region_g + '|' + datum.mode",
+          "as": "key"
+        }
+      ]
+    },
+    {
+      "name": "links23",
+      "source": "enriched_grouped",
+      "transform": [
+        {
+          "type": "aggregate",
+          "groupby": ["mode", "state_g"],
+          "ops": ["sum"],
+          "fields": ["value"],
+          "as": ["value"]
+        },
+        {
+          "type": "formula",
+          "expr": "datum.mode + '|' + datum.state_g",
+          "as": "key"
+        }
+      ]
+    },
+    {
+      "name": "nodes12",
+      "source": "links12",
+      "transform": [
+        {
+          "type": "fold",
+          "fields": ["region_g", "mode"],
+          "as": ["_stack_name", "grpId"]
+        },
+        {
+          "type": "formula",
+          "expr": "datum._stack_name === 'region_g' ? 'stk1' : 'stk2'",
+          "as": "stack"
+        },
+        {
+          "type": "formula",
+          "expr": "datum._stack_name === 'region_g' ? datum.region_g + '|' + datum.mode : datum.mode + '|' + datum.region_g",
+          "as": "sortField"
+        },
+        {
+          "type": "stack",
+          "groupby": ["stack"],
+          "sort": { "field": "sortField", "order": "descending" },
+          "field": "value"
+        },
+        { "type": "formula", "expr": "(datum.y0 + datum.y1) / 2", "as": "yc" }
+      ]
+    },
+    {
+      "name": "nodes23",
+      "source": "links23",
+      "transform": [
+        {
+          "type": "fold",
+          "fields": ["mode", "state_g"],
+          "as": ["_stack_name", "grpId"]
+        },
+        {
+          "type": "formula",
+          "expr": "datum._stack_name === 'mode' ? 'stk2' : 'stk3'",
+          "as": "stack"
+        },
+        {
+          "type": "formula",
+          "expr": "datum._stack_name === 'mode' ? datum.mode + '|' + datum.state_g : datum.state_g + '|' + datum.mode",
+          "as": "sortField"
+        },
+        {
+          "type": "stack",
+          "groupby": ["stack"],
+          "sort": { "field": "sortField", "order": "descending" },
+          "field": "value"
+        },
+        { "type": "formula", "expr": "(datum.y0 + datum.y1) / 2", "as": "yc" }
+      ]
+    },
+    {
+      "name": "groups",
+      "source": "enriched_grouped",
+      "transform": [
+        {
+          "type": "fold",
+          "fields": ["region_g", "mode", "state_g"],
+          "as": ["_stack_name", "grpId"]
+        },
+        {
+          "type": "formula",
+          "expr": "datum._stack_name === 'region_g' ? 'stk1' : (datum._stack_name === 'mode' ? 'stk2' : 'stk3')",
+          "as": "stack"
+        },
+        {
+          "type": "aggregate",
+          "groupby": ["stack", "grpId"],
+          "ops": ["sum"],
+          "fields": ["value"],
+          "as": ["total"]
+        },
+        {
+          "type": "stack",
+          "groupby": ["stack"],
+          "sort": { "field": "grpId", "order": "descending" },
+          "field": "total"
+        },
+        {
+          "type": "formula",
+          "expr": "datum.stack==='stk1' ? leftX : (datum.stack==='stk2' ? midX : rightX)",
+          "as": "x"
+        },
+        { "type": "formula", "expr": "(datum.y0 + datum.y1) / 2", "as": "yc" }
+      ]
+    },
+    {
+      "name": "groups_stk1",
+      "source": "groups",
+      "transform": [{ "type": "filter", "expr": "datum.stack==='stk1'" }]
+    },
+    {
+      "name": "groups_stk2",
+      "source": "groups",
+      "transform": [{ "type": "filter", "expr": "datum.stack==='stk2'" }]
+    },
+    {
+      "name": "groups_stk3",
+      "source": "groups",
+      "transform": [{ "type": "filter", "expr": "datum.stack==='stk3'" }]
+    },
+    {
+      "name": "nodes12_stk1",
+      "source": "nodes12",
+      "transform": [{ "type": "filter", "expr": "datum.stack === 'stk1'" }]
+    },
+    {
+      "name": "nodes12_stk2",
+      "source": "nodes12",
+      "transform": [{ "type": "filter", "expr": "datum.stack === 'stk2'" }]
+    },
+    {
+      "name": "nodes23_stk2",
+      "source": "nodes23",
+      "transform": [{ "type": "filter", "expr": "datum.stack === 'stk2'" }]
+    },
+    {
+      "name": "nodes23_stk3",
+      "source": "nodes23",
+      "transform": [{ "type": "filter", "expr": "datum.stack === 'stk3'" }]
+    },
+    {
+      "name": "edges12",
+      "source": "nodes12_stk1",
+      "transform": [
+        {
+          "type": "lookup",
+          "from": "nodes12_stk2",
+          "key": "key",
+          "fields": ["key"],
+          "as": ["target"]
+        },
+        { "type": "filter", "expr": "datum.target" },
+        {
+          "type": "linkpath",
+          "orient": "horizontal",
+          "shape": "diagonal",
+          "sourceX": { "expr": "leftX + nodeWidth" },
+          "sourceY": { "expr": "scale('y', datum.yc)" },
+          "targetX": { "expr": "midX" },
+          "targetY": { "expr": "scale('y', datum.target.yc)" }
+        }
+      ]
+    },
+    {
+      "name": "edges23",
+      "source": "nodes23_stk2",
+      "transform": [
+        {
+          "type": "lookup",
+          "from": "nodes23_stk3",
+          "key": "key",
+          "fields": ["key"],
+          "as": ["target"]
+        },
+        { "type": "filter", "expr": "datum.target" },
+        {
+          "type": "linkpath",
+          "orient": "horizontal",
+          "shape": "diagonal",
+          "sourceX": { "expr": "midX + nodeWidth" },
+          "sourceY": { "expr": "scale('y', datum.yc)" },
+          "targetX": { "expr": "rightX" },
+          "targetY": { "expr": "scale('y', datum.target.yc)" }
+        }
+      ]
+    }
+  ],
+  "scales": [
+    {
+      "name": "y",
+      "type": "linear",
+      "domain": { "data": "groups", "field": "y1" },
+      "range": [0, { "signal": "height" }],
+      "nice": false,
+      "zero": true
+    },
+    {
+      "name": "regionColor",
+      "type": "ordinal",
+      "domain": { "data": "links12", "field": "region_g" },
+      "range": { "scheme": "tableau10" }
+    },
+    {
+      "name": "modeColor",
+      "type": "ordinal",
+      "domain": { "data": "links12", "field": "mode" },
+      "range": { "scheme": "category10" }
+    }
+  ],
+  "marks": [
+    {
+      "type": "rect",
+      "from": { "data": "groups" },
+      "encode": {
+        "update": {
+          "x": { "field": "x" },
+          "width": { "signal": "nodeWidth" },
+          "y": { "scale": "y", "field": "y0" },
+          "y2": { "scale": "y", "field": "y1" },
+          "fill": {
+            "signal": "datum.stack==='stk1' ? scale('regionColor', datum.grpId) : (datum.stack==='stk2' ? scale('modeColor', datum.grpId) : '#888')"
+          },
+          "opacity": { "value": 0.6 },
+          "stroke": { "value": "white" },
+          "tooltip": {
+            "signal": "datum.grpId + ': ' + format(datum.total, ',')"
+          }
+        }
+      }
+    },
+    {
+      "type": "path",
+      "from": { "data": "edges12" },
+      "encode": {
+        "update": {
+          "path": { "field": "path" },
+          "stroke": { "scale": "regionColor", "field": "region_g" },
+          "strokeOpacity": { "value": 0.7 },
+          "strokeWidth": { "scale": "y", "field": "value" },
+          "fill": { "value": null },
+          "tooltip": {
+            "signal": "datum.region_g + ' → ' + datum.mode + ': ' + format(datum.value, ',')"
+          }
+        }
+      }
+    },
+    {
+      "type": "path",
+      "from": { "data": "edges23" },
+      "encode": {
+        "update": {
+          "path": { "field": "path" },
+          "stroke": { "scale": "modeColor", "field": "mode" },
+          "strokeOpacity": { "value": 0.7 },
+          "strokeWidth": { "scale": "y", "field": "value" },
+          "fill": { "value": null },
+          "tooltip": {
+            "signal": "datum.mode + ' → ' + datum.state_g + ': ' + format(datum.value, ',')"
+          }
+        }
+      }
+    },
+    {
+      "type": "text",
+      "from": { "data": "groups_stk1" },
+      "encode": {
+        "update": {
+          "x": { "signal": "leftX - 6" },
+          "y": { "scale": "y", "field": "yc" },
+          "align": { "value": "right" },
+          "baseline": { "value": "middle" },
+          "fontSize": { "value": 12 },
+          "text": { "field": "grpId" },
+          "fill": { "value": "black" }
+        }
+      }
+    },
+    {
+      "type": "text",
+      "from": { "data": "groups_stk2" },
+      "encode": {
+        "update": {
+          "x": { "signal": "midX + nodeWidth + 6" },
+          "y": { "scale": "y", "field": "yc" },
+          "align": { "value": "left" },
+          "baseline": { "value": "middle" },
+          "fontSize": { "value": 12 },
+          "text": { "field": "grpId" },
+          "fill": { "value": "black" }
+        }
+      }
+    },
+    {
+      "type": "text",
+      "from": { "data": "groups_stk3" },
+      "encode": {
+        "update": {
+          "x": { "signal": "rightX + nodeWidth + 6" },
+          "y": { "scale": "y", "field": "yc" },
+          "align": { "value": "left" },
+          "baseline": { "value": "middle" },
+          "fontSize": { "value": 12 },
+          "text": { "field": "grpId" },
+          "fill": { "value": "black" }
+        }
+      }
+    }
+  ],
+  "legends": [
+    { "fill": "regionColor", "title": "Region", "orient": "top-left" },
+    { "fill": "modeColor", "title": "Mode", "orient": "top" }
+  ],
+  "title": {
+    "text": "Arrivals Flow: Region → Mode → State of Entry (grouped)"
+  }
+}

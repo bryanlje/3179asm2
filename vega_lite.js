@@ -6,7 +6,8 @@ const charts = [
   ["#mode_stream",              "charts/mode_stream.json"],
   ["#state_choropleth",         "charts/state_choropleth.json"],
   ["#arrivals_tourism_scatter", "charts/arrivals_tourism_scatter.json"],
-  ["#countries_bar",            "charts/countries_bar.json"]
+  ["#countries_bar",            "charts/countries_bar.json"],
+  ["#sankey",                   "charts/sankey.json"]
 ];
 
 for (const [sel, spec] of charts) {

@@ -1,6 +1,6 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "title": {"text": "Monthly Arrivals (Year × Month Heatmap)", "anchor": "start"},
+  "title": {"text": "Monthly Arrivals (Year x Month Heatmap)", "anchor": "start"},
   "width": 920,
   "height": 420,
   "background": "white",

@@ -30,6 +30,7 @@
           "Middle East",
           "Pacific",
           "Americas",
+          "Africa",
           "Others"
         ]
       }
@@ -87,7 +88,7 @@
       "lookup": "country",
       "from": {
         "data": {
-          "url": "data/country_codes.csv"
+          "url": "https://raw.githubusercontent.com/bryanlje/3179asm2/main/data/country_codes.csv"
         },
         "key": "iso3",
         "fields": ["country_common"]
@@ -101,7 +102,8 @@
       "field": "country_name",
       "type": "nominal",
       "sort": "-y",
-      "title": "Country"
+      "title": "Country",
+      "axis": {"labelAngle": 0}
     },
     "y": {
       "aggregate": "sum",
