@@ -1,16 +1,34 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "title": {"text": "SOE Ranking Over Time (Monthly Top-N Bump Chart)", "anchor": "start"},
+  "title": {
+    "text": "SOE Ranking Over Time (Monthly Top-N Bump Chart)",
+    "anchor": "start"
+  },
   "width": 980,
   "height": 380,
   "background": "white",
 
-  "data": {"url": "https://raw.githubusercontent.com/bryanlje/3179asm2/main/data/soe_bump.csv", "format": {"type": "csv"}},
+  "data": {
+    "url": "https://raw.githubusercontent.com/bryanlje/3179asm2/main/data/soe_bump.csv",
+    "format": { "type": "csv" }
+  },
 
   "params": [
-    { "name": "Start_Month", "value": 0,  "bind": {"input": "range", "min": 0, "max": 59, "step": 1} },
-    { "name": "End_Month",   "value": 59, "bind": {"input": "range", "min": 0, "max": 59, "step": 1} },
-    { "name": "Top_N",    "value": 8,  "bind": {"input": "range", "min": 3, "max": 15, "step": 1} }
+    {
+      "name": "Start_Month",
+      "value": 0,
+      "bind": { "input": "range", "min": 0, "max": 59, "step": 1 }
+    },
+    {
+      "name": "End_Month",
+      "value": 59,
+      "bind": { "input": "range", "min": 0, "max": 59, "step": 1 }
+    },
+    {
+      "name": "Top_N",
+      "value": 8,
+      "bind": { "input": "range", "min": 3, "max": 15, "step": 1 }
+    }
   ],
 
   "transform": [
@@ -22,7 +40,7 @@
     { "filter": "datum.rank <= Top_N" }
   ],
 
-  "mark": {"type": "line", "point": true, "strokeWidth": 2},
+  "mark": { "type": "line", "point": true, "strokeWidth": 2 },
 
   "encoding": {
     "x": { "field": "ym", "type": "temporal", "title": "Month" },
@@ -38,23 +56,42 @@
       "type": "nominal",
       "title": "State of Entry",
       "scale": {
-        "range": ["#1f77b4","#ff7f0e","#2ca02c","#d62728","#9467bd",
-                  "#8c564b","#e377c2","#7f7f7f","#bcbd22","#17becf",
-                  "#393b79","#637939","#8c6d31","#843c39","#7b4173"]
+        "range": [
+          "#1f77b4",
+          "#ff7f0e",
+          "#2ca02c",
+          "#d62728",
+          "#9467bd",
+          "#8c564b",
+          "#e377c2",
+          "#7f7f7f",
+          "#bcbd22",
+          "#17becf",
+          "#393b79",
+          "#637939",
+          "#8c6d31",
+          "#843c39",
+          "#7b4173"
+        ]
       }
     },
     "tooltip": [
       { "field": "soe", "type": "nominal", "title": "SOE" },
       { "field": "ym", "type": "temporal", "title": "Month" },
-      { "field": "arrivals", "type": "quantitative", "title": "Arrivals (month)", "format": "," },
+      {
+        "field": "arrivals",
+        "type": "quantitative",
+        "title": "Arrivals (month)",
+        "format": ","
+      },
       { "field": "rank", "type": "quantitative", "title": "Rank" }
     ]
   },
 
   "config": {
-    "view": {"stroke": null},
-    "axis": {"labelColor": "black", "titleColor": "black"},
-    "legend": {"labelColor": "black", "titleColor": "black"},
-    "title": {"color": "black", "fontSize": 18}
+    "view": { "stroke": null },
+    "axis": { "labelColor": "black", "titleColor": "black" },
+    "legend": { "labelColor": "black", "titleColor": "black" },
+    "title": { "color": "black", "fontSize": 18 }
   }
 }

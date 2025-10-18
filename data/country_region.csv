@@ -2,30 +2,98 @@ country,region
 SGP,ASEAN
 IDN,ASEAN
 THA,ASEAN
-BRN,ASEAN
-PHL,ASEAN
 VNM,ASEAN
-MMR,ASEAN
+PHL,ASEAN
 KHM,ASEAN
 LAO,ASEAN
+MMR,ASEAN
+BRN,ASEAN
 MYS,ASEAN
+
 CHN,East Asia
 HKG,East Asia
-KOR,East Asia
-JPN,East Asia
+MAC,East Asia
 TWN,East Asia
+JPN,East Asia
+KOR,East Asia
+MNG,East Asia
+
 IND,South Asia
 PAK,South Asia
+BGD,South Asia
 LKA,South Asia
 NPL,South Asia
-AUS,Pacific
-NZL,Pacific
+MDV,South Asia
+BTN,South Asia
+
 GBR,Europe
+IRL,Europe
 FRA,Europe
 DEU,Europe
+ITA,Europe
+ESP,Europe
+PRT,Europe
 NLD,Europe
-USA,Americas
-CAN,Americas
-BRA,Americas
+BEL,Europe
+LUX,Europe
+CHE,Europe
+AUT,Europe
+SWE,Europe
+NOR,Europe
+DNK,Europe
+FIN,Europe
+POL,Europe
+CZE,Europe
+SVK,Europe
+HUN,Europe
+GRC,Europe
+ROU,Europe
+BGR,Europe
+HRV,Europe
+SVN,Europe
+EST,Europe
+LVA,Europe
+LTU,Europe
+UKR,Europe
+RUS,Europe
+
 SAU,Middle East
 ARE,Middle East
+QAT,Middle East
+KWT,Middle East
+OMN,Middle East
+BHR,Middle East
+IRN,Middle East
+IRQ,Middle East
+JOR,Middle East
+LBN,Middle East
+ISR,Middle East
+TUR,Middle East
+
+AUS,Pacific
+NZL,Pacific
+FJI,Pacific
+PNG,Pacific
+WSM,Pacific
+TON,Pacific
+VUT,Pacific
+SLB,Pacific
+
+USA,Americas
+CAN,Americas
+MEX,Americas
+BRA,Americas
+ARG,Americas
+CHL,Americas
+PER,Americas
+COL,Americas
+
+ZAF,Africa
+EGY,Africa
+MAR,Africa
+TUN,Africa
+KEN,Africa
+TZA,Africa
+ETH,Africa
+NGA,Africa
+GHA,Africa

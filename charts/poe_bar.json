@@ -65,22 +65,35 @@
           "field": "type",
           "type": "nominal",
           "title": "Entry Type",
-          "scale": { "domain": ["Land", "Sea", "Air"],
-        "range": ["#E69F00", "#3da7d4", "#008a57"]  }
+          "scale": {
+            "domain": ["Land", "Sea", "Air"],
+            "range": ["#E69F00", "#3da7d4", "#008a57"]
+          }
         },
         "tooltip": [
           { "field": "poe", "type": "nominal", "title": "Point of Entry" },
           { "field": "type", "type": "nominal", "title": "Entry Type" },
           { "field": "Year", "type": "quantitative" },
-          { "field": "TotalArrivals", "type": "quantitative", "format": ",", "title": "Arrivals" }
+          {
+            "field": "TotalArrivals",
+            "type": "quantitative",
+            "format": ",",
+            "title": "Arrivals"
+          }
         ]
       }
     },
     {
       "transform": [
         { "filter": "datum.rank == 1" },
-        { "calculate": "'Top POE (' + toString(yearSel) + ')'", "as": "AnnTitle" },
-        { "calculate": "format(datum.TotalArrivals, ',.0f') + ' arrivals • ' + datum.type", "as": "AnnSub" },
+        {
+          "calculate": "'Top POE (' + toString(yearSel) + ')'",
+          "as": "AnnTitle"
+        },
+        {
+          "calculate": "format(datum.TotalArrivals, ',.0f') + ' arrivals • ' + datum.type",
+          "as": "AnnSub"
+        },
         {
           "calculate": "datum.poe == 'Bangunan Sultan Iskandar' ? 'It is the busiest land crossing linking Malaysia and Singapore.' : 'It is main land connection between Malaysia and Thailand.'",
           "as": "descLine"
@@ -88,19 +101,19 @@
       ],
       "layer": [
         {
-        "mark": {
+          "mark": {
             "type": "rect",
             "cornerRadius": 10,
             "color": "white",
             "opacity": 0.95,
             "stroke": "#ddd"
-        },
-        "encoding": {
-            "x": {"value": 580},
-            "y": {"value": 50},
-            "x2": {"value": 940},
-            "y2": {"value": 150}
-        }
+          },
+          "encoding": {
+            "x": { "value": 580 },
+            "y": { "value": 50 },
+            "x2": { "value": 940 },
+            "y2": { "value": 150 }
+          }
         },
         {
           "mark": {

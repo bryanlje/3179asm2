@@ -3,7 +3,7 @@
   "title": "Who visits Malaysia the most?",
   "width": 900,
   "height": 560,
-  "data": { "url": "data/arrivals_record.csv" },
+  "data": { "url": "https://raw.githubusercontent.com/bryanlje/3179asm2/main/data/arrivals_record.csv" },
   "params": [
     {
       "name": "Year",
@@ -43,7 +43,7 @@
     {
       "lookup": "poe",
       "from": {
-        "data": { "url": "data/points_of_entry.csv" },
+        "data": { "url": "https://raw.githubusercontent.com/bryanlje/3179asm2/main/data/points_of_entry.csv" },
         "key": "poe",
         "fields": ["type"]
       }
@@ -51,7 +51,7 @@
     {
       "lookup": "country",
       "from": {
-        "data": { "url": "data/country_region.csv" },
+        "data": { "url": "https://raw.githubusercontent.com/bryanlje/3179asm2/main/data/country_region.csv" },
         "key": "country",
         "fields": ["region"]
       }
@@ -83,12 +83,17 @@
       "sort": [{ "field": "country_total", "order": "descending" }]
     },
 
-    { "filter": "datum.rk <= TopN" }
+    { "filter": "datum.rk <= TopN" },
+    {
+      "lookup": "country",
+      "from": {"data": {"url": "https://raw.githubusercontent.com/bryanlje/3179asm2/main/data/country_codes.csv"}, "key": "iso3", "fields": ["country_common"]},
+      "as": ["country_name"]
+    }
   ],
   "mark": { "type": "bar" },
   "encoding": {
     "y": {
-      "field": "country",
+      "field": "country_name",
       "type": "nominal",
       "sort": "-x",
       "title": "Country"
@@ -101,7 +106,7 @@
     },
     "color": { "field": "type", "type": "nominal", "title": "Mode" },
     "tooltip": [
-      { "field": "country", "title": "Country" },
+      { "field": "country_name", "title": "Country" },
       { "field": "region_safe", "title": "Region" },
       {
         "aggregate": "sum",

@@ -23,7 +23,7 @@
   ],
 
   "data": {
-    "url": "data/arrivals_soe.csv",
+    "url": "https://raw.githubusercontent.com/bryanlje/3179asm2/main/data/arrivals_soe.csv",
     "format": {
       "type": "csv",
       "parse": {"year": "number", "arrivals": "number"}
@@ -44,7 +44,7 @@
       "lookup": "join_key",
       "from": {
         "data": {
-          "url": "data/tourism_state_agg.csv",
+          "url": "https://raw.githubusercontent.com/bryanlje/3179asm2/main/data/tourism_state_agg.csv",
           "format": {
             "type": "csv",
             "parse": {"year": "number", "gdp_p5": "number"}

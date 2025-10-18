@@ -2,53 +2,68 @@
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "width": 1280,
   "height": 720,
-  "projection": {"type": "mercator"},
-  "title": {"text": "Arrivals by State (Per 1,000 residents)", "fontSize": 16},
+  "projection": { "type": "mercator" },
+  "title": {
+    "text": "Arrivals by State (Per 1,000 residents)",
+    "fontSize": 16
+  },
 
   "params": [
     {
-      "name": "PopYear", 
-      "value": 2023, 
+      "name": "PopYear",
+      "value": 2023,
       "bind": {
-        "input": "range", 
-        "min": 2020, 
-        "max": 2023, 
-        "step": 1}
+        "input": "range",
+        "min": 2020,
+        "max": 2023,
+        "step": 1
       }
+    }
   ],
 
   "layer": [
     {
       "data": {
         "url": "https://raw.githubusercontent.com/bryanlje/3179asm2/main/output.json",
-        "format": {"type": "topojson", "feature": "my"}
+        "format": { "type": "topojson", "feature": "my" }
       },
-      "mark": {"type": "geoshape", "fill": "#f8f8f8", "stroke": "#dddddd"}
+      "mark": { "type": "geoshape", "fill": "#f8f8f8", "stroke": "#dddddd" }
     },
     {
-      "data": {"url": "https://raw.githubusercontent.com/bryanlje/3179asm2/main/data/arrivals_record.csv"},
-      "transform": [        {
+      "data": {
+        "url": "https://raw.githubusercontent.com/bryanlje/3179asm2/main/data/arrivals_record.csv"
+      },
+      "transform": [
+        {
           "lookup": "poe",
           "from": {
-            "data": {"url": "https://raw.githubusercontent.com/bryanlje/3179asm2/main/data/points_of_entry.csv"},
+            "data": {
+              "url": "https://raw.githubusercontent.com/bryanlje/3179asm2/main/data/points_of_entry.csv"
+            },
             "key": "poe",
             "fields": ["state"]
           }
         },
-        {"calculate": "year(toDate(datum.date))", "as": "yr"},
-        {"filter": "datum.yr === PopYear"},
-        {"aggregate": [{"op": "sum", "field": "arrivals", "as": "arrivals"}], "groupby": ["state"]},
-        {"calculate": "datum.state + '|' + PopYear", "as": "pop_key"},
+        { "calculate": "year(toDate(datum.date))", "as": "yr" },
+        { "filter": "datum.yr === PopYear" },
+        {
+          "aggregate": [{ "op": "sum", "field": "arrivals", "as": "arrivals" }],
+          "groupby": ["state"]
+        },
+        { "calculate": "datum.state + '|' + PopYear", "as": "pop_key" },
         {
           "lookup": "pop_key",
           "from": {
-            "data": {"url": "data/population_state_agg.csv"},
+            "data": { "url": "data/population_state_agg.csv" },
             "key": "join_key",
-            "fields": ["population","year","state"]
+            "fields": ["population", "year", "state"]
           },
-          "as": ["population_raw","pop_year","pop_state"]
+          "as": ["population_raw", "pop_year", "pop_state"]
         },
-        {"calculate": "datum.population_raw == null ? null : datum.population_raw * 1000", "as": "population_persons"},
+        {
+          "calculate": "datum.population_raw == null ? null : datum.population_raw * 1000",
+          "as": "population_persons"
+        },
         {
           "calculate": "datum.population_persons == null || datum.population_persons <= 0 ? null : 1000 * datum.arrivals / datum.population_persons",
           "as": "per_1000"
@@ -58,30 +73,34 @@
           "from": {
             "data": {
               "url": "https://raw.githubusercontent.com/bryanlje/3179asm2/main/output.json",
-              "format": {"type": "topojson", "feature": "my"}
+              "format": { "type": "topojson", "feature": "my" }
             },
             "key": "properties.name",
-            "fields": ["geometry","properties.name"]
+            "fields": ["geometry", "properties.name"]
           },
-          "as": ["geo","state_name"]
+          "as": ["geo", "state_name"]
         }
       ],
-      "mark": {"type": "geoshape"},
+      "mark": { "type": "geoshape" },
       "encoding": {
-        "shape": {"field": "geo", "type": "geojson"},
+        "shape": { "field": "geo", "type": "geojson" },
         "color": {
           "field": "per_1000",
           "type": "quantitative",
           "title": "Arrivals per 1,000 (selected year)",
-          "legend": {"format": ","},
-          "scale": {"scheme": "tealblues"}
+          "legend": { "format": "," },
+          "scale": { "scheme": "tealblues" }
         },
         "tooltip": [
-          {"field": "state_name", "title": "State"},
-          {"field": "arrivals", "title": "Arrivals (" , "format": ","},
-          {"field": "pop_year", "title": "Population Year"},
-          {"field": "population_persons", "title": "Population", "format": ","},
-          {"field": "per_1000", "title": "Per 1,000", "format": ".2f"}
+          { "field": "state_name", "title": "State" },
+          { "field": "arrivals", "title": "Arrivals (", "format": "," },
+          { "field": "pop_year", "title": "Population Year" },
+          {
+            "field": "population_persons",
+            "title": "Population",
+            "format": ","
+          },
+          { "field": "per_1000", "title": "Per 1,000", "format": ".2f" }
         ]
       }
     }
