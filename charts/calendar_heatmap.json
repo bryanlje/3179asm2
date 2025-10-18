@@ -7,7 +7,7 @@
   "padding": 10,
 
   "data": {
-    "url": "data/arrivals_soe.csv",
+    "url": "https://raw.githubusercontent.com/bryanlje/3179asm2/main/data/arrivals_soe.csv",
     "format": {"type": "csv"}
   },
 

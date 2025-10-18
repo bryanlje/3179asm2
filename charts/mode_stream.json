@@ -1,7 +1,7 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "title": "Mode Share Over Time (Stream Graph)",
-  "data": {"url": "data/arrivals_record.csv"},
+  "data": {"url": "https://raw.githubusercontent.com/bryanlje/3179asm2/main/data/arrivals_record.csv"},
   "width": 680,
   "height": 350,
   "params": [
