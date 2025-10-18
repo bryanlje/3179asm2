@@ -1,102 +1,89 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "title": "Arrivals Pressure by State (arrivals per 1,000 residents)",
-  "data": {"url": "data/arrivals_record.csv"},
+  "width": 1280,
+  "height": 720,
+  "projection": {"type": "mercator"},
+  "title": {"text": "Arrivals by State (Per 1,000 residents)", "fontSize": 16},
+
   "params": [
-    {"name": "Gender", "value": "All", "bind": {"input": "select", "options": ["All","Male","Female"]}},
-    {"name": "Mode",   "value": "All", "bind": {"input": "select", "options": ["All","Air","Land","Sea"]}},
-    {"name": "From",   "value": "2023-01-01", "bind": {"input": "date"}},
-    {"name": "To",     "value": "2024-12-31", "bind": {"input": "date"}},
-    {"name": "Metric", "value": "Per 1,000", "bind": {"input": "select", "options": ["Per 1,000","Absolute"]}},
-    {"name": "PopYear","value": 2024, "bind": {"input": "range", "min": 1970, "max": 2025, "step": 1}},
-    {"name": "PopUnit","value": "Thousands", "bind": {"input": "select", "options": ["Thousands","Absolute"]}}
-  ],
-  "transform": [
     {
-      "calculate": "Gender === 'Male' ? datum.arrivals_male : (Gender === 'Female' ? datum.arrivals_female : datum.arrivals)",
-      "as": "arrivals_sel"
-    },
-    {"filter": "toDate(datum.date) >= toDate(From) && toDate(datum.date) <= toDate(To)"},
-    {
-      "lookup": "poe",
-      "from": {
-        "data": {"url": "data/points_of_entry.csv"},
-        "key": "poe",
-        "fields": ["state","iso","type"]
+      "name": "PopYear", 
+      "value": 2023, 
+      "bind": {
+        "input": "range", 
+        "min": 2020, 
+        "max": 2023, 
+        "step": 1}
       }
-    },
-    {"filter": "Mode === 'All' || datum.type === Mode"},
-    {
-      "aggregate": [
-        {"op": "sum", "field": "arrivals_sel", "as": "arrivals_sum"}
-      ],
-      "groupby": ["state","iso"]
-    },
-
-    /* ---- Population join (yearly; sex=both, age=overall, ethnicity=overall) ---- */
-    {
-      "lookup": "state",
-      "from": {
-        "data": {"url": "data/state_population.csv"},
-        "key": "state",
-        "fields": ["population","date","sex","age","ethnicity"],
-        "transform": [
-          {"filter": "datum.sex === 'both' && datum.age === 'overall' && datum.ethnicity === 'overall'"},
-          {"calculate": "year(toDate(datum.date))", "as": "pop_year"},
-          {"filter": "datum.pop_year === PopYear"}
-        ]
-      },
-      "as": ["population_raw","pop_date","pop_sex","pop_age","pop_ethnicity"]
-    },
-    {
-      "calculate": "PopUnit === 'Thousands' ? datum.population_raw * 1000 : datum.population_raw",
-      "as": "population_effective"
-    },
-    {
-      "calculate": "datum.population_effective == null || datum.population_effective <= 0 ? null : 1000 * datum.arrivals_sum / datum.population_effective",
-      "as": "arrivals_per_1000"
-    },
-
-    /* ---- Attach geometry via ISO code ---- */
-    {
-      "lookup": "iso",
-      "from": {
-        "data": {
-          "url": "data/output.json",
-          "format": {"type": "topojson", "feature": "states"}   /* change 'states' if your object name differs */
-        },
-        "key": "properties.iso",
-        "fields": ["geometry","properties.state"]
-      },
-      "as": ["geo","state_name_from_map"]
-    },
-
-    /* final metric switch */
-    {
-      "calculate": "Metric === 'Per 1,000' ? datum.arrivals_per_1000 : datum.arrivals_sum",
-      "as": "metric_value"
-    }
   ],
-  "mark": {"type": "geoshape", "stroke": "#ffffff", "strokeWidth": 0.6},
-  "encoding": {
-    "shape": {"field": "geo", "type": "geojson"},
-    "color": {
-      "field": "metric_value",
-      "type": "quantitative",
-      "title": {"signal": "Metric === 'Per 1,000' ? 'Arrivals per 1,000 (Pop ' + PopYear + ')' : 'Arrivals'"},
-      "legend": {"format": ","}
+
+  "layer": [
+    {
+      "data": {
+        "url": "https://raw.githubusercontent.com/bryanlje/3179asm2/main/output.json",
+        "format": {"type": "topojson", "feature": "my"}
+      },
+      "mark": {"type": "geoshape", "fill": "#f8f8f8", "stroke": "#dddddd"}
     },
-    "tooltip": [
-      {"field": "state", "title": "State"},
-      {"field": "arrivals_sum", "title": "Arrivals", "format": ","},
-      {"field": "population_effective", "title": "Population", "format": ","},
-      {"field": "arrivals_per_1000", "title": "Per 1,000", "format": ".2f"},
-      {"field": "pop_date", "title": "Pop Date"}
-    ]
-  },
-  "config": {
-    "axis": {"labelColor": "black", "titleColor": "black"},
-    "legend": {"labelColor": "black", "titleColor": "black"},
-    "view": {"stroke": "#e6e6e6"}
-  }
+    {
+      "data": {"url": "https://raw.githubusercontent.com/bryanlje/3179asm2/main/data/arrivals_record.csv"},
+      "transform": [        {
+          "lookup": "poe",
+          "from": {
+            "data": {"url": "https://raw.githubusercontent.com/bryanlje/3179asm2/main/data/points_of_entry.csv"},
+            "key": "poe",
+            "fields": ["state"]
+          }
+        },
+        {"calculate": "year(toDate(datum.date))", "as": "yr"},
+        {"filter": "datum.yr === PopYear"},
+        {"aggregate": [{"op": "sum", "field": "arrivals", "as": "arrivals"}], "groupby": ["state"]},
+        {"calculate": "datum.state + '|' + PopYear", "as": "pop_key"},
+        {
+          "lookup": "pop_key",
+          "from": {
+            "data": {"url": "data/population_state_agg.csv"},
+            "key": "join_key",
+            "fields": ["population","year","state"]
+          },
+          "as": ["population_raw","pop_year","pop_state"]
+        },
+        {"calculate": "datum.population_raw == null ? null : datum.population_raw * 1000", "as": "population_persons"},
+        {
+          "calculate": "datum.population_persons == null || datum.population_persons <= 0 ? null : 1000 * datum.arrivals / datum.population_persons",
+          "as": "per_1000"
+        },
+        {
+          "lookup": "state",
+          "from": {
+            "data": {
+              "url": "https://raw.githubusercontent.com/bryanlje/3179asm2/main/output.json",
+              "format": {"type": "topojson", "feature": "my"}
+            },
+            "key": "properties.name",
+            "fields": ["geometry","properties.name"]
+          },
+          "as": ["geo","state_name"]
+        }
+      ],
+      "mark": {"type": "geoshape"},
+      "encoding": {
+        "shape": {"field": "geo", "type": "geojson"},
+        "color": {
+          "field": "per_1000",
+          "type": "quantitative",
+          "title": "Arrivals per 1,000 (selected year)",
+          "legend": {"format": ","},
+          "scale": {"scheme": "tealblues"}
+        },
+        "tooltip": [
+          {"field": "state_name", "title": "State"},
+          {"field": "arrivals", "title": "Arrivals (" , "format": ","},
+          {"field": "pop_year", "title": "Population Year"},
+          {"field": "population_persons", "title": "Population", "format": ","},
+          {"field": "per_1000", "title": "Per 1,000", "format": ".2f"}
+        ]
+      }
+    }
+  ]
 }
