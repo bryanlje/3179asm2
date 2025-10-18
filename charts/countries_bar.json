@@ -3,7 +3,9 @@
   "title": "Who visits Malaysia the most?",
   "width": 900,
   "height": 560,
-  "data": { "url": "https://raw.githubusercontent.com/bryanlje/3179asm2/main/data/arrivals_record.csv" },
+  "data": {
+    "url": "https://raw.githubusercontent.com/bryanlje/3179asm2/main/data/arrivals_record.csv"
+  },
   "params": [
     {
       "name": "Year",
@@ -12,8 +14,7 @@
     },
     {
       "name": "TopN",
-      "value": 5,
-      "bind": { "input": "range", "min": 3, "max": 10, "step": 1 }
+      "value": 6
     },
     {
       "name": "Region",
@@ -32,18 +33,15 @@
           "Others"
         ]
       }
-    },
-    {
-      "name": "Mode",
-      "value": "All",
-      "bind": { "input": "select", "options": ["All", "Air", "Land", "Sea"] }
     }
   ],
   "transform": [
     {
       "lookup": "poe",
       "from": {
-        "data": { "url": "https://raw.githubusercontent.com/bryanlje/3179asm2/main/data/points_of_entry.csv" },
+        "data": {
+          "url": "https://raw.githubusercontent.com/bryanlje/3179asm2/main/data/points_of_entry.csv"
+        },
         "key": "poe",
         "fields": ["type"]
       }
@@ -51,7 +49,9 @@
     {
       "lookup": "country",
       "from": {
-        "data": { "url": "https://raw.githubusercontent.com/bryanlje/3179asm2/main/data/country_region.csv" },
+        "data": {
+          "url": "https://raw.githubusercontent.com/bryanlje/3179asm2/main/data/country_region.csv"
+        },
         "key": "country",
         "fields": ["region"]
       }
@@ -64,7 +64,6 @@
     { "calculate": "year(toDate(datum.date))", "as": "yr" },
     { "filter": "datum.yr === Year" },
     { "filter": "Region === 'All' || datum.region_safe === Region" },
-    { "filter": "Mode === 'All' || datum.type === Mode" },
 
     {
       "aggregate": [{ "op": "sum", "field": "arrivals", "as": "arrivals_sum" }],
@@ -86,19 +85,25 @@
     { "filter": "datum.rk <= TopN" },
     {
       "lookup": "country",
-      "from": {"data": {"url": "https://raw.githubusercontent.com/bryanlje/3179asm2/main/data/country_codes.csv"}, "key": "iso3", "fields": ["country_common"]},
+      "from": {
+        "data": {
+          "url": "data/country_codes.csv"
+        },
+        "key": "iso3",
+        "fields": ["country_common"]
+      },
       "as": ["country_name"]
     }
   ],
   "mark": { "type": "bar" },
   "encoding": {
-    "y": {
+    "x": {
       "field": "country_name",
       "type": "nominal",
-      "sort": "-x",
+      "sort": "-y",
       "title": "Country"
     },
-    "x": {
+    "y": {
       "aggregate": "sum",
       "field": "arrivals_sum",
       "type": "quantitative",
