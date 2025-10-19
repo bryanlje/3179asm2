@@ -1,13 +1,13 @@
 {
   "$schema": "https://vega.github.io/schema/vega/v5.json",
   "description": "Arrivals flow: Region -> Mode -> State of Entry (grouped)",
-  "padding": 0,
+  "padding": { "top": 24, "bottom": 24, "left": 0, "right": 0 },
   "bounds": "flush",
   "autosize": { "type": "fit", "contains": "padding", "resize": true },
 
   "signals": [
-    { "name": "nodeWidth", "value": 50 },
-    { "name": "columnGap", "value": 250 },
+    { "name": "nodeWidth", "value": 70 },
+    { "name": "columnGap", "value": 270 },
 
     { "name": "labelPadL", "value": 80 },
     { "name": "labelPadR", "value": 110 },
@@ -17,7 +17,7 @@
     { "name": "rightX", "update": "midX + nodeWidth + columnGap" },
 
     { "name": "width", "update": "rightX + nodeWidth + labelPadR" },
-    { "name": "height", "value": 400 },
+    { "name": "height", "value": 500 },
 
     { "name": "TopStates", "value": 4 }
   ],
@@ -111,6 +111,7 @@
         }
       ]
     },
+
     {
       "name": "links12",
       "source": "enriched_grouped",
@@ -129,6 +130,7 @@
         }
       ]
     },
+
     {
       "name": "links23",
       "source": "enriched_grouped",
@@ -147,6 +149,7 @@
         }
       ]
     },
+
     {
       "name": "nodes12",
       "source": "links12",
@@ -175,6 +178,7 @@
         { "type": "formula", "expr": "(datum.y0 + datum.y1) / 2", "as": "yc" }
       ]
     },
+
     {
       "name": "nodes23",
       "source": "links23",
@@ -203,6 +207,7 @@
         { "type": "formula", "expr": "(datum.y0 + datum.y1) / 2", "as": "yc" }
       ]
     },
+
     {
       "name": "groups",
       "source": "enriched_grouped",
@@ -238,6 +243,7 @@
         { "type": "formula", "expr": "(datum.y0 + datum.y1) / 2", "as": "yc" }
       ]
     },
+
     {
       "name": "groups_stk1",
       "source": "groups",
@@ -273,6 +279,7 @@
       "source": "nodes23",
       "transform": [{ "type": "filter", "expr": "datum.stack === 'stk3'" }]
     },
+
     {
       "name": "edges12",
       "source": "nodes12_stk1",
@@ -296,6 +303,7 @@
         }
       ]
     },
+
     {
       "name": "edges23",
       "source": "nodes23_stk2",
@@ -333,14 +341,20 @@
     {
       "name": "regionColor",
       "type": "ordinal",
-      "domain": { "data": "links12", "field": "region_g" },
-      "range": { "scheme": "tableau10" }
+      "domain": ["ASEAN", "Others"],
+      "range": ["#e8cfe7", "#c2c2b0"]
     },
     {
       "name": "modeColor",
       "type": "ordinal",
-      "domain": { "data": "links12", "field": "mode" },
-      "range": { "scheme": "category10" }
+      "domain": ["Land", "Air", "Sea"],
+      "range": ["#E69F00", "#3da7d4", "#009E73"]
+    },
+    {
+      "name": "stateColor",
+      "type": "ordinal",
+      "domain": ["Selangor", "Sarawak", "Others", "Kedah", "Johor"],
+      "range": ["#ffed29", "#a8ed7e", "#c2c2b0", "#8dd8e0", "#a48de0"]
     }
   ],
 
@@ -356,9 +370,9 @@
           "y": { "scale": "y", "field": "y0" },
           "y2": { "scale": "y", "field": "y1" },
           "fill": {
-            "signal": "datum.stack==='stk1' ? scale('regionColor', datum.grpId) : (datum.stack==='stk2' ? scale('modeColor', datum.grpId) : '#888')"
+            "signal": "datum.stack==='stk1' ? scale('regionColor', datum.grpId) : (datum.stack==='stk2' ? scale('modeColor', datum.grpId) : scale('stateColor', datum.grpId))"
           },
-          "opacity": { "value": 0.6 },
+          "opacity": { "value": 0.7 },
           "stroke": { "value": "white" },
           "tooltip": {
             "signal": "datum.grpId + ': ' + format(datum.total, ',')"
@@ -366,8 +380,10 @@
         }
       }
     },
+
     {
       "type": "path",
+      "zindex": 2,
       "from": { "data": "edges12" },
       "clip": true,
       "encode": {
@@ -383,14 +399,18 @@
         }
       }
     },
+
     {
       "type": "path",
+      "zindex": 2,
       "from": { "data": "edges23" },
       "clip": true,
       "encode": {
         "update": {
           "path": { "field": "path" },
-          "stroke": { "scale": "modeColor", "field": "mode" },
+          "stroke": {
+            "signal": "{gradient:'linear', x1: 0, y1: 0.5, x2: 1, y2: 0.5, stops:[ {offset:0, color: scale('modeColor', datum.mode)}, {offset:1, color: scale('stateColor', datum.state_g)} ]}"
+          },
           "strokeOpacity": { "value": 0.7 },
           "strokeWidth": { "scale": "y", "field": "value" },
           "fill": { "value": null },
@@ -400,50 +420,78 @@
         }
       }
     },
+
     {
       "type": "text",
+      "zindex": 1,
       "from": { "data": "groups_stk1" },
       "encode": {
         "update": {
-          "x": { "signal": "leftX - 6" },
+          "x": { "signal": "leftX + nodeWidth/2" },
           "y": { "scale": "y", "field": "yc" },
-          "align": { "value": "right" },
+          "align": { "value": "center" },
           "baseline": { "value": "middle" },
-          "fontSize": { "value": 12 },
           "text": { "field": "grpId" },
           "fill": { "value": "black" }
         }
       }
     },
+
     {
       "type": "text",
+      "zindex": 1,
       "from": { "data": "groups_stk2" },
       "encode": {
         "update": {
-          "x": { "signal": "midX + nodeWidth + 6" },
+          "x": { "signal": "midX + nodeWidth/2" },
           "y": { "scale": "y", "field": "yc" },
-          "align": { "value": "left" },
+          "align": { "value": "center" },
           "baseline": { "value": "middle" },
-          "fontSize": { "value": 12 },
           "text": { "field": "grpId" },
           "fill": { "value": "black" }
         }
       }
     },
+
     {
       "type": "text",
+      "zindex": 1,
       "from": { "data": "groups_stk3" },
       "encode": {
         "update": {
-          "x": { "signal": "rightX + nodeWidth + 6" },
+          "x": { "signal": "rightX + nodeWidth/2" },
           "y": { "scale": "y", "field": "yc" },
-          "align": { "value": "left" },
+          "align": { "value": "center" },
           "baseline": { "value": "middle" },
-          "fontSize": { "value": 12 },
           "text": { "field": "grpId" },
           "fill": { "value": "black" }
         }
       }
     }
-  ]
+  ],
+
+  "config": {
+    "view": { "stroke": null },
+    "axis": {
+      "labelColor": "black",
+      "titleColor": "black",
+      "labelFontSize": 16,
+      "titleFontSize": 16,
+      "labelFont": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif",
+      "titleFont": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif"
+    },
+    "legend": {
+      "labelColor": "black",
+      "titleColor": "black",
+      "labelFontSize": 16,
+      "titleFontSize": 16
+    },
+    "title": {
+      "font": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif",
+      "color": "black"
+    },
+    "text": {
+      "font": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif"
+    }
+  }
 }
