@@ -115,7 +115,17 @@
   "config": {
     "font": "-apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
     "view": { "stroke": null },
-    "axis": { "labelFontSize": 14, "titleFontSize": 14 },
-    "legend": { "labelFontSize": 14, "titleFontSize": 14 }
+    "axis": {
+      "labelColor": "black",
+      "titleColor": "black",
+      "labelFontSize": 16,
+      "titleFontSize": 16
+    },
+    "legend": {
+      "labelColor": "black",
+      "titleColor": "black",
+      "labelFontSize": 16,
+      "titleFontSize": 16
+    }
   }
 }

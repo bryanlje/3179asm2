@@ -1,97 +1,145 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "title": {
-    "text": "SOE Ranking Over Time (Monthly Top-N Bump Chart)",
-    "anchor": "start"
-  },
-  "width": 980,
-  "height": 380,
-  "background": "white",
-
+  "width": "container",
+  "height": 400,
+  "background": "transparent",
   "data": {
-    "url": "https://raw.githubusercontent.com/bryanlje/3179asm2/main/data/soe_bump.csv",
+    "url": "data/soe_bump.csv",
     "format": { "type": "csv" }
   },
 
-  "params": [
+  "transform": [
     {
-      "name": "Start_Month",
-      "value": 0,
-      "bind": { "input": "range", "min": 0, "max": 59, "step": 1 }
+      "filter": "toDate(datum.ym) >= toDate('2020-12-01') && toDate(datum.ym) <= toDate('2023-12-31')"
     },
+
     {
-      "name": "End_Month",
-      "value": 59,
-      "bind": { "input": "range", "min": 0, "max": 59, "step": 1 }
-    },
-    {
-      "name": "Top_N",
-      "value": 8,
-      "bind": { "input": "range", "min": 3, "max": 15, "step": 1 }
+      "calculate": "datum.rank <= 5 ? datum.rank : null",
+      "as": "display_rank"
     }
   ],
 
-  "transform": [
-    {
-      "calculate": "(year(toDate(datum.ym)) - 2020) * 12 + month(toDate(datum.ym))",
-      "as": "mi"
-    },
-    { "filter": "datum.mi >= Start_Month && datum.mi <= End_Month" },
-    { "filter": "datum.rank <= Top_N" }
-  ],
-
-  "mark": { "type": "line", "point": true, "strokeWidth": 2 },
-
   "encoding": {
-    "x": { "field": "ym", "type": "temporal", "title": "Month" },
+    "x": {
+      "field": "ym",
+      "type": "temporal",
+      "title": null,
+      "axis": {
+        "tickCount": {"interval": "month", "step": 6},
+        "grid": false,
+        "labelExpr": "[timeFormat(datum.value, '%b') == 'Jan' ? timeFormat(datum.value, '%b %Y') : timeFormat(datum.value, '%b')]"
+      }
+    },
     "y": {
-      "field": "rank",
+      "field": "display_rank",
       "type": "quantitative",
-      "title": "Rank (1 = highest)",
-      "scale": { "reverse": true, "zero": false },
-      "axis": { "tickMinStep": 1, "format": "d" }
+      "title": "Rank",
+      "scale": { "reverse": true, "domain": [1, 5] },
+      "axis": { "tickMinStep": 1, "format": "d", "grid": false }
     },
     "color": {
       "field": "soe",
       "type": "nominal",
       "title": "State of Entry",
+      "legend": null,
       "scale": {
+        "domain": [
+          "Johor",
+          "Selangor",
+          "Sarawak",
+          "Pulau Pinang",
+          "Kedah",
+          "Perlis"
+        ],
         "range": [
-          "#1f77b4",
-          "#ff7f0e",
-          "#2ca02c",
-          "#d62728",
-          "#9467bd",
-          "#8c564b",
-          "#e377c2",
-          "#7f7f7f",
-          "#bcbd22",
-          "#17becf",
-          "#393b79",
-          "#637939",
-          "#8c6d31",
-          "#843c39",
-          "#7b4173"
+          "#bf8f00", 
+          "#439400", 
+          "#00948f",
+          "#6da3ed",
+          "#da99e0",
+          "#432263"
         ]
       }
     },
     "tooltip": [
-      { "field": "soe", "type": "nominal", "title": "SOE" },
-      { "field": "ym", "type": "temporal", "title": "Month" },
+      { "field": "soe", "type": "nominal", "title": "State" },
+      {
+        "field": "ym",
+        "type": "temporal",
+        "title": "Month",
+        "format": "%B %Y"
+      },
       {
         "field": "arrivals",
         "type": "quantitative",
-        "title": "Arrivals (month)",
+        "title": "Arrivals",
         "format": ","
       },
-      { "field": "rank", "type": "quantitative", "title": "Rank" }
+      { "field": "rank", "type": "ordinal", "title": "Rank" }
     ]
   },
 
+  "layer": [
+    {
+      "mark": {
+        "type": "line",
+        "strokeWidth": 10,
+        "opacity": 0.5,
+        "interpolate": "monotone"
+      }
+    },
+    {
+      "mark": {
+        "type": "line",
+        "strokeWidth": 2,
+        "interpolate": "monotone"
+      }
+    },
+    {
+      "mark": {
+        "type": "point",
+        "filled": true,
+        "stroke": "white",
+        "size": 60
+      }
+    },
+    {
+      "transform": [
+        { "filter": "datum.display_rank != null" },
+        {
+          "window": [{ "op": "rank", "as": "order" }],
+          "sort": [{ "field": "ym", "order": "descending" }],
+          "groupby": ["soe"]
+        },
+        { "filter": "datum.order == 1" }
+      ],
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "dx": 8,
+        "fontSize": 16,
+        "fontWeight": "bold"
+      },
+      "encoding": {
+        "text": { "field": "soe" }
+      }
+    }
+  ],
+
   "config": {
+    "font": "-apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
     "view": { "stroke": null },
-    "axis": { "labelColor": "black", "titleColor": "black" },
-    "legend": { "labelColor": "black", "titleColor": "black" },
-    "title": { "color": "black", "fontSize": 18 }
+    "axis": {
+      "labelColor": "black",
+      "titleColor": "black",
+      "labelFontSize": 16,
+      "titleFontSize": 16
+    },
+    "legend": {
+      "labelColor": "black",
+      "titleColor": "black",
+      "labelFontSize": 16,
+      "titleFontSize": 16
+    }
   }
 }
