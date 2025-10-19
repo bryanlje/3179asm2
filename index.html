@@ -1,43 +1,303 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Entry Points of Tourists in Malaysia</title>
-    
-    <script src="https://cdn.jsdelivr.net/npm/vega@5.20.2" defer></script>
-    <script src="https://cdn.jsdelivr.net/npm/vega-lite@5.1.0" defer></script>
-    <script src="https://cdn.jsdelivr.net/npm/vega-embed@6.17.0" defer></script>
-    <script src="vega_lite.js" defer></script>
-  
-  <!-- link to the CSS file -->
-  <link rel="stylesheet" type="text/css" href="styles.css" media="all">
-  
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Malaysia’s Gateways: How Visitors Returned, Moved, and Mattered (2020–2024)</title>
+
+  <!-- Vega libraries -->
+  <script src="https://cdn.jsdelivr.net/npm/vega@5.20.2" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-lite@5.1.0" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-embed@6.17.0" defer></script>
+
+  <!-- Your chart bootstrapper -->
+  <script src="vega_lite.js" defer></script>
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="styles.css" media="all" />
 </head>
 
-<body>
-    <h1>Tourism in Malaysia: Arrivals</h1>
-    <div id="arrivals_symbol_map"></div>
+<body id="top">
+  <!-- ===================== HEADER ===================== -->
+  <header class="site-header">
+    <div class="container">
+      <h1 class="site-title">Malaysia’s Gateways: How Visitors Returned, Moved, and Mattered (2020–2024)</h1>
+      <p class="site-lede">
+        From disruption to recovery: when visitors returned, how they traveled, which gateways led,
+        and what that meant for states and tourism value.
+      </p>
+    </div>
+  </header>
 
-    <h2 id="bar-chart-title">Top 10 Points of Entry (by Year)</h2>
-    <p id="bar-chart-caption"></p>
-    <div id="poe_bar"></div>
+  <!-- ===================== TOC (optional) ===================== -->
+  <nav class="toc container" aria-label="On-page navigation">
+    <ul>
+      <li><a href="#act-1">Act I — The comeback</a></li>
+      <li><a href="#act-2">Act II — Gateways</a></li>
+      <li><a href="#act-2b">State dynamics</a></li>
+      <li><a href="#act-3">Value & origins</a></li>
+      <li><a href="#finale">Finale</a></li>
+    </ul>
+  </nav>
 
-    <div id="calendar_heatmap"></div>
+  <main>
 
-    <div id="poe_bump"></div>
+    <!-- ===================== ACT I ===================== -->
+    <section id="act-1" class="card container">
+      <header class="card-header">
+        <h2>Act I — The comeback (When + How)</h2>
+        <p class="card-subtitle">
+          Start with the rhythm of recovery (monthly arrivals), then see the changing composition of travel modes.
+        </p>
+      </header>
 
-    <div id="mode_stream"></div>
+      <div class="card-body">
+        <!-- 1) Monthly Arrivals Heatmap -->
+        <figure class="viz-block" aria-labelledby="heatmap-title">
+          <figcaption id="heatmap-title" class="viz-title">Monthly Arrivals Heatmap (2020–2024)</figcaption>
+          <p class="viz-desc">
+            Arrival patterns through the recovery. Use the state filter to contrast border vs. hub states.
+            Look for dark troughs giving way to brighter peaks later.
+          </p>
+          <div id="calendar_heatmap" class="viz"></div>
+          <aside class="annotations">
+            <h4 class="annotations-title">Good annotation spots</h4>
+            <ul>
+              <li>Auto-label the darkest/lightest cells per year: <em>“Lowest month”</em>, <em>“Peak month”</em>.</li>
+              <li>Band seasonal periods (Nov–Dec, mid-year) with subtle guides.</li>
+              <li>Show a small note when a state is selected: <em>“Showing: Selangor — peaks cluster late-year.”</em></li>
+            </ul>
+          </aside>
+        </figure>
 
-    <div id="state_choropleth"></div>
+        <!-- 2) Mode Share Stream Graph -->
+        <figure class="viz-block" aria-labelledby="stream-title">
+          <figcaption id="stream-title" class="viz-title">Mode Share Stream (Land / Air / Sea)</figcaption>
+          <p class="viz-desc">
+            How people entered changed during recovery. Focus on <strong>composition</strong> rather than absolute counts:
+            which mode regained share first? Default the time range to post-disruption to avoid empty space.
+          </p>
+          <div id="mode_stream" class="viz"></div>
+          <aside class="annotations">
+            <h4 class="annotations-title">Good annotation spots</h4>
+            <ul>
+              <li>Mark the first month when a mode clearly overtakes others: <em>“Air rebounds here.”</em></li>
+              <li>Provide a chip to include early period if desired.</li>
+              <li>Tooltips: share % plus Δ vs. same month previous year.</li>
+            </ul>
+          </aside>
+        </figure>
+      </div>
 
-    <div id="arrivals_tourism_scatter"></div>
+      <p class="transition">
+        Totals alone don’t tell the full story. Composition reveals which routes returned first.
+      </p>
+    </section>
 
-    <div id="countries_bar"></div>
+    <!-- ===================== ACT II ===================== -->
+    <section id="act-2" class="card container">
+      <header class="card-header">
+        <h2>Act II — The gateways (Where)</h2>
+        <p class="card-subtitle">
+          Move from “how” to “where”: see the national footprint of entry points, then zoom into the leaders by year.
+        </p>
+      </header>
 
-    <div id="sankey"></div>
+      <div class="card-body">
+        <!-- 3) POE Symbol Map -->
+        <figure class="viz-block" aria-labelledby="map-title">
+          <figcaption id="map-title" class="viz-title">Point of Entry Symbol Map</figcaption>
+          <p class="viz-desc">
+            Size indicates total arrivals; color shows dominant mode. Optionally switch between “All years combined”
+            and a chosen year to compare against the baseline.
+          </p>
+          <div id="arrivals_symbol_map" class="viz"></div>
+          <aside class="annotations">
+            <h4 class="annotations-title">Good annotation spots</h4>
+            <ul>
+              <li>Call out dense clusters (e.g., southern border or major airports).</li>
+              <li>Badge any POE where one mode &gt; 70%: <em>“Mostly land/air/sea.”</em></li>
+              <li>When a year is selected, show % change vs. all-years in tooltips.</li>
+            </ul>
+          </aside>
+        </figure>
 
+        <!-- 4) Top-10 POE Horizontal Bar (keep year filter) -->
+        <figure class="viz-block" aria-labelledby="poe-bar-title">
+          <figcaption id="poe-bar-title" class="viz-title">
+            <span id="bar-chart-title">Top 10 Points of Entry (by Year)</span>
+          </figcaption>
+          <p id="bar-chart-caption" class="viz-desc">
+            Who led each year? Watch the reshuffle as recovery unfolds. Newcomers and drop-outs tell the story
+            of shifting travel patterns.
+          </p>
+          <div id="poe_bar" class="viz"></div>
+          <aside class="annotations">
+            <h4 class="annotations-title">Good annotation spots</h4>
+            <ul>
+              <li>Animate rank transitions on year change; tag <em>NEW</em>/<em>OUT</em>.</li>
+              <li>Highlight unexpected mode splits (e.g., land-heavy POE showing sizable air).</li>
+              <li>Optional faint reference bars: all-years average behind current year.</li>
+            </ul>
+          </aside>
+        </figure>
+      </div>
+
+      <p class="transition">
+        The map shows the footprint; the bars show the podium.
+      </p>
+    </section>
+
+    <!-- ===================== STATE DYNAMICS ===================== -->
+    <section id="act-2b" class="card container">
+      <header class="card-header">
+        <h2>State dynamics — Who led, and when?</h2>
+        <p class="card-subtitle">
+          Leadership isn’t static. Which states held the top spots, and which surged during the rebound?
+        </p>
+      </header>
+
+      <!-- NOTE: This pair is side-by-side only on very large screens; otherwise stacked. -->
+      <div class="card-body grid two-col-lg">
+        <!-- 5) Top-5 States Bump Chart -->
+        <figure class="viz-block" aria-labelledby="bump-title">
+          <figcaption id="bump-title" class="viz-title">Top 5 States of Entry — Monthly Rank (2020–2024)</figcaption>
+          <p class="viz-desc">
+            Use the time window to reduce clutter. Track rank changes and spot sustained leadership.
+          </p>
+          <div id="poe_bump" class="viz"></div>
+          <aside class="annotations">
+            <h4 class="annotations-title">Good annotation spots</h4>
+            <ul>
+              <li>Label moments when rank #1 changes hands: <em>“Lead switches to X.”</em></li>
+              <li>Note the state with the fewest rank changes (stability).</li>
+              <li>Keep y-axis focused on Top-5 only.</li>
+            </ul>
+          </aside>
+        </figure>
+
+        <!-- 6) Arrivals per 1,000 Residents Choropleth -->
+        <figure class="viz-block" aria-labelledby="choropleth-title">
+          <figcaption id="choropleth-title" class="viz-title">Arrivals per 1,000 Residents (States)</figcaption>
+          <p class="viz-desc">
+            Pressure per resident: where arrivals concentrate relative to population. Toggle between all-years and a chosen year.
+          </p>
+          <div id="state_choropleth" class="viz"></div>
+          <aside class="annotations">
+            <h4 class="annotations-title">Good annotation spots</h4>
+            <ul>
+              <li>Badge highest and lowest per-capita states.</li>
+              <li>Use quantile bins with a legend note (e.g., quintiles, 2020–2024 total).</li>
+              <li>When a year is chosen, show % change vs. all-years in tooltip.</li>
+            </ul>
+          </aside>
+        </figure>
+      </div>
+
+      <p class="transition">
+        Volume is one thing; intensity per resident is another.
+      </p>
+    </section>
+
+    <!-- ===================== VALUE & ORIGINS ===================== -->
+    <section id="act-3" class="card container">
+      <header class="card-header">
+        <h2>Act III — Value & origins (Who + Impact)</h2>
+        <p class="card-subtitle">
+          Do arrivals translate to value? Which source markets dominate, and how do they travel?
+        </p>
+      </header>
+
+      <!-- Also side-by-side only on very large screens; otherwise stacked. -->
+      <div class="card-body grid two-col-lg">
+        <!-- 7) Scatter: revenue & efficiency -->
+        <figure class="viz-block" aria-labelledby="scatter-title">
+          <figcaption id="scatter-title" class="viz-title">States: Arrivals vs. Tourism Value</figcaption>
+          <p class="viz-desc">
+            Bubble size = total tourism revenue; color = revenue per arrival (spend efficiency).
+            Crosshairs at medians form intuitive quadrants.
+          </p>
+          <div id="arrivals_tourism_scatter" class="viz"></div>
+          <aside class="annotations">
+            <h4 class="annotations-title">Good annotation spots</h4>
+            <ul>
+              <li>Auto-label the largest bubble (most revenue) and warmest color (highest revenue/arrival).</li>
+              <li>Show median crosshairs and light quadrant labels.</li>
+              <li>Use dynamic axis ranges with padding; dim point opacity with a subtle stroke.</li>
+            </ul>
+          </aside>
+        </figure>
+
+        <!-- 8) Stacked Bar: Top-5 Countries by Mode (filter by region) -->
+        <figure class="viz-block" aria-labelledby="countries-title">
+          <figcaption id="countries-title" class="viz-title">Top 5 Countries (by Region), Stacked by Mode</figcaption>
+          <p class="viz-desc">
+            Who are the visitors, and how do they arrive? Switch regions (ASEAN, Pacific, Africa, etc.).
+            Bars remain fixed at Top-5 to stabilize comparisons.
+          </p>
+          <div id="countries_bar" class="viz"></div>
+          <aside class="annotations">
+            <h4 class="annotations-title">Good annotation spots</h4>
+            <ul>
+              <li>Tag any country skewed &gt; 70% to one mode: <em>“Mostly land/air/sea.”</em></li>
+              <li>Animate re-ranking when the region changes.</li>
+              <li>Tooltips: share within region and absolute totals.</li>
+            </ul>
+          </aside>
+        </figure>
+      </div>
+
+      <p class="transition">
+        Value also depends on who’s coming — and their preferred mode of travel.
+      </p>
+    </section>
+
+    <!-- ===================== FINALE ===================== -->
+    <section id="finale" class="card container">
+      <header class="card-header">
+        <h2>Finale — Stitching the journey end-to-end</h2>
+        <p class="card-subtitle">
+          A single view tracing where travelers come from, how they move, and where they land.
+        </p>
+      </header>
+
+      <div class="card-body">
+        <!-- 9) Sankey: Region → Mode → State -->
+        <figure class="viz-block" aria-labelledby="sankey-title">
+          <figcaption id="sankey-title" class="viz-title">Region → Mode → State of Entry (Sankey)</figcaption>
+          <p class="viz-desc">
+            Follow the dominant paths to see the story at a glance — for example,
+            <em>ASEAN → Land → Johor</em> (if supported by your data).
+          </p>
+          <div id="sankey" class="viz"></div>
+          <aside class="annotations">
+            <h4 class="annotations-title">Good annotation spots</h4>
+            <ul>
+              <li>Highlight the 2–3 thickest links with subtle emphasis.</li>
+              <li>Tooltips should include totals and shares at each node and link.</li>
+              <li>Keep “Others” nodes to preserve totals; collapse tiny links to reduce noise.</li>
+            </ul>
+          </aside>
+        </figure>
+      </div>
+
+      <p class="transition">
+        Recovery had a rhythm (heatmap), composition shifts mattered (stream), gateways carried the load (map + Top-10),
+        winners rotated (bump), burden and benefit diverged (choropleth vs. scatter), and the full journey ties it all together (Sankey).
+      </p>
+      <p class="back-to-top"><a href="#top">Back to top</a></p>
+    </section>
+
+  </main>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer class="site-footer">
+    <div class="container">
+      <small>
+        Built with Vega-Lite. Style and layout in <code>styles.css</code>. Charts render into the IDs above via <code>vega_lite.js</code>.
+      </small>
+    </div>
+  </footer>
 </body>
-
 </html>

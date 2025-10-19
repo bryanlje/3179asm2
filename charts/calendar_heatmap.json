@@ -4,13 +4,13 @@
     "text": "Monthly Arrivals (Year x Month Heatmap)",
     "anchor": "start"
   },
-  "width": 920,
-  "height": 420,
+  "width": 700,
+  "height": 350,
   "background": "white",
   "padding": 10,
 
   "data": {
-    "url": "https://raw.githubusercontent.com/bryanlje/3179asm2/main/data/arrivals_soe_monthly_state.csv",
+    "url": "data/arrivals_soe_monthly_state.csv",
     "format": {
       "type": "csv",
       "parse": {
