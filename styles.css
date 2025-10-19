@@ -36,15 +36,20 @@ body {
 #vg-tooltip-element {
     font-family: var(--font-family-sans);
     font-size: 16px;
-    padding: 10px 15px;
+    /* font-weight: bold; */
+    padding: 10px 20px;
     border-radius: 8px;
     color: black;
     background: var(--background-color);
+    max-width: 500px;
+    white-space: nowrap;
 }
 
 /* not working */
-#vg-tooltip-element .key {
-    color: black;
+#vg-tooltip-element table tr td.key {
+    color: rgb(61, 61, 61);
+    font-weight: normal;
+    max-width: 300px;
 }
 
 /* ==========================================================================

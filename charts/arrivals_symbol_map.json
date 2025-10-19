@@ -17,6 +17,7 @@
       }
     }
   ],
+
   "layer": [
     {
       "data": {
@@ -25,6 +26,7 @@
       },
       "mark": { "type": "geoshape", "stroke": "#d1d1d1", "strokeWidth": 0.5 }
     },
+
     {
       "data": {
         "url": "https://raw.githubusercontent.com/bryanlje/3179asm2/main/output.json",
@@ -37,6 +39,7 @@
         "strokeWidth": 1
       }
     },
+
     {
       "data": {
         "url": "https://raw.githubusercontent.com/bryanlje/3179asm2/main/data/arrivals_record.csv",
@@ -72,12 +75,14 @@
         },
         { "filter": "isValid(datum.lat) && isValid(datum.long)" }
       ],
+
       "mark": {
         "type": "circle",
         "opacity": 0.8,
         "stroke": "white",
         "strokeWidth": 0.5
       },
+
       "encoding": {
         "longitude": { "field": "long", "type": "quantitative" },
         "latitude": { "field": "lat", "type": "quantitative" },
@@ -105,13 +110,14 @@
           {
             "field": "arrivals_total",
             "type": "quantitative",
-            "title": "Arrivals for Selection",
+            "title": "Arrivals",
             "format": ","
           }
         ]
       }
     }
   ],
+
   "config": {
     "font": "-apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
     "view": { "stroke": null },

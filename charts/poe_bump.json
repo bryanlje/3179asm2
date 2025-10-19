@@ -2,6 +2,7 @@
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "width": "container",
   "height": 400,
+  "padding": { "left": 0, "right": 0, "top": 10, "bottom": 10 },
   "background": "transparent",
   "data": {
     "url": "data/soe_bump.csv",
@@ -25,7 +26,7 @@
       "type": "temporal",
       "title": null,
       "axis": {
-        "tickCount": {"interval": "month", "step": 6},
+        "tickCount": { "interval": "month", "step": 6 },
         "grid": false,
         "labelExpr": "[timeFormat(datum.value, '%b') == 'Jan' ? timeFormat(datum.value, '%b %Y') : timeFormat(datum.value, '%b')]"
       }
@@ -52,8 +53,8 @@
           "Perlis"
         ],
         "range": [
-          "#bf8f00", 
-          "#439400", 
+          "#bf8f00",
+          "#439400",
           "#00948f",
           "#6da3ed",
           "#da99e0",
