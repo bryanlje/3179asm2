@@ -1,17 +1,27 @@
 {
   "$schema": "https://vega.github.io/schema/vega/v5.json",
   "description": "Arrivals flow: Region -> Mode -> State of Entry (grouped)",
-  "width": 800,
-  "height": 650,
-  "padding": 10,
+  "padding": 0,
+  "bounds": "flush",
+  "autosize": { "type": "fit", "contains": "padding", "resize": true },
+
   "signals": [
     { "name": "nodeWidth", "value": 50 },
-    { "name": "columnGap", "value": 500 },
-    { "name": "leftX", "update": "0" },
-    { "name": "midX", "update": "leftX + columnGap" },
-    { "name": "rightX", "update": "midX + columnGap" },
+    { "name": "columnGap", "value": 250 },
+
+    { "name": "labelPadL", "value": 80 },
+    { "name": "labelPadR", "value": 110 },
+
+    { "name": "leftX", "update": "labelPadL" },
+    { "name": "midX", "update": "leftX + nodeWidth + columnGap" },
+    { "name": "rightX", "update": "midX + nodeWidth + columnGap" },
+
+    { "name": "width", "update": "rightX + nodeWidth + labelPadR" },
+    { "name": "height", "value": 400 },
+
     { "name": "TopStates", "value": 4 }
   ],
+
   "data": [
     {
       "name": "arrivals",
@@ -310,6 +320,7 @@
       ]
     }
   ],
+
   "scales": [
     {
       "name": "y",
@@ -332,9 +343,11 @@
       "range": { "scheme": "category10" }
     }
   ],
+
   "marks": [
     {
       "type": "rect",
+      "zindex": 1,
       "from": { "data": "groups" },
       "encode": {
         "update": {
@@ -356,6 +369,7 @@
     {
       "type": "path",
       "from": { "data": "edges12" },
+      "clip": true,
       "encode": {
         "update": {
           "path": { "field": "path" },
@@ -372,6 +386,7 @@
     {
       "type": "path",
       "from": { "data": "edges23" },
+      "clip": true,
       "encode": {
         "update": {
           "path": { "field": "path" },
@@ -430,12 +445,5 @@
         }
       }
     }
-  ],
-  "legends": [
-    { "fill": "regionColor", "title": "Region", "orient": "top-left" },
-    { "fill": "modeColor", "title": "Mode", "orient": "top" }
-  ],
-  "title": {
-    "text": "Arrivals Flow: Region → Mode → State of Entry (grouped)"
-  }
+  ]
 }

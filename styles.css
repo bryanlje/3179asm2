@@ -239,6 +239,23 @@ body {
     margin: 0 auto;
 }
 
+#sankey .viz {
+    width: 100%;
+    height: 380px;
+    display: block;
+}
+
+#sankey .viz-block {
+    display: block;
+}
+
+#sankey .vega-embed,
+#sankey canvas,
+#sankey svg {
+  width: 100% !important;
+  height: 100% !important;
+}
+
 /* Styling for the annotation sections */
 .annotations {
     background-color: #f5f7fa;

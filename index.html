@@ -6,23 +6,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Malaysia’s Gateways: How Visitors Returned, Moved, and Mattered (2020–2024)</title>
 
-  <!-- Vega libraries -->
   <script src="https://cdn.jsdelivr.net/npm/vega@5.20.2" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-lite@5.1.0" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-embed@6.17.0" defer></script>
 
-  <!-- Your chart bootstrapper -->
   <script src="vega_lite.js" defer></script>
 
-  <!-- Styles -->
   <link rel="stylesheet" href="styles.css" media="all" />
 </head>
 
 <body id="top">
-  <!-- ===================== HEADER ===================== -->
   <header class="site-header">
     <div class="container">
-      <h1 class="site-title">Malaysia's Gateways: How Visitors Returned, Moved, and Mattered (2020–2024)</h1>
+      <h1 class="site-title">Malaysia’s Gateways: How Visitors Returned, Moved, and Mattered (2020–2024)</h1>
       <p class="site-lede">
         From disruption to recovery: when visitors returned, how they traveled, which gateways led,
         and what that meant for states and tourism value.
@@ -30,7 +26,6 @@
     </div>
   </header>
 
-  <!-- ===================== TOC (optional) ===================== -->
   <nav class="toc container" aria-label="On-page navigation">
     <ul>
       <li><a href="#act-1">Act I — The comeback</a></li>
@@ -43,7 +38,6 @@
 
   <main>
 
-    <!-- ===================== ACT I ===================== -->
     <section id="act-1" class="card container">
       <header class="card-header">
         <h2>Act I — The comeback (When + How)</h2>
@@ -53,7 +47,6 @@
       </header>
 
       <div class="card-body">
-        <!-- 1) Monthly Arrivals Heatmap -->
         <figure class="viz-block" aria-labelledby="heatmap-title">
           <figcaption id="heatmap-title" class="viz-title">Monthly Arrivals Heatmap (2020–2024)</figcaption>
           <p class="viz-desc">
@@ -71,7 +64,6 @@
           </aside>
         </figure>
 
-        <!-- 2) Mode Share Stream Graph -->
         <figure class="viz-block" aria-labelledby="stream-title">
           <figcaption id="stream-title" class="viz-title">Mode Share Stream (Land / Air / Sea)</figcaption>
           <p class="viz-desc">
@@ -95,7 +87,6 @@
       </p>
     </section>
 
-    <!-- ===================== ACT II ===================== -->
     <section id="act-2" class="card container">
       <header class="card-header">
         <h2>Act II — The gateways (Where)</h2>
@@ -105,7 +96,6 @@
       </header>
 
       <div class="card-body">
-        <!-- 3) POE Symbol Map -->
         <figure class="viz-block" aria-labelledby="map-title">
           <figcaption id="map-title" class="viz-title">Point of Entry Symbol Map</figcaption>
           <p class="viz-desc">
@@ -123,7 +113,6 @@
           </aside>
         </figure>
 
-        <!-- 4) Top-10 POE Horizontal Bar (keep year filter) -->
         <figure class="viz-block" aria-labelledby="poe-bar-title">
           <figcaption id="poe-bar-title" class="viz-title">
             <span id="bar-chart-title">Top 10 Points of Entry (by Year)</span>
@@ -149,7 +138,6 @@
       </p>
     </section>
 
-    <!-- ===================== STATE DYNAMICS ===================== -->
     <section id="act-2b" class="card container">
       <header class="card-header">
         <h2>State dynamics — Who led, and when?</h2>
@@ -159,7 +147,6 @@
       </header>
 
       <div class="card-body">
-        <!-- 5) Top-5 States Bump Chart -->
         <figure class="viz-block" aria-labelledby="bump-title">
           <figcaption id="bump-title" class="viz-title">Top 6 States of Entry — Monthly Rank</figcaption>
           <p class="viz-desc">
@@ -176,7 +163,6 @@
           </aside>
         </figure>
 
-        <!-- 6) Arrivals per 1,000 Residents Choropleth -->
         <figure class="viz-block" aria-labelledby="choropleth-title">
           <figcaption id="choropleth-title" class="viz-title">Arrivals per 1,000 Residents (States)</figcaption>
           <p class="viz-desc">
@@ -199,7 +185,6 @@
       </p>
     </section>
 
-    <!-- ===================== VALUE & ORIGINS ===================== -->
     <section id="act-3" class="card container">
       <header class="card-header">
         <h2>Act III — Value & origins (Who + Impact)</h2>
@@ -208,10 +193,9 @@
         </p>
       </header>
 
-      <div class="card-body grid two-col-lg">
-        <!-- 7) Scatter: revenue & efficiency -->
+      <div class="card-body">
         <figure class="viz-block" aria-labelledby="scatter-title">
-          <figcaption id="scatter-title" class="viz-title">States: Arrivals vs. Tourism Value</figcaption>
+          <figcaption id="scatter-title" class="viz-title">Arrivals Share vs Tourism Revenue Share by State</figcaption>
           <p class="viz-desc">
             Bubble size = total tourism revenue; color = revenue per arrival (spend efficiency).
             Crosshairs at medians form intuitive quadrants.
@@ -227,11 +211,10 @@
           </aside>
         </figure>
 
-        <!-- 8) Stacked Bar: Top-5 Countries by Mode (filter by region) -->
         <figure class="viz-block" aria-labelledby="countries-title">
           <figcaption id="countries-title" class="viz-title">Top 5 Countries (by Region), Stacked by Mode</figcaption>
           <p class="viz-desc">
-            Who are the visitors, and how do they arrive? Switch regions (ASEAN, Pacific, Africa, etc.).
+            Who visits Malaysia the most? <br> Who are the visitors, and how do they arrive? Switch regions (ASEAN, Pacific, Africa, etc.).
             Bars remain fixed at Top-5 to stabilize comparisons.
           </p>
           <div id="countries_bar" class="viz"></div>
@@ -251,7 +234,6 @@
       </p>
     </section>
 
-    <!-- ===================== FINALE ===================== -->
     <section id="finale" class="card container">
       <header class="card-header">
         <h2>Finale — Stitching the journey end-to-end</h2>
@@ -261,7 +243,6 @@
       </header>
 
       <div class="card-body">
-        <!-- 9) Sankey: Region → Mode → State -->
         <figure class="viz-block" aria-labelledby="sankey-title">
           <figcaption id="sankey-title" class="viz-title">Region → Mode → State of Entry (Sankey)</figcaption>
           <p class="viz-desc">
@@ -289,7 +270,6 @@
 
   </main>
 
-  <!-- ===================== FOOTER ===================== -->
   <footer class="site-footer">
     <div class="container">
       <small>

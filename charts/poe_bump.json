@@ -5,7 +5,7 @@
   "padding": { "left": 0, "right": 0, "top": 10, "bottom": 10 },
   "background": "transparent",
   "data": {
-    "url": "data/soe_bump.csv",
+    "url": "https://raw.githubusercontent.com/bryanlje/3179asm2/main/data/soe_bump.csv",
     "format": { "type": "csv" }
   },
 

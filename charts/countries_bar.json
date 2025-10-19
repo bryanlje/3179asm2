@@ -1,11 +1,12 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "title": "Who visits Malaysia the most?",
-  "width": 900,
+  "width": "container",
   "height": 560,
+  "background": "transparent",
   "data": {
     "url": "https://raw.githubusercontent.com/bryanlje/3179asm2/main/data/arrivals_record.csv"
   },
+
   "params": [
     {
       "name": "Year",
@@ -36,6 +37,7 @@
       }
     }
   ],
+
   "transform": [
     {
       "lookup": "poe",
@@ -47,6 +49,7 @@
         "fields": ["type"]
       }
     },
+
     {
       "lookup": "country",
       "from": {
@@ -57,6 +60,7 @@
         "fields": ["region"]
       }
     },
+
     {
       "calculate": "isValid(datum.region) ? datum.region : 'Others'",
       "as": "region_safe"
@@ -96,6 +100,7 @@
       "as": ["country_name"]
     }
   ],
+
   "mark": { "type": "bar" },
   "encoding": {
     "x": {
@@ -111,7 +116,15 @@
       "type": "quantitative",
       "title": "Arrivals (selected year)"
     },
-    "color": { "field": "type", "type": "nominal", "title": "Mode" },
+    "color": { 
+      "field": "type", 
+      "type": "nominal", 
+      "title": "Mode",
+      "scale": {
+        "domain": ["Land", "Air", "Sea"],
+        "range": ["#E69F00", "#3da7d4", "#009E73"]
+      }
+    },
     "tooltip": [
       { "field": "country_name", "title": "Country" },
       { "field": "region_safe", "title": "Region" },
@@ -125,9 +138,21 @@
       { "field": "arrivals_sum", "title": "Segment arrivals", "format": "," }
     ]
   },
+
   "config": {
-    "axis": { "labelColor": "black", "titleColor": "black" },
-    "legend": { "labelColor": "black", "titleColor": "black" },
-    "view": { "stroke": "#e6e6e6" }
+    "font": "-apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+    "view": { "stroke": null },
+    "axis": {
+      "labelColor": "black",
+      "titleColor": "black",
+      "labelFontSize": 16,
+      "titleFontSize": 16
+    },
+    "legend": {
+      "labelColor": "black",
+      "titleColor": "black",
+      "labelFontSize": 16,
+      "titleFontSize": 16
+    }
   }
 }
