@@ -33,6 +33,14 @@ body {
     font-size: 18px;
 }
 
+#vg-tooltip-element {
+    font-family: var(--font-family-sans);
+    font-size: 16px;
+    padding: 10px 15px;
+    border-radius: 8px;
+    color: black;
+}
+
 /* ==========================================================================
    2. Layout Containers
    ========================================================================== */
@@ -224,7 +232,7 @@ body {
 .annotations {
     background-color: #f5f7fa;
     border: 1px solid var(--border-color);
-    border-radius: 6px;
+    border-radius: 8px;
     padding: 1rem 1.5rem;
     margin-top: 1.5rem;
     font-size: 0.9rem;

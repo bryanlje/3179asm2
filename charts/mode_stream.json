@@ -1,27 +1,33 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "title": "Mode Share Over Time (Stream Graph)",
-  "data": {
-    "url": "https://raw.githubusercontent.com/bryanlje/3179asm2/main/data/arrivals_record.csv"
-  },
   "width": "container",
   "height": 350,
   "background": "transparent",
-  "padding": 0,
+  "padding": {
+    "left": 0,
+    "right": 0,
+    "top": 10,
+    "bottom": 10
+  },
+
+  "data": {
+    "url": "https://raw.githubusercontent.com/bryanlje/3179asm2/main/data/arrivals_record.csv"
+  },
+
   "params": [
     {
       "name": "Gender",
-      "value": "All",
-      "bind": { "input": "select", "options": ["All", "Male", "Female"] }
+      "value": "All"
     },
-    { "name": "From", "value": "2020-01-01", "bind": { "input": "date" } },
-    { "name": "To", "value": "2024-12-31", "bind": { "input": "date" } },
+    { "name": "From", "value": "2022-01-01" },
+    { "name": "To", "value": "2024-12-31" },
     {
       "name": "ModeLegend",
       "select": { "type": "point", "fields": ["type"] },
       "bind": "legend"
     }
   ],
+
   "transform": [
     {
       "calculate": "Gender === 'Male' ? datum.arrivals_male : (Gender === 'Female' ? datum.arrivals_female : datum.arrivals)",
@@ -56,28 +62,50 @@
     { "calculate": "datum.arrivals_sum / datum.month_total", "as": "share" },
     { "filter": { "param": "ModeLegend" } }
   ],
+
   "mark": { "type": "area", "interpolate": "monotone" },
+
   "encoding": {
-    "x": { "field": "ym", "type": "temporal", "title": null },
+    "x": {
+      "field": "ym",
+      "type": "temporal",
+      "title": null,
+      "axis": {
+        "grid": false,
+        "labelExpr": "[timeFormat(datum.value, '%b') == 'Jan' ? timeFormat(datum.value, '%b %Y') : timeFormat(datum.value, '%b')]",
+        "tickCount": {"interval": "month", "step": 3}
+      }
+    },
     "y": {
       "field": "arrivals_sum",
       "type": "quantitative",
       "stack": "center",
-      "title": null
+      "title": null,
+      "axis": { "grid": false, "labels": false, "ticks": false, "domain": false }
     },
-    "color": { "field": "type", "type": "nominal", "title": "Mode" },
+    "color": {
+      "field": "type",
+      "type": "nominal",
+      "title": "Mode",
+      "scale": {
+            "domain": ["Land", "Air", "Sea"],
+            "range": ["#E69F00", "#3da7d4", "#009E73"]
+      }
+    },
     "opacity": {
       "condition": { "param": "ModeLegend", "value": 1 },
       "value": 0.2
     },
     "tooltip": [
-      { "field": "ym", "type": "temporal", "title": "Month" },
+      { "field": "ym", "type": "temporal", "title": "Month", "format": "%B %Y" },
       { "field": "type", "title": "Mode" },
       { "field": "arrivals_sum", "title": "Arrivals", "format": "," },
       { "field": "share", "title": "Share", "format": ".1%" }
     ]
   },
+
   "config": {
+    "font": "-apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
     "view": { "stroke": null },
     "axis": {
       "labelColor": "black",

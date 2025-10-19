@@ -7,6 +7,7 @@
     "url": "https://raw.githubusercontent.com/bryanlje/3179asm2/main/data/arrivals_record.csv",
     "format": { "type": "csv" }
   },
+
   "params": [
     {
       "name": "yearSel",
@@ -18,14 +19,17 @@
       }
     }
   ],
+
   "transform": [
     { "calculate": "year(toDate(datum.date))", "as": "Year" },
+
     {
       "aggregate": [
         { "op": "sum", "field": "arrivals", "as": "TotalArrivals" }
       ],
       "groupby": ["Year", "poe"]
     },
+
     {
       "lookup": "poe",
       "from": {
@@ -37,14 +41,18 @@
         "fields": ["type"]
       }
     },
+
     { "filter": "datum.Year == yearSel" },
+
     {
       "window": [{ "op": "rank", "as": "rank" }],
       "sort": [{ "field": "TotalArrivals", "order": "descending" }],
       "groupby": ["Year"]
     },
+
     { "filter": "datum.rank <= 10" }
   ],
+
   "layer": [
     {
       "mark": { "type": "bar" },
@@ -59,17 +67,21 @@
           "field": "TotalArrivals",
           "type": "quantitative",
           "title": "Total Arrivals",
-          "axis": { "format": "~s" }
+          "axis": { 
+            "format": "~s",
+            "tickCount": 10
+          }
         },
         "color": {
           "field": "type",
           "type": "nominal",
           "title": "Entry Type",
           "scale": {
-            "domain": ["Land", "Sea", "Air"],
-            "range": ["#E69F00", "#3da7d4", "#008a57"]
+            "domain": ["Land", "Air", "Sea"],
+            "range": ["#E69F00", "#3da7d4", "#009E73"]
           }
         },
+
         "tooltip": [
           { "field": "poe", "type": "nominal", "title": "Point of Entry" },
           { "field": "type", "type": "nominal", "title": "Entry Type" },
@@ -83,6 +95,7 @@
         ]
       }
     },
+
     {
       "transform": [
         { "filter": "datum.rank == 1" },
@@ -99,6 +112,7 @@
           "as": "descLine"
         }
       ],
+
       "layer": [
         {
           "mark": {
@@ -175,9 +189,21 @@
       ]
     }
   ],
+
   "config": {
-    "view": { "stroke": "transparent" },
-    "axis": { "labelFontSize": 12, "titleFontSize": 12 },
-    "bar": { "cornerRadiusEnd": 2 }
+    "font": "-apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+    "view": { "stroke": null },
+    "axis": {
+      "labelColor": "black",
+      "titleColor": "black",
+      "labelFontSize": 16,
+      "titleFontSize": 16
+    },
+    "legend": {
+      "labelColor": "black",
+      "titleColor": "black",
+      "labelFontSize": 16,
+      "titleFontSize": 16
+    }
   }
 }

@@ -3,10 +3,15 @@
   "width": "container",
   "height": 370,
   "background": "transparent",
-  "padding": 0,
+  "padding": {
+    "left": 0,
+    "right": 0,
+    "top": 10,
+    "bottom": 10
+  },
 
   "data": {
-    "url": "data/arrivals_soe_monthly_state.csv",
+    "url": "https://raw.githubusercontent.com/bryanlje/3179asm2/main/data/arrivals_soe_monthly_state.csv",
     "format": {
       "type": "csv",
       "parse": {
@@ -58,7 +63,7 @@
       "field": "arrivals",
       "type": "quantitative",
       "title": "Arrivals",
-      "scale": { "scheme": "yelloworangered" },
+      "scale": { "scheme": "tealblues" },
       "legend": {
         "title": "Arrivals",
         "format": "~s",
@@ -84,6 +89,7 @@
   },
 
   "config": {
+    "font": "-apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
     "view": { "stroke": null },
     "axis": {
       "labelColor": "black",

@@ -10,9 +10,13 @@ const charts = [
   ["#sankey",                   "charts/sankey.json"]
 ];
 
+
 for (const [sel, spec] of charts) {
   const el = document.querySelector(sel);
   if (!el) continue;
-  vegaEmbed(el, spec, {actions: false})
+  vegaEmbed(el, spec, {
+    actions: false,
+    renderer: 'svg'
+  })
     .catch(err => console.error(`Embed failed for ${sel} with ${spec}:`, err));
 }
