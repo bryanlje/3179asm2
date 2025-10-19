@@ -15,7 +15,7 @@
   "data": [
     {
       "name": "arrivals",
-      "url": "data/arrivals_record.csv",
+      "url": "https://raw.githubusercontent.com/bryanlje/3179asm2/main/data/arrivals_record.csv",
       "format": { "type": "csv" },
       "transform": [
         { "type": "formula", "expr": "toNumber(datum.arrivals)", "as": "value" }
@@ -23,12 +23,12 @@
     },
     {
       "name": "country_region",
-      "url": "data/country_region.csv",
+      "url": "https://raw.githubusercontent.com/bryanlje/3179asm2/main/data/country_region.csv",
       "format": { "type": "csv" }
     },
     {
       "name": "poe_map",
-      "url": "data/points_of_entry.csv",
+      "url": "https://raw.githubusercontent.com/bryanlje/3179asm2/main/data/points_of_entry.csv",
       "format": { "type": "csv" }
     },
     {
