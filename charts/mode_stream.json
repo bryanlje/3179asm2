@@ -4,8 +4,10 @@
   "data": {
     "url": "https://raw.githubusercontent.com/bryanlje/3179asm2/main/data/arrivals_record.csv"
   },
-  "width": 680,
+  "width": "container",
   "height": 350,
+  "background": "transparent",
+  "padding": 0,
   "params": [
     {
       "name": "Gender",
@@ -76,8 +78,18 @@
     ]
   },
   "config": {
-    "axis": { "labelColor": "black", "titleColor": "black" },
-    "legend": { "labelColor": "black", "titleColor": "black" },
-    "view": { "stroke": "#e6e6e6" }
+    "view": { "stroke": null },
+    "axis": {
+      "labelColor": "black",
+      "titleColor": "black",
+      "labelFontSize": 16,
+      "titleFontSize": 16
+    },
+    "legend": {
+      "labelColor": "black",
+      "titleColor": "black",
+      "labelFontSize": 16,
+      "titleFontSize": 16
+    }
   }
 }
