@@ -65,7 +65,7 @@ body {
 }
 
 .state-johor {
-    color: #bf8f00;
+    color: #b8a500;
 }
 
 .state-selangor {
@@ -86,6 +86,14 @@ body {
 
 .state-perlis {
     color: #6929a6;
+}
+
+.region-asean {
+    color: #6174ed;
+}
+
+.region-others {
+    color: #c2c2b0;
 }
 
 /* ==========================================================================

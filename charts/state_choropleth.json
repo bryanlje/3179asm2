@@ -2,7 +2,7 @@
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "width": "container",
   "height": 400,
-  "padding": { "left": 0, "right": 0, "top": 10, "bottom": 20 },
+  "padding": { "left": 0, "right": 0, "top": 20, "bottom": 40 },
   "background": "transparent",
   "projection": { "type": "mercator" },
   "view": { "stroke": "transparent" },

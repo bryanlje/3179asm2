@@ -5,8 +5,8 @@
   "padding": {
     "left": 0,
     "right": 0,
-    "top": 20,
-    "bottom": 20
+    "top": 30,
+    "bottom": 30
   },
   "background": "transparent",
   "data": {
@@ -34,7 +34,7 @@
         "tickCount": { "interval": "month", "step": 6 },
         "grid": false,
         "labelExpr": "[timeFormat(datum.value, '%b') == 'Jan' ? timeFormat(datum.value, '%b %Y') : timeFormat(datum.value, '%b')]",
-        "labelPadding": 10
+        "labelPadding": 15
       }
     },
     "y": {
@@ -67,7 +67,7 @@
           "Perlis"
         ],
         "range": [
-          "#bf8f00",
+          "#b8a500",
           "#439400",
           "#00948f",
           "#5a8ed6",

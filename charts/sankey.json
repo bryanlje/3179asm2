@@ -1,7 +1,7 @@
 {
   "$schema": "https://vega.github.io/schema/vega/v5.json",
   "description": "Arrivals flow: Region -> Mode -> State of Entry (grouped)",
-  "padding": { "top": 20, "bottom": 20, "left": 0, "right": 0 },
+  "padding": { "top": 30, "bottom": 40, "left": 0, "right": 0 },
   "bounds": "full",
   "autosize": { "type": "fit", "contains": "padding", "resize": true },
 
@@ -342,7 +342,7 @@
       "name": "regionColor",
       "type": "ordinal",
       "domain": ["ASEAN", "Others"],
-      "range": ["#c6abf5", "#c2c2b0"]
+      "range": ["#6174ed", "#c2c2b0"]
     },
     {
       "name": "modeColor",
@@ -354,7 +354,7 @@
       "name": "stateColor",
       "type": "ordinal",
       "domain": ["Selangor", "Sarawak", "Others", "Kedah", "Johor"],
-      "range": ["#5abf06", "#04c7c0", "#c2c2b0", "#da99e0", "#e0a904"]
+      "range": ["#5abf06", "#04c7c0", "#c2c2b0", "#c866d1", "#b8a500"]
     }
   ],
 

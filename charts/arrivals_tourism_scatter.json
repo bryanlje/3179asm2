@@ -1,7 +1,13 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "width": "container",
-  "height": 550,
+  "height": 640,
+  "padding": {
+    "top": 20,
+    "bottom": 50,
+    "left": 0,
+    "right": 0
+  },
   "background": "transparent",
 
   "params": [
@@ -62,6 +68,13 @@
     {
       "calculate": "datum.revenue_share / datum.arrivals_share",
       "as": "rev_per_arrival_ratio"
+    },
+    {
+      "calculate": "(datum.gdp_p5 * 1000000) / datum.arrivals",
+      "as": "StateRevenuePerArrival_RM"
+    },
+    {
+      "filter": "datum.arrivals_share >= 0.015"
     }
   ],
 
@@ -97,7 +110,7 @@
           "field": "arrivals_share",
           "type": "quantitative",
           "axis": {
-            "title": "Arrivals share (state of entry)",
+            "title": "Share of Total Arrivals",
             "format": ".0%",
             "tickCount": 13,
             "titlePadding": 15
@@ -108,7 +121,7 @@
           "field": "revenue_share",
           "type": "quantitative",
           "axis": {
-            "title": "Tourism revenue share",
+            "title": "Share of Total Tourism Revenue",
             "format": ".0%",
             "tickCount": 13,
             "titlePadding": 15
@@ -120,16 +133,36 @@
         "size": {
           "field": "gdp_p5",
           "type": "quantitative",
-          "title": "Tourism revenue (RM mil)",
-          "legend": { "format": ",.0f", "titleLimit": 0 },
-          "scale": { "range": [50, 1000] }
+          "title": ["State Tourism Revenue", "(RM mil)"],
+          "legend": {
+            "format": ",.0f",
+            "titleLimit": 0,
+            "titlePadding": 15,
+            "labelOffset": 5,
+            "symbolFillColor": "#a3a3a3",
+            "padding": 20
+          },
+          "scale": {
+            "range": [50, 1200]
+          }
         },
+
         "color": {
           "field": "rev_per_arrival_ratio",
           "type": "quantitative",
-          "title": "Revenue per Arrival (RM)",
-          "legend": { "format": ".2f", "titleLimit": 0 },
-          "scale": { "scheme": "viridis", "domainMid": 1 }
+          "title": "Revenue / Arrival Ratio",
+          "legend": {
+            "format": ".1f",
+            "titleLimit": 0,
+            "titlePadding": 15,
+            "gradientThickness": 25,
+            "labelOffset": 15,
+            "padding": 20
+          },
+          "scale": {
+            "scheme": "viridis",
+            "domain": [0, 2.5]
+          }
         },
         "tooltip": [
           { "field": "soe", "type": "nominal", "title": "State" },
@@ -143,19 +176,19 @@
           {
             "field": "gdp_p5",
             "type": "quantitative",
-            "title": "Tourism revenue (RM mil)",
+            "title": "State Tourism Revenue (RM mil)",
             "format": ",.2f"
           },
           {
             "field": "revenue_share",
             "type": "quantitative",
-            "title": "Revenue share",
+            "title": "Share of Total Tourism Revenue",
             "format": ".2%"
           },
           {
             "field": "arrivals_share",
             "type": "quantitative",
-            "title": "Arrivals share",
+            "title": "Share of Total Arrivals",
             "format": ".2%"
           },
           {

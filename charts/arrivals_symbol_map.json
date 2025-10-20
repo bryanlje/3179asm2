@@ -110,7 +110,8 @@
             "orient": "none",
             "legendX": 850,
             "legendY": 250,
-            "symbolSize": 400
+            "symbolSize": 400,
+            "titlePadding": 8
           }
         },
         "tooltip": [

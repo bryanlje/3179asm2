@@ -93,7 +93,8 @@
             "legendY": 310,
             "symbolSize": 400,
             "symbolType": "circle",
-            "rowPadding": 5
+            "rowPadding": 8,
+            "titlePadding": 10
           }
         },
 

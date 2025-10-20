@@ -3,6 +3,12 @@
   "width": "container",
   "height": 560,
   "background": "transparent",
+  "padding": {
+    "top": 30,
+    "bottom": 30,
+    "left": 0,
+    "right": 0
+  },
   "data": {
     "url": "https://raw.githubusercontent.com/bryanlje/3179asm2/main/data/arrivals_record.csv"
   },
@@ -101,15 +107,34 @@
     { "calculate": "Year", "as": "selYear" }
   ],
 
-  "mark": { "type": "bar" },
+  "layer": [
+    { "mark": { "type": "bar", "size": 120 } },
+
+    {
+      "mark": {
+        "type": "text",
+        "dy": -6,
+        "fontSize": 16,
+        "font": "-apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+        "baseline": "bottom"
+      },
+      "encoding": {
+        "color": { "value": "black" },
+        "y": { "field": "country_total" },
+        "text": { "field": "country_total", "format": "," }
+      }
+    }
+  ],
+
   "encoding": {
     "x": {
       "field": "country_name",
       "type": "nominal",
-      "sort": "-y",
+      "sort": { "op": "sum", "field": "arrivals_sum", "order": "descending" },
       "title": "Country",
-      "axis": { 
+      "axis": {
         "labelAngle": 0,
+        "labelPadding": 10,
         "titlePadding": 15
       }
     },
@@ -117,31 +142,39 @@
       "aggregate": "sum",
       "field": "arrivals_sum",
       "type": "quantitative",
-      "title": "Arrivals (selected year)",
+      "title": "Arrivals",
       "axis": {
-        "titlePadding": 15
+        "titlePadding": 15,
+        "labelPadding": 5
       }
     },
     "color": {
       "field": "type",
       "type": "nominal",
-      "title": "Mode",
+      "title": "Mode of Entry",
       "scale": {
         "domain": ["Land", "Air", "Sea"],
         "range": ["#E69F00", "#3da7d4", "#009E73"]
+      },
+      "legend": {
+        "orient": "top-right",
+        "symbolSize": 400,
+        "symbolType": "circle",
+        "rowPadding": 8,
+        "titlePadding": 10
       }
     },
     "tooltip": [
       { "field": "country_name", "title": "Country" },
       { "field": "region_safe", "title": "Region" },
-      {"field": "selYear", "title": "Year"},
+      { "field": "selYear", "title": "Year" },
       {
         "field": "country_total",
-        "title": "Total arrivals",
+        "title": "Total Arrivals",
         "format": ","
       },
-      { "field": "type", "title": "Segment Mode" },
-      { "field": "arrivals_sum", "title": "Segment Arrivals", "format": "," }
+      { "field": "type", "title": "Mode of Entry" },
+      { "field": "arrivals_sum", "title": "Arrivals", "format": "," }
     ]
   },
 
