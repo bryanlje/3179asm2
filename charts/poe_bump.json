@@ -1,8 +1,13 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "width": "container",
-  "height": 400,
-  "padding": { "left": 0, "right": 0, "top": 10, "bottom": 10 },
+  "height": 420,
+  "padding": {
+    "left": 0,
+    "right": 0,
+    "top": 20,
+    "bottom": 20
+  },
   "background": "transparent",
   "data": {
     "url": "https://raw.githubusercontent.com/bryanlje/3179asm2/main/data/soe_bump.csv",
@@ -29,7 +34,7 @@
         "tickCount": { "interval": "month", "step": 6 },
         "grid": false,
         "labelExpr": "[timeFormat(datum.value, '%b') == 'Jan' ? timeFormat(datum.value, '%b %Y') : timeFormat(datum.value, '%b')]",
-        "titlePadding": 15
+        "labelPadding": 10
       }
     },
     "y": {
@@ -37,11 +42,14 @@
       "type": "quantitative",
       "title": "Rank",
       "scale": { "reverse": true, "domain": [1, 5] },
-      "axis": { 
-        "tickMinStep": 1, 
-        "format": "d", 
+      "axis": {
+        "tickMinStep": 1,
+        "format": "d",
         "grid": false,
-        "titlePadding": 15
+        "domain": false,
+        "titlePadding": 10,
+        "labelPadding": 15,
+        "labelFontWeight": "bold"
       }
     },
     "color": {
@@ -62,9 +70,9 @@
           "#bf8f00",
           "#439400",
           "#00948f",
-          "#6da3ed",
-          "#da99e0",
-          "#432263"
+          "#5a8ed6",
+          "#c866d1",
+          "#6929a6"
         ]
       }
     },
@@ -88,18 +96,55 @@
 
   "layer": [
     {
+      "transform": [
+        { "calculate": "toDate('2022-04-01')", "as": "refDate" }
+      ],
       "mark": {
-        "type": "line",
-        "strokeWidth": 10,
-        "opacity": 0.5,
-        "interpolate": "monotone"
+        "type": "rule",
+        "stroke": "#596172",
+        "strokeWidth": 3,
+        "strokeDash": [5, 8]
+      },
+      "encoding": {
+        "x": { "field": "refDate", "type": "temporal" },
+        "y": { "datum": 0.75 },
+        "y2": { "datum": 5.25 }
+      }
+    },
+    {
+      "transform": [
+        { "calculate": "toDate('2022-04-01')", "as": "refDate" }
+      ],
+      "mark": {
+        "type": "text",
+        "fontSize": 14,
+        "fill": "#596172",
+        "align": "left",
+        "baseline": "bottom",
+        "dx": 10,
+        "dy": -22
+      },
+      "encoding": {
+        "x": { "field": "refDate", "type": "temporal" },
+        "y": { "datum": 1 },
+        "text": { "value": "Borders Reopened" }
       }
     },
     {
       "mark": {
         "type": "line",
-        "strokeWidth": 2,
-        "interpolate": "monotone"
+        "strokeWidth": 16,
+        "opacity": 0.4,
+        "interpolate": "monotone",
+        "strokeCap": "round"
+      }
+    },
+    {
+      "mark": {
+        "type": "line",
+        "strokeWidth": 5,
+        "interpolate": "monotone",
+        "strokeCap": "round"
       }
     },
     {
@@ -107,7 +152,7 @@
         "type": "point",
         "filled": true,
         "stroke": "white",
-        "size": 60
+        "size": 120
       }
     },
     {
@@ -120,16 +165,35 @@
         },
         { "filter": "datum.order == 1" }
       ],
-      "mark": {
-        "type": "text",
-        "align": "left",
-        "dx": 8,
-        "fontSize": 16,
-        "fontWeight": "bold"
-      },
-      "encoding": {
-        "text": { "field": "soe" }
-      }
+      "layer": [
+        {
+          "transform": [{ "filter": "datum.soe !== 'Perlis'" }],
+          "mark": {
+            "type": "text",
+            "align": "left",
+            "dx": 15,
+            "fontSize": 16,
+            "fontWeight": "bold"
+          },
+          "encoding": {
+            "text": { "field": "soe" }
+          }
+        },
+        {
+          "transform": [{ "filter": "datum.soe === 'Perlis'" }],
+          "mark": {
+            "type": "text",
+            "align": "left",
+            "dx": -5,
+            "dy": -20,
+            "fontSize": 16,
+            "fontWeight": "bold"
+          },
+          "encoding": {
+            "text": { "field": "soe" }
+          }
+        }
+      ]
     }
   ],
 

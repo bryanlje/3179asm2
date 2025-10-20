@@ -106,14 +106,13 @@
           <div class="split-copy">
             <!-- <h3 class="split-title">How the mix shifted</h3> -->
             <p class="viz-desc">
-              While air travel accounted for the majority of the limited cross-border movement during the lockdown, 
-              the reopening of borders triggered <br> a dramatic reversal. 
-              Land travel surged to <br> capture a 60-70% share of total traffic.
+              During the lockdown, <strong class="mode-air">air travel</strong> accounted for most of the limited cross-border movement. 
+              However, with the reopening of borders, <strong class="mode-land">land travel</strong> surged <br> to capture a 60-70% share of total traffic.
             </p>
             <p class="viz-desc">
               Since then, a stable pattern has emerged: <br> <strong class="mode-land">land travel</strong> maintains its <strong>dominant position</strong>, 
-              <br> <strong class="mode-air">air traffic</strong> has settled down at around 30%, 
-              <br> while <strong class="mode-sea">arrivals via sea</strong> rarely surpass 5%.
+              <br> <strong class="mode-air">air traffic</strong> has settled down at around <strong class="mode-air">30%</strong>, 
+              <br> while <strong class="mode-sea">arrivals via sea</strong> rarely surpass <strong class="mode-sea">5%</strong>.
             </p>
           </div>
 
@@ -190,67 +189,83 @@
 
     <section id="act-2b" class="card container">
       <header class="card-header">
-        <h2>State dynamics — Who led, and when?</h2>
-        <p class="card-subtitle">
+        <h2>The States</h2>
+        <!-- <p class="card-subtitle">
           Leadership isn’t static. Which states held the top spots, and which surged during the rebound?
-        </p>
+        </p> -->
       </header>
 
       <div class="card-body">
         <figure class="viz-block" aria-labelledby="bump-title">
-          <figcaption id="bump-title" class="viz-title">Top 6 States of Entry — Monthly Rank</figcaption>
+          <!-- <figcaption id="bump-title" class="viz-title">Top 6 States of Entry — Monthly Rank</figcaption> -->
           <p class="viz-desc">
-            Track the rank changes of the leading states during the core recovery period to spot leadership changes and stability.
+            The state rankings from January 2021 to December 2023 <br> reveal two distinct eras, defined by Malaysia's national <br> lockdown and the subsequent reopening of borders.
+          </p>
+          <p class="viz-desc">
+            <strong>First stage: lockdown period</strong>. Northern states like <strong class="state-kedah">Kedah</strong> and <br> <strong class="state-perlis">Perlis</strong> unexpectedly held the top spots. 
+            This can be attributed <br> to their land borders with neighbouring countries such as <br> Thailand.
+            <strong class="state-selangor">Selangor</strong>, with its international airports, remained <br> a key contender by handling the limited air traffic.
+          </p>
+          <p class="viz-desc">
+            <strong>Second stage: reopening of borders</strong>. <strong class="state-johor">Johor</strong> leapt up to claim <br> the top position, establishing a new hierarchy.
+            In this new <br> landscape, <strong class="state-selangor">Selangor</strong> and <strong class="state-sarawak">Sarawak</strong> settled into second and third <br> place respectively, 
+            while former leaders like <strong class="state-kedah">Kedah</strong> dropped to <br> 5th, and <strong class="state-perlis">Perlis</strong> was eliminated from the top ranks entirely.
           </p>
           <div id="poe_bump" class="viz"></div>
-          <aside class="annotations">
+          <!-- <aside class="annotations">
             <h4 class="annotations-title">Good annotation spots</h4>
             <ul>
               <li>Label moments when rank #1 changes hands: <em>“Lead switches to X.”</em></li>
               <li>Note the state with the fewest rank changes (stability).</li>
               <li>Keep y-axis focused on the top ranks only.</li>
             </ul>
-          </aside>
+          </aside> -->
         </figure>
 
         <figure class="viz-block" aria-labelledby="choropleth-title">
-          <figcaption id="choropleth-title" class="viz-title">Arrivals per 1,000 Residents (States)</figcaption>
+          <!-- <figcaption id="choropleth-title" class="viz-title">Arrivals per 1,000 Residents (States)</figcaption> -->
           <p class="viz-desc">
-            Pressure per resident: where arrivals concentrate relative to population. Toggle between all-years and a chosen year.
+            However, the true scale of <strong class="state-johor">Johor's</strong> dominance is evident when <br> viewing arrivals <strong><i>relative to the local population</i></strong>.
+            The map, displaying <br> arrivals per 1000 residents, highlights Johor as a significant outlier.
           </p>
           <div id="state_choropleth" class="viz"></div>
-          <aside class="annotations">
+          <p class="viz-desc">
+            In 2023, the state recorded an astounding <strong>3,629 arrivals for <br> every resident</strong> - the number of visitors was more than triple <br> its own population.
+            Far surpassing any state, this underscores <br> <strong class="state-johor">Johor's</strong> critical role as the <strong>primary gateway into Malaysia</strong>.
+          </p>
+          <!-- <aside class="annotations">
             <h4 class="annotations-title">Good annotation spots</h4>
             <ul>
               <li>Badge highest and lowest per-capita states.</li>
               <li>Use quantile bins with a legend note (e.g., quintiles, 2020–2024 total).</li>
               <li>When a year is chosen, show % change vs. all-years in tooltip.</li>
             </ul>
-          </aside>
+          </aside> -->
         </figure>
       </div>
 
-      <p class="transition">
+      <!-- <p class="transition">
         Volume is one thing; intensity per resident is another.
-      </p>
+      </p> -->
     </section>
 
     <section id="act-3" class="card container">
       <header class="card-header">
-        <h2>Act III — Value & origins (Who + Impact)</h2>
-        <p class="card-subtitle">
+        <h2>The Visitors</h2>
+        <!-- <p class="card-subtitle">
           Do arrivals translate to value? Which source markets dominate, and how do they travel?
-        </p>
+        </p> -->
       </header>
 
       <div class="card-body">
         <figure class="viz-block" aria-labelledby="scatter-title">
-          <figcaption id="scatter-title" class="viz-title">Arrivals Share vs Tourism Revenue Share by State</figcaption>
+          <!-- <figcaption id="scatter-title" class="viz-title">Arrivals Share vs Tourism Revenue Share by State</figcaption> -->
           <p class="viz-desc">
             Bubble size = total tourism revenue; color = revenue per arrival (spend efficiency).
             Crosshairs at medians form intuitive quadrants.
           </p>
-          <div id="arrivals_tourism_scatter" class="viz"></div>
+          <div id="countries_bar" class="viz"></div>
+          
           <aside class="annotations">
             <h4 class="annotations-title">Good annotation spots</h4>
             <ul>
@@ -267,7 +282,7 @@
             Who visits Malaysia the most? <br> Who are the visitors, and how do they arrive? Switch regions (ASEAN, Pacific, Africa, etc.).
             Bars remain fixed at Top-5 to stabilize comparisons.
           </p>
-          <div id="countries_bar" class="viz"></div>
+          <div id="sankey" class="viz"></div>
           <aside class="annotations">
             <h4 class="annotations-title">Good annotation spots</h4>
             <ul>
@@ -286,7 +301,7 @@
 
     <section id="finale" class="card container">
       <header class="card-header">
-        <h2>Finale — Stitching the journey end-to-end</h2>
+        <h2>The Impact</h2>
         <p class="card-subtitle">
           A single view tracing where travelers come from, how they move, and where they land.
         </p>
@@ -299,7 +314,8 @@
             Follow the dominant paths to see the story at a glance — for example,
             <em>ASEAN → Land → Johor</em> (if supported by your data).
           </p>
-          <div id="sankey" class="viz"></div>
+          <div id="arrivals_tourism_scatter" class="viz"></div>
+          
           <aside class="annotations">
             <h4 class="annotations-title">Good annotation spots</h4>
             <ul>

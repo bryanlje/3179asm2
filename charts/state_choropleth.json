@@ -2,7 +2,7 @@
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "width": "container",
   "height": 400,
-  "padding": { "left": 0, "right": 0, "top": 10, "bottom": 10 },
+  "padding": { "left": 0, "right": 0, "top": 10, "bottom": 20 },
   "background": "transparent",
   "projection": { "type": "mercator" },
   "view": { "stroke": "transparent" },
@@ -96,7 +96,13 @@
           "type": "quantitative",
           "scale": { "scheme": "tealblues" },
           "title": ["Arrivals per", "1000 Residents"],
-          "legend": { "format": ",.0f", "padding": 10 }
+          "legend": {
+            "orient": "bottom-right",
+            "tickCount": 3,
+            "gradientLength": 175,
+            "format": ",.0f",
+            "titleAnchor": "middle"
+          }
         },
         "tooltip": [
           { "field": "state_clean", "title": "State" },

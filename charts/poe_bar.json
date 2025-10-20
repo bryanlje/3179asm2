@@ -82,7 +82,7 @@
         "color": {
           "field": "type",
           "type": "nominal",
-          "title": "Point of Entry Type",
+          "title": "Mode of Entry",
           "scale": {
             "domain": ["Land", "Air", "Sea"],
             "range": ["#E69F00", "#3da7d4", "#009E73"]
@@ -99,7 +99,7 @@
 
         "tooltip": [
           { "field": "poe", "type": "nominal", "title": "Point of Entry" },
-          { "field": "type", "type": "nominal", "title": "Entry Type" },
+          { "field": "type", "type": "nominal", "title": "Mode" },
           { "field": "Year", "type": "quantitative" },
           {
             "field": "TotalArrivals",

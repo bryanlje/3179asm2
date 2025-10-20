@@ -64,6 +64,30 @@ body {
     color: #009E73;
 }
 
+.state-johor {
+    color: #bf8f00;
+}
+
+.state-selangor {
+    color: #439400;
+}
+
+.state-sarawak {
+    color: #00948f;
+}
+
+.state-penang {
+    color: #6da3ed;
+}
+
+.state-kedah {
+    color: #c866d1;
+}
+
+.state-perlis {
+    color: #6929a6;
+}
+
 /* ==========================================================================
    2. Layout Containers
    ========================================================================== */
@@ -117,7 +141,7 @@ body {
 
 .site-title {
   font-family: var(--font-family-serif);
-  font-size: 3.5rem;
+  font-size: 3.8rem;
   color: var(--heading-color);
   margin: 0 0 3rem 0;
   line-height: 1.2;
@@ -182,7 +206,7 @@ body {
 
 .card-header h2 {
   font-family: var(--font-family-serif);
-  font-size: 2rem;
+  font-size: 2.5rem;
   color: var(--heading-color);
   margin: 0 0 0.25rem 0;
 }
