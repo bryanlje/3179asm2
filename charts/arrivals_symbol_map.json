@@ -85,9 +85,18 @@
         "size": {
           "field": "arrivals_total",
           "type": "quantitative",
-          "title": "Total Arrivals",
+          "title": "Arrivals",
           "scale": { "type": "sqrt", "range": [30, 1200] },
-          "legend": { "orient": "bottom", "offset": 40 }
+          "legend": {
+            "orient": "none",
+            "legendX": 200,
+            "legendY": 46,
+            "direction": "horizontal",
+            "titleAnchor": "middle",
+            "labelBaseline": "middle",
+            "symbolOffset": 20,
+            "symbolFillColor": "#a3a3a3"
+          }
         },
         "color": {
           "field": "type",
@@ -97,13 +106,18 @@
             "domain": ["Land", "Air", "Sea"],
             "range": ["#E69F00", "#3da7d4", "#009E73"]
           },
-          "legend": { "orient": "bottom" }
+          "legend": {
+            "orient": "none",
+            "legendX": 850,
+            "legendY": 250,
+            "symbolSize": 400
+          }
         },
         "tooltip": [
           { "field": "poe", "title": "Point of Entry" },
           { "field": "state", "title": "State" },
           { "field": "type", "title": "Type" },
-          {"field": "selYear", "title": "Year"},
+          { "field": "selYear", "title": "Year" },
           {
             "field": "arrivals_total",
             "type": "quantitative",
@@ -125,6 +139,7 @@
       "titleFontSize": 16
     },
     "legend": {
+      "orient": "top",
       "labelColor": "black",
       "titleColor": "black",
       "labelFontSize": 16,

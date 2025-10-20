@@ -41,11 +41,12 @@
           "timeUnit": "year",
           "field": "date",
           "type": "ordinal",
-          "title": "Year",
+          "title": null,
           "axis": {
             "ticks": false,
             "domain": false,
-            "titlePadding": 15
+            "titlePadding": 15,
+            "labelPadding": 10
           },
           "scale": {
             "paddingInner": 0.05
@@ -56,13 +57,14 @@
           "timeUnit": "month",
           "field": "date",
           "type": "ordinal",
-          "title": "Month",
+          "title": null,
           "axis": {
             "labelAngle": 0,
             "format": "%b",
             "ticks": false,
             "domain": false,
-            "titlePadding": 15
+            "titlePadding": 15,
+            "labelPadding": 10
           },
           "scale": {
             "paddingInner": 0.05,

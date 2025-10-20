@@ -3,6 +3,12 @@
   "description": "Top 10 points of entry (POE) by total arrivals for a selected year; bars colored by entry type (Land/Sea/Air).",
   "width": "container",
   "height": 440,
+  "padding": {
+    "top": 40,
+    "bottom": 10,
+    "left": 0,
+    "right": 0
+  },
   "data": {
     "url": "https://raw.githubusercontent.com/bryanlje/3179asm2/main/data/poe_without_country.csv",
     "format": { "type": "csv" }
@@ -55,16 +61,18 @@
         "y": {
           "field": "poe",
           "type": "nominal",
-          "title": "Point of Entry",
+          "title": null,
           "sort": "-x",
           "axis": {
-            "titlePadding": 15
+            "titlePadding": 25,
+            "labelLimit": 1000,
+            "labelPadding": 10
           }
         },
         "x": {
           "field": "TotalArrivals",
           "type": "quantitative",
-          "title": "Total Arrivals",
+          "title": "Arrivals",
           "axis": {
             "format": "~s",
             "tickCount": 10,
@@ -74,10 +82,18 @@
         "color": {
           "field": "type",
           "type": "nominal",
-          "title": "Entry Type",
+          "title": "Point of Entry Type",
           "scale": {
             "domain": ["Land", "Air", "Sea"],
             "range": ["#E69F00", "#3da7d4", "#009E73"]
+          },
+          "legend": {
+            "orient": "none",
+            "legendX": 630,
+            "legendY": 310,
+            "symbolSize": 400,
+            "symbolType": "circle",
+            "rowPadding": 5
           }
         },
 
@@ -99,7 +115,7 @@
       "transform": [
         { "filter": "datum.rank == 1" },
         {
-          "calculate": "'Top POE (' + toString(Year) + ')'",
+          "calculate": "'Top Point of Entry (' + toString(Year) + ')'",
           "as": "AnnTitle"
         },
         {
@@ -122,10 +138,10 @@
             "stroke": "#ddd"
           },
           "encoding": {
-            "x": { "value": 580 },
-            "y": { "value": 50 },
-            "x2": { "value": 940 },
-            "y2": { "value": 150 }
+            "x": { "value": 440 },
+            "y": { "value": 60 },
+            "x2": { "value": 800 },
+            "y2": { "value": 165 }
           }
         },
         {
@@ -137,8 +153,8 @@
             "baseline": "top"
           },
           "encoding": {
-            "x": { "value": 600 },
-            "y": { "value": 66 },
+            "x": { "value": 460 },
+            "y": { "value": 75 },
             "text": { "field": "AnnTitle" }
           }
         },
@@ -149,11 +165,11 @@
             "fontWeight": "bold",
             "align": "left",
             "baseline": "top",
-            "fill": "#113466"
+            "fill": "#9c6b00bb"
           },
           "encoding": {
-            "x": { "value": 600 },
-            "y": { "value": 84 },
+            "x": { "value": 460 },
+            "y": { "value": 97 },
             "text": { "field": "poe" }
           }
         },
@@ -166,8 +182,8 @@
             "baseline": "top"
           },
           "encoding": {
-            "x": { "value": 600 },
-            "y": { "value": 102 },
+            "x": { "value": 460 },
+            "y": { "value": 120 },
             "text": { "field": "AnnSub" }
           }
         },
@@ -180,8 +196,8 @@
             "baseline": "top"
           },
           "encoding": {
-            "x": { "value": 600 },
-            "y": { "value": 120 },
+            "x": { "value": 460 },
+            "y": { "value": 138 },
             "text": { "field": "descLine" }
           }
         }
