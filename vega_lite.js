@@ -24,7 +24,7 @@ function embedAll() {
         renderer: rendererType // Use the renderer from the array
       };
 
-      console.log(`Embedding ${selector} with ${rendererType} renderer.`);
+      // console.log(`Embedding ${selector} with ${rendererType} renderer.`);
 
       return vegaEmbed(selector, specPath, embedOptions).then((res) => {
         views.push(res.view);

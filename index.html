@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Malaysia’s Gateways: How Visitors Returned, Moved, and Mattered (2020–2024)</title>
+  <title>The Gateways of Malaysia: How Visitors Returned, Moved, and Mattered (2020-2023)</title>
 
   <script src="https://cdn.jsdelivr.net/npm/vega@5.20.2" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-lite@5.1.0" defer></script>
@@ -27,15 +27,43 @@
 <body id="top">
   <header class="site-header">
     <div class="container">
-      <h1 class="site-title">Malaysia’s Gateways: How Visitors Returned, Moved, and Mattered (2020–2024)</h1>
+      <h1 class="site-title">The Gateways of Malaysia</h1>
       <p class="site-lede">
-        From disruption to recovery: when visitors returned, how they traveled, which gateways led,
-        and what that meant for states and tourism value.
+        After the devastating pandemic of COVID-19 triggered worldwide shutdowns, 
+        Malaysia's tourism sector came to a grinding halt. <br><br>
+        This visualisation explores <strong>when</strong> visitors returned to Malaysia, <strong>how</strong> <br>
+        they travelled, and <strong>what</strong> it meant for Malaysia's tourism economy.
       </p>
     </div>
   </header>
 
-  <nav class="toc container" aria-label="On-page navigation">
+  <section class="card container kpi-card" aria-labelledby="kpi-title">
+    <header class="card-header">
+      <h2 id="kpi-title">Tourism in 2024:</h2>
+    </header>
+
+    <div class="card-body">
+      <div class="kpi-grid">
+        <div class="kpi">
+          <div class="kpi-number">RM291.9<span class="kpi-suffix">b</span></div>
+          <div class="kpi-label">Tourism industry output</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-number">15.1<span class="kpi-suffix">%</span></div>
+          <div class="kpi-label">Share of Malaysia's economy</div>
+        </div>
+      </div>
+
+      <p class="kpi-kicker">
+        These two numbers set the stage: <strong>tourism is back</strong>.
+      </p>
+      <p class="kpi-source">
+        <a href="http://www.statistics.gov.my/uploads/release-content/file_20250912110633.pdf" target="_blank">Source: DOSM, <em>Tourism Satellite Account 2024</em></a>.
+      </p>
+    </div>
+  </section>
+
+  <!-- <nav class="toc container" aria-label="On-page navigation">
     <ul>
       <li><a href="#act-1">Act I — The comeback</a></li>
       <li><a href="#act-2">Act II — Gateways</a></li>
@@ -43,65 +71,70 @@
       <li><a href="#act-3">Value & origins</a></li>
       <li><a href="#finale">Finale</a></li>
     </ul>
-  </nav>
+  </nav> -->
 
   <main>
 
     <section id="act-1" class="card container">
       <header class="card-header">
-        <h2>Act I — The comeback (When + How)</h2>
-        <p class="card-subtitle">
-          Start with the rhythm of recovery (monthly arrivals), then see the changing composition of travel modes.
-        </p>
+        <h2>The Comeback</h2>
+        <!-- <p class="card-subtitle">
+          From the first trickle back to full holiday peaks, 
+        </p> -->
       </header>
 
       <div class="card-body">
         <figure class="viz-block" aria-labelledby="heatmap-title">
-          <figcaption id="heatmap-title" class="viz-title">Monthly Arrivals Heatmap (2020–2024)</figcaption>
+          <!-- <figcaption id="heatmap-title" class="viz-title">Monthly Arrivals (2020-2024)</figcaption> -->
           <p class="viz-desc">
-            Arrival patterns through the recovery. Use the state filter to contrast border vs. hub states.
-            Look for dark troughs giving way to brighter peaks later.
+            The Movement Control Order (MCO) caused arrivals to plummet in <br> <strong>April 2020</strong>, remaining low throughout 2021.
+            A clear <br> turning point arrives in <strong>April 2022</strong>, when Malaysia allowed <br> quarantine-free travel for fully-vaccinated travellers.
+            The number of <br> arrivals continued increasing steadily until a full capacity <br> of approximately 3 million arrivals per month was reached.
           </p>
           <div id="calendar_heatmap" class="viz"></div>
-          <aside class="annotations">
+          <!-- <aside class="annotations">
             <h4 class="annotations-title">Good annotation spots</h4>
             <ul>
               <li>Auto-label the darkest/lightest cells per year: <em>“Lowest month”</em>, <em>“Peak month”</em>.</li>
               <li>Band seasonal periods (Nov–Dec, mid-year) with subtle guides.</li>
               <li>Show a small note when a state is selected: <em>“Showing: Selangor — peaks cluster late-year.”</em></li>
             </ul>
-          </aside>
+          </aside> -->
         </figure>
 
-        <figure class="viz-block" aria-labelledby="stream-title">
-          <figcaption id="stream-title" class="viz-title">Mode Share Stream (Land / Air / Sea)</figcaption>
-          <p class="viz-desc">
-            How people entered changed during recovery. Focus on <strong>composition</strong> rather than absolute counts:
-            which mode regained share first? Default the time range to post-disruption to avoid empty space.
-          </p>
-          <div id="mode_stream" class="viz"></div>
-          <aside class="annotations">
-            <h4 class="annotations-title">Good annotation spots</h4>
-            <ul>
-              <li>Mark the first month when a mode clearly overtakes others: <em>“Air rebounds here.”</em></li>
-              <li>Provide a chip to include early period if desired.</li>
-              <li>Tooltips: share % plus Δ vs. same month previous year.</li>
-            </ul>
-          </aside>
-        </figure>
+        <div class="viz-split grid two-col-lg">
+          <div class="split-copy">
+            <!-- <h3 class="split-title">How the mix shifted</h3> -->
+            <p class="viz-desc">
+              While air travel accounted for the majority of the limited cross-border movement during the lockdown, 
+              the reopening of borders triggered <br> a dramatic reversal. 
+              Land travel surged to <br> capture a 60-70% share of total traffic.
+            </p>
+            <p class="viz-desc">
+              Since then, a stable pattern has emerged: <br> <strong class="mode-land">land travel</strong> maintains its <strong>dominant position</strong>, 
+              <br> <strong class="mode-air">air traffic</strong> has settled at around 30%, 
+              while <br> <strong class="mode-sea">arrivals via sea</strong> rarely surpass 5%.
+            </p>
+          </div>
+
+          <figure class="viz-block split-figure" aria-labelledby="stream-title">
+            <!-- <figcaption id="stream-title" class="viz-title">Mode Mix During Recovery (Land / Air / Sea)</figcaption> -->
+            <div id="mode_stream" class="viz"></div>
+          </figure>
+        </div>
       </div>
 
-      <p class="transition">
+      <!-- <p class="transition">
         Totals alone don’t tell the full story. Composition reveals which routes returned first.
-      </p>
+      </p> -->
     </section>
 
     <section id="act-2" class="card container">
       <header class="card-header">
-        <h2>Act II — The gateways (Where)</h2>
-        <p class="card-subtitle">
+        <h2>The Gateways</h2>
+        <!-- <p class="card-subtitle">
           Move from “how” to “where”: see the national footprint of entry points, then zoom into the leaders by year.
-        </p>
+        </p> -->
       </header>
 
       <div class="card-body">
