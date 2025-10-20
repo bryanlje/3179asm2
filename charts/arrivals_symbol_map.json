@@ -86,15 +86,19 @@
           "field": "arrivals_total",
           "type": "quantitative",
           "title": "Arrivals",
-          "scale": { "type": "sqrt", "range": [30, 1200] },
+          "scale": { 
+            "type": "sqrt", 
+            "range": [30, 1200],
+            "domain": [0, 8000000]
+          },
           "legend": {
             "orient": "none",
             "legendX": 200,
-            "legendY": 46,
+            "legendY": 35,
             "direction": "horizontal",
             "titleAnchor": "middle",
             "labelBaseline": "middle",
-            "symbolOffset": 20,
+            "symbolOffset": 8,
             "symbolFillColor": "#a3a3a3"
           }
         },

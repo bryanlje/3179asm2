@@ -53,47 +53,47 @@ body {
 }
 
 .mode-land {
-    color: #E69F00;
+  color: #e69f00;
 }
 
 .mode-air {
-    color: #3da7d4;
+  color: #3da7d4;
 }
 
 .mode-sea {
-    color: #009E73;
+  color: #009e73;
 }
 
 .state-johor {
-    color: #b8a500;
+  color: #b8a500;
 }
 
 .state-selangor {
-    color: #439400;
+  color: #439400;
 }
 
 .state-sarawak {
-    color: #00948f;
+  color: #00948f;
 }
 
 .state-penang {
-    color: #6da3ed;
+  color: #6da3ed;
 }
 
 .state-kedah {
-    color: #c866d1;
+  color: #c866d1;
 }
 
 .state-perlis {
-    color: #6929a6;
+  color: #6929a6;
 }
 
 .region-asean {
-    color: #6174ed;
+  color: #6174ed;
 }
 
 .region-others {
-    color: #c2c2b0;
+  color: #c2c2b0;
 }
 
 /* ==========================================================================
@@ -306,7 +306,7 @@ body {
 }
 
 .viz-split .viz-desc {
-    max-width: 100%;
+  max-width: 100%;
 }
 
 /* Left column (copy) */
@@ -325,9 +325,9 @@ body {
 
 /* Right column (chart) */
 .split-figure {
-    min-width: 0;
-    flex-basis: 0;
-    flex-grow: 1;
+  min-width: 0;
+  flex-basis: 0;
+  flex-grow: 1;
   margin: 0;
   align-self: center;
 }
@@ -449,11 +449,12 @@ body {
 .year-btn {
   font: 600 14px/1 system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial,
     sans-serif;
-  padding: 8px 12px;
+  padding: 12px 20px;
   border: 1px solid #e2e8f0;
   border-radius: 10px;
   background: #fff;
   cursor: pointer;
+  font-size: 1.3rem;
 }
 .year-btn:hover {
   border-color: #0ea5a5;
@@ -462,6 +463,123 @@ body {
   color: #0b5c55;
   background: #d1faf5;
   border-color: #0ea5a5;
+}
+
+/* ==========================================================================
+   Year Switcher V2
+   ========================================================================== */
+
+/* Base: reuse your .year-btn look & feel, add fixed positioning via .year-fab */
+.year-fab {
+  position: fixed;
+  top: 50%;
+  /* Vertical placement per button using a CSS var (in px): --offset:-72px, -24px, 24px, 72px */
+  transform: translateY(calc(-50% + var(--offset, 0px)));
+  z-index: 9999;
+
+  /* Slightly larger hit area feels better for floating UI */
+  padding: 15px 20px;
+
+  /* Nicer surface + subtle shadow out of the box */
+  background: #fff;
+  border: 2px solid #e2e8f0;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+
+  transition: transform 180ms ease, box-shadow 180ms ease,
+    border-color 180ms ease, background-color 180ms ease;
+
+  --slide: 0px; /* side nudge */
+  --scale: 1;
+  transform: translateY(calc(-50% + var(--offset, 0px)))
+    translateX(var(--slide)) scale(var(--scale));
+}
+
+/* Side selection */
+.year-fab.right {
+  right: 50px;
+}
+.year-fab.left {
+  left: 50px;
+}
+
+/* Hover: gentle lift, side-appropriate nudge, and a soft glow */
+.year-fab.right:hover {
+  transform: translateY(calc(-50% + var(--offset, 0px))) translateX(-2px)
+    scale(1.03);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.16),
+    0 0 0 3px rgba(14, 165, 165, 0.08);
+  border-color: #0ea5a5;
+  background: #ffffff;
+}
+.year-fab.left:hover {
+  transform: translateY(calc(-50% + var(--offset, 0px))) translateX(2px)
+    scale(1.03);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.16),
+    0 0 0 3px rgba(14, 165, 165, 0.08);
+  border-color: #0ea5a5;
+  background: #ffffff;
+}
+
+/* Active state keeps your original palette */
+.year-fab.active {
+  color: black;
+  background: #d1faf5;
+  border-color: #0ea5a5;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.16), 0 0 0 2px rgba(14, 165, 165, 0.2);
+}
+
+/* Accessible focus (keyboard users) */
+.year-fab:focus-visible {
+  outline: none;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.18), 0 0 0 3px #d1faf5,
+    0 0 0 5px rgba(14, 165, 165, 0.35);
+  border-color: #0ea5a5;
+}
+
+/* Optional subtle aura on hover (nice but not gaudy) */
+.year-fab::before {
+  content: "";
+  position: absolute;
+  inset: -4px;
+  border-radius: 14px;
+  background: radial-gradient(
+    circle at 50% 50%,
+    rgba(14, 165, 165, 0.12),
+    rgba(14, 165, 165, 0) 70%
+  );
+  opacity: 0;
+  transition: opacity 180ms ease;
+  pointer-events: none;
+}
+.year-fab:hover::before {
+  opacity: 1;
+}
+
+/* Mobile: tuck them slightly inward so they don't hug the edge too tightly */
+@media (max-width: 768px) {
+  .year-fab.right {
+    right: 10px;
+  }
+  .year-fab.left {
+    left: 10px;
+  }
+}
+
+.year-fab.is-hidden {
+  opacity: 0;
+  pointer-events: none;
+  --scale: 0.98; /* a hair smaller when hidden */
+  transition: opacity 200ms ease, transform 220ms ease, box-shadow 180ms ease,
+    border-color 180ms ease, background-color 180ms ease;
+}
+
+/* Slide slightly towards the edge when hidden (side-aware) */
+.year-fab.right.is-hidden {
+  --slide: 12px;
+}
+.year-fab.left.is-hidden {
+  --slide: -12px;
 }
 
 /* ==========================================================================
@@ -532,7 +650,6 @@ body {
   }
 }
 
-
 /* ==========================================================================
    Metadata Card (scoped to #metadata)
    ========================================================================== */
@@ -590,7 +707,7 @@ body {
 /* Left label column */
 .meta-list li strong {
   color: var(--heading-color);
-  flex: 0 0 160px;       /* fixed label width for neat alignment */
+  flex: 0 0 160px; /* fixed label width for neat alignment */
   max-width: 50%;
   align-self: end;
 }

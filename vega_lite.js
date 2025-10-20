@@ -86,3 +86,78 @@ document.addEventListener("DOMContentLoaded", () => {
   const initialYear = getInitialYear();
   embedAll().then(() => wireYearButtons(initialYear));
 });
+
+////////////////////////////////////////////////
+//          FOR YEAR FILTER BUTTONS
+////////////////////////////////////////////////
+
+const BUFFER_TOP  = '100px';   // e.g., '200px' or '20%'
+const BUFFER_BOTTOM = '100px'; // e.g., '240px' or '25%'
+
+/* ===== Scroll-gated visibility for Year FABs ===== */
+document.addEventListener('DOMContentLoaded', () => {
+  // Which charts should reveal the year buttons?
+  const targetChartIds = [
+    'arrivals_symbol_map',  // symbol map
+    'poe_bar',              // horizontal bar chart (Top 10 POE)
+    'state_choropleth',     // choropleth map
+    'countries_bar'         // stacked countries bar chart
+  ];
+
+  // Get the elements (some pages/states might not have all)
+  const targets = targetChartIds
+    .map(id => document.getElementById(id))
+    .filter(Boolean);
+
+  // If nothing to watch, just bail and keep buttons visible
+  const yearFabs = Array.from(document.querySelectorAll('.year-fab'));
+  if (!targets.length || !yearFabs.length) return;
+
+  // Start hidden
+  yearFabs.forEach(btn => btn.classList.add('is-hidden'));
+
+  // Track how many watched charts are currently visible
+  let inViewCount = 0;
+
+  const showFabs = () => {
+    yearFabs.forEach(btn => btn.classList.remove('is-hidden'));
+  };
+  const hideFabs = () => {
+    yearFabs.forEach(btn => btn.classList.add('is-hidden'));
+  };
+
+  const visible = new Set();
+
+  // IntersectionObserver to toggle on scroll
+  const observer = new IntersectionObserver((entries) => {
+    for (const entry of entries) {
+      const key = entry.target; // each observed element
+      if (entry.isIntersecting) visible.add(key);
+      else visible.delete(key);
+    }
+
+    if (visible.size > 0) {
+      showFabs();
+    } else {
+      hideFabs();
+    }
+  }, {
+    root: null,
+    // Expand the viewport by this much above/below for early show/late hide
+    rootMargin: `${BUFFER_TOP} 0px ${BUFFER_BOTTOM} 0px`,
+    // Trigger as soon as it touches the expanded region
+    threshold: 0
+  });
+
+  // Observe each chart (or its .viz-block wrapper)
+  targets.forEach(el => {
+    const block = el.closest('.viz-block') || el;
+    observer.observe(block);
+  });
+
+  // Fallback: if IntersectionObserver isn’t supported, keep them visible
+  // (Very old browsers only)
+  if (!('IntersectionObserver' in window)) {
+    showFabs();
+  }
+});
