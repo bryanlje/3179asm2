@@ -37,7 +37,7 @@
 
     {
       "data": {
-        "url": "https://raw.githubusercontent.com/bryanlje/3179asm2/main/data/arrivals_record.csv",
+        "url": "https://raw.githubusercontent.com/bryanlje/3179asm2/main/data/poe_without_country.csv",
         "format": { "type": "csv", "parse": { "date": "date" } }
       },
       "transform": [
