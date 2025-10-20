@@ -1,23 +1,23 @@
 {
   "$schema": "https://vega.github.io/schema/vega/v5.json",
   "description": "Arrivals flow: Region -> Mode -> State of Entry (grouped)",
-  "padding": { "top": 24, "bottom": 24, "left": 0, "right": 0 },
-  "bounds": "flush",
+  "padding": { "top": 20, "bottom": 20, "left": 0, "right": 0 },
+  "bounds": "full",
   "autosize": { "type": "fit", "contains": "padding", "resize": true },
 
   "signals": [
     { "name": "nodeWidth", "value": 70 },
-    { "name": "columnGap", "value": 270 },
+    { "name": "columnGap", "value": 300 },
 
-    { "name": "labelPadL", "value": 80 },
-    { "name": "labelPadR", "value": 110 },
+    { "name": "labelPadL", "value": 50 },
+    { "name": "labelPadR", "value": 50 },
 
     { "name": "leftX", "update": "labelPadL" },
     { "name": "midX", "update": "leftX + nodeWidth + columnGap" },
     { "name": "rightX", "update": "midX + nodeWidth + columnGap" },
 
     { "name": "width", "update": "rightX + nodeWidth + labelPadR" },
-    { "name": "height", "value": 500 },
+    { "name": "height", "value": 550 },
 
     { "name": "TopStates", "value": 4 }
   ],
@@ -342,7 +342,7 @@
       "name": "regionColor",
       "type": "ordinal",
       "domain": ["ASEAN", "Others"],
-      "range": ["#e8cfe7", "#c2c2b0"]
+      "range": ["#c6abf5", "#c2c2b0"]
     },
     {
       "name": "modeColor",
@@ -354,7 +354,7 @@
       "name": "stateColor",
       "type": "ordinal",
       "domain": ["Selangor", "Sarawak", "Others", "Kedah", "Johor"],
-      "range": ["#ffed29", "#a8ed7e", "#c2c2b0", "#8dd8e0", "#a48de0"]
+      "range": ["#5abf06", "#04c7c0", "#c2c2b0", "#da99e0", "#e0a904"]
     }
   ],
 
@@ -372,7 +372,7 @@
           "fill": {
             "signal": "datum.stack==='stk1' ? scale('regionColor', datum.grpId) : (datum.stack==='stk2' ? scale('modeColor', datum.grpId) : scale('stateColor', datum.grpId))"
           },
-          "opacity": { "value": 0.7 },
+          "opacity": { "value": 0.8 },
           "stroke": { "value": "white" },
           "tooltip": {
             "signal": "datum.grpId + ': ' + format(datum.total, ',')"
@@ -390,7 +390,7 @@
         "update": {
           "path": { "field": "path" },
           "stroke": { "scale": "regionColor", "field": "region_g" },
-          "strokeOpacity": { "value": 0.7 },
+          "strokeOpacity": { "value": 0.5 },
           "strokeWidth": { "scale": "y", "field": "value" },
           "fill": { "value": null },
           "tooltip": {
@@ -408,10 +408,8 @@
       "encode": {
         "update": {
           "path": { "field": "path" },
-          "stroke": {
-            "signal": "{gradient:'linear', x1: 0, y1: 0.5, x2: 1, y2: 0.5, stops:[ {offset:0, color: scale('modeColor', datum.mode)}, {offset:1, color: scale('stateColor', datum.state_g)} ]}"
-          },
-          "strokeOpacity": { "value": 0.7 },
+          "stroke": { "scale": "modeColor", "field": "mode" },
+          "strokeOpacity": { "value": 0.5 },
           "strokeWidth": { "scale": "y", "field": "value" },
           "fill": { "value": null },
           "tooltip": {
@@ -475,23 +473,24 @@
     "axis": {
       "labelColor": "black",
       "titleColor": "black",
-      "labelFontSize": 16,
-      "titleFontSize": 16,
+      "labelFontSize": 14,
+      "titleFontSize": 14,
       "labelFont": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif",
       "titleFont": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif"
     },
     "legend": {
       "labelColor": "black",
       "titleColor": "black",
-      "labelFontSize": 16,
-      "titleFontSize": 16
+      "labelFontSize": 14,
+      "titleFontSize": 14
     },
     "title": {
       "font": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif",
       "color": "black"
     },
     "text": {
-      "font": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif"
+      "font": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif",
+      "fontSize": 14
     }
   }
 }

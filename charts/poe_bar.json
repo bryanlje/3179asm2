@@ -10,13 +10,8 @@
 
   "params": [
     {
-      "name": "yearSel",
-      "value": 2023,
-      "bind": {
-        "input": "select",
-        "name": "Year: ",
-        "options": [2020, 2021, 2022, 2023]
-      }
+      "name": "Year",
+      "value": 2023
     }
   ],
 
@@ -42,7 +37,7 @@
       }
     },
 
-    { "filter": "datum.Year == yearSel" },
+    { "filter": "datum.Year == Year" },
 
     {
       "window": [{ "op": "rank", "as": "rank" }],
@@ -61,15 +56,19 @@
           "field": "poe",
           "type": "nominal",
           "title": "Point of Entry",
-          "sort": "-x"
+          "sort": "-x",
+          "axis": {
+            "titlePadding": 15
+          }
         },
         "x": {
           "field": "TotalArrivals",
           "type": "quantitative",
           "title": "Total Arrivals",
-          "axis": { 
+          "axis": {
             "format": "~s",
-            "tickCount": 10
+            "tickCount": 10,
+            "titlePadding": 15
           }
         },
         "color": {
@@ -100,7 +99,7 @@
       "transform": [
         { "filter": "datum.rank == 1" },
         {
-          "calculate": "'Top POE (' + toString(yearSel) + ')'",
+          "calculate": "'Top POE (' + toString(Year) + ')'",
           "as": "AnnTitle"
         },
         {

@@ -8,13 +8,8 @@
   "view": { "fill": "transparent", "stroke": "transparent" },
   "params": [
     {
-      "name": "yearSel",
-      "value": "All Years",
-      "bind": {
-        "input": "select",
-        "name": "Year: ",
-        "options": ["All Years", 2020, 2021, 2022, 2023]
-      }
+      "name": "Year",
+      "value": "2020"
     }
   ],
 
@@ -51,7 +46,7 @@
           "as": "year"
         },
         {
-          "filter": "yearSel === 'All Years' || datum.year == yearSel"
+          "filter": "Year === 'All Years' || datum.year == Year"
         },
         {
           "aggregate": [
@@ -59,6 +54,7 @@
           ],
           "groupby": ["poe"]
         },
+        { "calculate": "Year", "as": "selYear" },
         {
           "lookup": "poe",
           "from": {
@@ -107,6 +103,7 @@
           { "field": "poe", "title": "Point of Entry" },
           { "field": "state", "title": "State" },
           { "field": "type", "title": "Type" },
+          {"field": "selYear", "title": "Year"},
           {
             "field": "arrivals_total",
             "type": "quantitative",

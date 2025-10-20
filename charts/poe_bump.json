@@ -28,7 +28,8 @@
       "axis": {
         "tickCount": { "interval": "month", "step": 6 },
         "grid": false,
-        "labelExpr": "[timeFormat(datum.value, '%b') == 'Jan' ? timeFormat(datum.value, '%b %Y') : timeFormat(datum.value, '%b')]"
+        "labelExpr": "[timeFormat(datum.value, '%b') == 'Jan' ? timeFormat(datum.value, '%b %Y') : timeFormat(datum.value, '%b')]",
+        "titlePadding": 15
       }
     },
     "y": {
@@ -36,7 +37,12 @@
       "type": "quantitative",
       "title": "Rank",
       "scale": { "reverse": true, "domain": [1, 5] },
-      "axis": { "tickMinStep": 1, "format": "d", "grid": false }
+      "axis": { 
+        "tickMinStep": 1, 
+        "format": "d", 
+        "grid": false,
+        "titlePadding": 15
+      }
     },
     "color": {
       "field": "soe",

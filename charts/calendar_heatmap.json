@@ -42,7 +42,8 @@
       "title": "Year",
       "axis": {
         "ticks": false,
-        "domain": false
+        "domain": false,
+        "titlePadding": 15
       }
     },
     "x": {
@@ -54,7 +55,8 @@
         "labelAngle": 0,
         "format": "%b",
         "ticks": false,
-        "domain": false
+        "domain": false,
+        "titlePadding": 15
       },
       "scale": { "paddingInner": 0.05, "paddingOuter": 0.05 }
     },
@@ -76,7 +78,8 @@
         "timeUnit": "yearmonth",
         "field": "date",
         "type": "temporal",
-        "title": "Month"
+        "title": "Month",
+        "format": "%B %Y"
       },
       {
         "aggregate": "sum",

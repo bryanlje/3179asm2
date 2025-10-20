@@ -7,6 +7,10 @@
   "projection": { "type": "mercator" },
   "view": { "stroke": "transparent" },
 
+  "params": [
+    { "name": "Year", "value": 2023 }
+  ],
+
   "layer": [
     {
       "data": {
@@ -21,72 +25,69 @@
         "url": "https://raw.githubusercontent.com/bryanlje/3179asm2/main/output.json",
         "format": { "type": "topojson", "feature": "my" }
       },
-      "mark": {
-        "type": "geoshape",
-        "fill": "#e9e9e9",
-        "stroke": "#a9a9a9"
-      }
+      "mark": { "type": "geoshape", "fill": "#e9e9e9", "stroke": "#a9a9a9" }
     },
 
     {
       "data": {
-        "url": "https://raw.githubusercontent.com/bryanlje/3179asm2/main/data/arrivals_record.csv"
+        "url": "https://raw.githubusercontent.com/bryanlje/3179asm2/main/data/arrivals_record.csv",
+        "format": { "type": "csv", "parse": { "date": "date" } }
       },
       "transform": [
-        {
-          "lookup": "poe",
-          "from": {
-            "data": {
-              "url": "https://raw.githubusercontent.com/bryanlje/3179asm2/main/data/points_of_entry.csv"
-            },
-            "key": "poe",
-            "fields": ["state"]
-          }
-        },
-        { "filter": "datum.state != null" },
-        {
-          "calculate": "replace(datum.state, '_', ' ')",
-          "as": "state_clean"
-        },
-        {
-          "aggregate": [
-            { "op": "sum", "field": "arrivals", "as": "total_arrivals" }
-          ],
-          "groupby": ["state_clean"]
-        },
-        {
-          "lookup": "state_clean",
-          "from": {
-            "data": {
-              "url": "https://raw.githubusercontent.com/bryanlje/3179asm2/main/data/population_state_agg.csv"
-            },
-            "key": "state",
-            "fields": ["population"]
-          }
-        },
-        { "filter": "datum.population != null" },
-        {
-          "calculate": "datum.total_arrivals / datum.population",
-          "as": "arrivals_per_1000"
-        },
-        {
-          "lookup": "state_clean",
-          "from": {
-            "data": {
-              "url": "https://raw.githubusercontent.com/bryanlje/3179asm2/main/output.json",
-              "format": { "type": "topojson", "feature": "my" }
-            },
-            "key": "properties.name"
+          { "calculate": "year(toDate(datum.date))", "as": "yr" },
+          { "filter": "datum.yr == Year" },
+          {
+            "lookup": "poe",
+            "from": {
+              "data": { "url": "https://raw.githubusercontent.com/bryanlje/3179asm2/main/data/points_of_entry.csv" },
+              "key": "poe",
+              "fields": ["state"]
+            }
           },
-          "as": "geo"
-        },
-        { "filter": "datum.geo != null" }
+          { "filter": "datum.state != null" },
+          { "calculate": "replace(datum.state, '_', ' ')", "as": "state_clean" },
+          {
+            "aggregate": [
+              { "op": "sum", "field": "arrivals", "as": "total_arrivals" }
+            ],
+            "groupby": ["state_clean"]
+          },
+          
+          {
+            "calculate": "datum.state_clean + '|' + Year",
+            "as": "join_key"
+          },
+
+          { "calculate": "Year", "as": "selYear" },
+          
+          {
+            "lookup": "join_key",
+            "from": {
+              "data": { "url": "https://raw.githubusercontent.com/bryanlje/3179asm2/main/data/population_state_agg.csv" },
+              "key": "join_key",
+              "fields": ["population", "year"]
+            }
+          },
+          { "filter": "datum.population != null" },
+          {
+            "calculate": "datum.total_arrivals / datum.population",
+            "as": "arrivals_per_1000"
+          },
+          {
+            "lookup": "state_clean",
+            "from": {
+              "data": {
+                "url": "https://raw.githubusercontent.com/bryanlje/3179asm2/main/output.json",
+                "format": { "type": "topojson", "feature": "my" }
+              },
+              "key": "properties.name"
+            },
+            "as": "geo"
+          },
+          { "filter": "datum.geo != null" }
       ],
 
-      "mark": {
-        "type": "geoshape",
-        "stroke": "#a9a9a9"
-      },
+      "mark": { "type": "geoshape", "stroke": "#a9a9a9" },
 
       "encoding": {
         "shape": { "field": "geo", "type": "geojson" },
@@ -95,31 +96,14 @@
           "type": "quantitative",
           "scale": { "scheme": "tealblues" },
           "title": ["Arrivals per", "1000 Residents"],
-          "legend": {
-            "format": ",.0f",
-            "padding": 10
-          }
+          "legend": { "format": ",.0f", "padding": 10 }
         },
         "tooltip": [
-          { "field": "state_clean", "type": "nominal", "title": "State" },
-          {
-            "field": "total_arrivals",
-            "type": "quantitative",
-            "title": "Total Arrivals",
-            "format": ","
-          },
-          {
-            "field": "population",
-            "type": "quantitative",
-            "title": "Population (Thousands)",
-            "format": ","
-          },
-          {
-            "field": "arrivals_per_1000",
-            "type": "quantitative",
-            "title": "Arrivals per 1000 Residents",
-            "format": ",.2f"
-          }
+          { "field": "state_clean", "title": "State" },
+          { "field": "selYear", "title": "Year" },
+          { "field": "total_arrivals", "type": "quantitative", "title": "Total Arrivals", "format": "," },
+          { "field": "population", "type": "quantitative", "title": "Population (Thousands)", "format": ",.2f" },
+          { "field": "arrivals_per_1000", "type": "quantitative", "title": "Arrivals per 1000 Residents", "format": ",.2f" }
         ]
       }
     }

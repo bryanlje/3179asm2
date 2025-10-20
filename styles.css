@@ -300,3 +300,37 @@ body {
         padding: 1.5rem;
     }
 }
+
+
+/* ==========================================================================
+   Year Switcher
+   ========================================================================== */
+
+.year-switcher {
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  display: grid;
+  gap: 8px;
+  padding: 10px;
+  background: rgba(255,255,255,0.9);
+  backdrop-filter: saturate(120%) blur(6px);
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+  z-index: 9999;
+}
+.year-btn {
+  font: 600 14px/1 system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+  padding: 8px 12px;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  background: #fff;
+  cursor: pointer;
+}
+.year-btn:hover { border-color: #0ea5a5; }
+.year-btn.active {
+  color: #0b5c55;
+  background: #d1faf5;
+  border-color: #0ea5a5;
+}

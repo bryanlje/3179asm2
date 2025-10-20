@@ -10,8 +10,7 @@
   "params": [
     {
       "name": "Year",
-      "value": 2023,
-      "bind": { "input": "range", "min": 2020, "max": 2023, "step": 1 }
+      "value": 2023
     },
     {
       "name": "TopN",
@@ -98,7 +97,8 @@
         "fields": ["country_common"]
       },
       "as": ["country_name"]
-    }
+    },
+    { "calculate": "Year", "as": "selYear" }
   ],
 
   "mark": { "type": "bar" },
@@ -108,17 +108,23 @@
       "type": "nominal",
       "sort": "-y",
       "title": "Country",
-      "axis": {"labelAngle": 0}
+      "axis": { 
+        "labelAngle": 0,
+        "titlePadding": 15
+      }
     },
     "y": {
       "aggregate": "sum",
       "field": "arrivals_sum",
       "type": "quantitative",
-      "title": "Arrivals (selected year)"
+      "title": "Arrivals (selected year)",
+      "axis": {
+        "titlePadding": 15
+      }
     },
-    "color": { 
-      "field": "type", 
-      "type": "nominal", 
+    "color": {
+      "field": "type",
+      "type": "nominal",
       "title": "Mode",
       "scale": {
         "domain": ["Land", "Air", "Sea"],
@@ -128,14 +134,14 @@
     "tooltip": [
       { "field": "country_name", "title": "Country" },
       { "field": "region_safe", "title": "Region" },
+      {"field": "selYear", "title": "Year"},
       {
-        "aggregate": "sum",
-        "field": "arrivals_sum",
+        "field": "country_total",
         "title": "Total arrivals",
         "format": ","
       },
-      { "field": "type", "title": "Segment mode" },
-      { "field": "arrivals_sum", "title": "Segment arrivals", "format": "," }
+      { "field": "type", "title": "Segment Mode" },
+      { "field": "arrivals_sum", "title": "Segment Arrivals", "format": "," }
     ]
   },
 

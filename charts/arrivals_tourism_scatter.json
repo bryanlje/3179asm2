@@ -7,8 +7,7 @@
   "params": [
     {
       "name": "Year",
-      "value": 2023,
-      "bind": { "input": "range", "min": 2020, "max": 2023, "step": 1 }
+      "value": 2023
     }
   ],
 
@@ -100,7 +99,8 @@
           "axis": {
             "title": "Arrivals share (state of entry)",
             "format": ".0%",
-            "tickCount": 13
+            "tickCount": 13,
+            "titlePadding": 15
           },
           "scale": { "nice": true }
         },
@@ -110,7 +110,8 @@
           "axis": {
             "title": "Tourism revenue share",
             "format": ".0%",
-            "tickCount": 13
+            "tickCount": 13,
+            "titlePadding": 15
           },
           "scale": {
             "nice": true
@@ -126,7 +127,7 @@
         "color": {
           "field": "rev_per_arrival_ratio",
           "type": "quantitative",
-          "title": "Rev per arrival (x natl avg)",
+          "title": "Revenue per Arrival (RM)",
           "legend": { "format": ".2f", "titleLimit": 0 },
           "scale": { "scheme": "viridis", "domainMid": 1 }
         },
@@ -150,7 +151,7 @@
             "type": "quantitative",
             "title": "Revenue share",
             "format": ".2%"
-          },          
+          },
           {
             "field": "arrivals_share",
             "type": "quantitative",
