@@ -194,7 +194,7 @@ body {
   color: var(--primary-color);
   font-weight: 600;
   padding-bottom: 5px;
-  border-bottom: 2px solid transparent;
+  /* border-bottom: 2px solid transparent; */
   transition: all 0.2s ease-in-out;
 }
 
@@ -242,7 +242,7 @@ body {
 
 .back-to-top {
   text-align: center;
-  padding: 1.5rem 2rem 2rem 2rem;
+  padding: 2rem 2rem 0 2rem;
   border-top: 1px solid var(--border-color);
 }
 
@@ -529,5 +529,117 @@ body {
 @media (max-width: 720px) {
   .kpi-grid {
     grid-template-columns: 1fr;
+  }
+}
+
+
+/* ==========================================================================
+   Metadata Card (scoped to #metadata)
+   ========================================================================== */
+
+#metadata .card-header {
+  background: var(--card-background);
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 1rem;
+}
+
+#metadata .card-subtitle {
+  color: var(--subtle-text-color);
+  margin-top: 0.25rem;
+}
+
+#metadata .card-body {
+  padding-top: 1.25rem;
+  align-items: start;
+}
+
+#metadata .grid {
+  gap: 2rem; /* slightly tighter than default to fit lists nicely */
+}
+
+#metadata .viz-title {
+  margin: 0 0 0.75rem 0;
+  font-size: 1.3rem;
+  letter-spacing: 0.2px;
+  color: var(--primary-color);
+}
+
+/* Clean, readable list of key/value items */
+.meta-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  /* display: grid; */
+  gap: 10px;
+  text-align: start;
+  justify-content: center;
+}
+
+.meta-list li {
+  display: flex;
+  gap: 12px;
+  /* align-items: baseline; */
+  padding: 10px 12px;
+  margin-bottom: 15px;
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  background: var(--card-background);
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.02);
+}
+
+/* Left label column */
+.meta-list li strong {
+  color: var(--heading-color);
+  flex: 0 0 160px;       /* fixed label width for neat alignment */
+  max-width: 50%;
+  align-self: end;
+}
+
+/* Right value column */
+.meta-list li > :not(strong) {
+  color: var(--text-color);
+  flex: 1 1 auto;
+}
+
+/* Links inside metadata */
+.meta-list a {
+  text-decoration: none;
+  /* border-bottom: 1px dashed rgba(14, 165, 165, 0.35); */
+}
+.meta-list a:hover {
+  color: var(--primary-color);
+  font-weight: bold;
+  /* border-bottom-color: currentColor; */
+}
+
+/* Optional pill tag for licenses / badges */
+.meta-tag {
+  display: inline-block;
+  margin-left: 0.25rem;
+  padding: 2px 8px;
+  border-radius: 999px;
+  border: 1px solid var(--border-color);
+  font-size: 0.85rem;
+  line-height: 1.4;
+  color: var(--primary-color);
+  background: #f7fcfd;
+}
+
+/* Dates look nicer with tabular numerals */
+#metadata time {
+  font-variant-numeric: tabular-nums;
+  color: var(--subtle-text-color);
+}
+
+/* Mobile tweaks */
+@media (max-width: 720px) {
+  .meta-list li {
+    flex-direction: column;
+    row-gap: 2px;
+    padding: 10px 12px;
+  }
+  .meta-list li strong {
+    flex: none;
+    max-width: 100%;
   }
 }

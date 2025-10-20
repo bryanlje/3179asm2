@@ -90,7 +90,7 @@
           "legend": {
             "orient": "none",
             "legendX": 630,
-            "legendY": 310,
+            "legendY": 280,
             "symbolSize": 400,
             "symbolType": "circle",
             "rowPadding": 8,
