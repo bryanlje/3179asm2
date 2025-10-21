@@ -2,12 +2,11 @@
   "$schema": "https://vega.github.io/schema/vega/v5.json",
   "description": "Arrivals flow: Region -> Mode -> State of Entry (grouped)",
   "padding": { "top": 30, "bottom": 40, "left": 0, "right": 0 },
-  "bounds": "full",
   "autosize": { "type": "fit", "contains": "padding", "resize": true },
 
   "signals": [
-    { "name": "nodeWidth", "value": 70 },
-    { "name": "columnGap", "value": 300 },
+    { "name": "nodeWidth", "value": 100 },
+    { "name": "columnGap", "value": 368 },
 
     { "name": "labelPadL", "value": 50 },
     { "name": "labelPadR", "value": 50 },
@@ -17,7 +16,7 @@
     { "name": "rightX", "update": "midX + nodeWidth + columnGap" },
 
     { "name": "width", "update": "rightX + nodeWidth + labelPadR" },
-    { "name": "height", "value": 600 },
+    { "name": "height", "value": 650 },
 
     { "name": "TopStates", "value": 4 }
   ],
@@ -473,16 +472,16 @@
     "axis": {
       "labelColor": "black",
       "titleColor": "black",
-      "labelFontSize": 14,
-      "titleFontSize": 14,
+      "labelFontSize": 16,
+      "titleFontSize": 16,
       "labelFont": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif",
       "titleFont": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif"
     },
     "legend": {
       "labelColor": "black",
       "titleColor": "black",
-      "labelFontSize": 14,
-      "titleFontSize": 14
+      "labelFontSize": 16,
+      "titleFontSize": 16
     },
     "title": {
       "font": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif",
@@ -490,7 +489,7 @@
     },
     "text": {
       "font": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif",
-      "fontSize": 14
+      "fontSize": 16
     }
   }
 }

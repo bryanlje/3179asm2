@@ -102,13 +102,13 @@
       "mark": {
         "type": "rule",
         "stroke": "#596172",
-        "strokeWidth": 3,
-        "strokeDash": [5, 8]
+        "strokeWidth": 4,
+        "strokeDash": [10, 10]
       },
       "encoding": {
         "x": { "field": "refDate", "type": "temporal" },
-        "y": { "datum": 0.75 },
-        "y2": { "datum": 5.25 }
+        "y": { "datum": 0.6 },
+        "y2": { "datum": 5.4 }
       }
     },
     {
@@ -117,12 +117,12 @@
       ],
       "mark": {
         "type": "text",
-        "fontSize": 14,
+        "fontSize": 16,
         "fill": "#596172",
         "align": "left",
         "baseline": "bottom",
         "dx": 10,
-        "dy": -22
+        "dy": -28
       },
       "encoding": {
         "x": { "field": "refDate", "type": "temporal" },

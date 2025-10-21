@@ -16,7 +16,7 @@
   "layer": [
     {
       "data": {
-        "url": "https://raw.githubusercontent.com/bryanlje/3179asm2/main/output.json",
+        "url": "https://raw.githubusercontent.com/bryanlje/3179asm2/main/maps/output.json",
         "format": { "type": "topojson", "feature": "ne_110m_graticules_1" }
       },
       "mark": { "type": "geoshape", "stroke": "#d1d1d1", "strokeWidth": 0.5 }
@@ -24,7 +24,7 @@
 
     {
       "data": {
-        "url": "https://raw.githubusercontent.com/bryanlje/3179asm2/main/output.json",
+        "url": "https://raw.githubusercontent.com/bryanlje/3179asm2/main/maps/output.json",
         "format": { "type": "topojson", "feature": "my" }
       },
       "mark": {
@@ -69,12 +69,13 @@
             "fields": ["lat", "long", "type", "state", "abb", "iso"]
           }
         },
-        { "filter": "isValid(datum.lat) && isValid(datum.long)" }
+        { "filter": "isValid(datum.lat) && isValid(datum.long)" },
+        { "calculate": "replace(datum.state, '_', ' ')", "as": "state_clean" }
       ],
 
       "mark": {
         "type": "circle",
-        "opacity": 0.8,
+        "opacity": 0.7,
         "stroke": "white",
         "strokeWidth": 0.5
       },
@@ -88,7 +89,7 @@
           "title": "Arrivals",
           "scale": { 
             "type": "sqrt", 
-            "range": [30, 1200],
+            "range": [50, 1200],
             "domain": [0, 8000000]
           },
           "legend": {
@@ -120,7 +121,7 @@
         },
         "tooltip": [
           { "field": "poe", "title": "Point of Entry" },
-          { "field": "state", "title": "State" },
+          { "field": "state_clean", "title": "State" },
           { "field": "type", "title": "Mode" },
           { "field": "selYear", "title": "Year" },
           {

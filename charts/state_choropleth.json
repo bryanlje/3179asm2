@@ -14,7 +14,7 @@
   "layer": [
     {
       "data": {
-        "url": "https://raw.githubusercontent.com/bryanlje/3179asm2/main/output.json",
+        "url": "https://raw.githubusercontent.com/bryanlje/3179asm2/main/maps/output.json",
         "format": { "type": "topojson", "feature": "ne_110m_graticules_1" }
       },
       "mark": { "type": "geoshape", "stroke": "#d1d1d1", "strokeWidth": 0.5 }
@@ -22,7 +22,7 @@
 
     {
       "data": {
-        "url": "https://raw.githubusercontent.com/bryanlje/3179asm2/main/output.json",
+        "url": "https://raw.githubusercontent.com/bryanlje/3179asm2/main/maps/output.json",
         "format": { "type": "topojson", "feature": "my" }
       },
       "mark": { "type": "geoshape", "fill": "#e9e9e9", "stroke": "#a9a9a9" }
@@ -77,7 +77,7 @@
             "lookup": "state_clean",
             "from": {
               "data": {
-                "url": "https://raw.githubusercontent.com/bryanlje/3179asm2/main/output.json",
+                "url": "https://raw.githubusercontent.com/bryanlje/3179asm2/main/maps/output.json",
                 "format": { "type": "topojson", "feature": "my" }
               },
               "key": "properties.name"

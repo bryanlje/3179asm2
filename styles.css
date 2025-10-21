@@ -696,7 +696,7 @@ body {
   display: flex;
   gap: 12px;
   /* align-items: baseline; */
-  padding: 10px 12px;
+  padding: 10px 15px;
   margin-bottom: 15px;
   border: 1px solid var(--border-color);
   border-radius: 10px;
