@@ -27,6 +27,8 @@
       "value": "All",
       "bind": {
         "input": "select",
+        "element": "#region-filter",
+        "name": "Region:",
         "options": [
           "All",
           "ASEAN",
@@ -38,6 +40,18 @@
           "Americas",
           "Africa",
           "Others"
+        ],
+        "labels": [
+          "All Regions",
+          "ASEAN",
+          "East Asia",
+          "South Asia",
+          "Europe",
+          "Middle East",
+          "Pacific",
+          "Americas",
+          "Africa",
+          "Other Regions"
         ]
       }
     }

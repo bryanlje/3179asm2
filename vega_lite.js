@@ -91,8 +91,8 @@ document.addEventListener("DOMContentLoaded", () => {
 //          FOR YEAR FILTER BUTTONS
 ////////////////////////////////////////////////
 
-const BUFFER_TOP  = '100px';   // e.g., '200px' or '20%'
-const BUFFER_BOTTOM = '100px'; // e.g., '240px' or '25%'
+const BUFFER_TOP  = '50px';   // e.g., '200px' or '20%'
+const BUFFER_BOTTOM = '50px'; // e.g., '240px' or '25%'
 
 /* ===== Scroll-gated visibility for Year FABs ===== */
 document.addEventListener('DOMContentLoaded', () => {

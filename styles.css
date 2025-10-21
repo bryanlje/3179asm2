@@ -291,6 +291,16 @@ body {
   align-items: center; /* Vertically centers the chart */
   width: 100%;
   margin: 0 auto;
+  transition: opacity 2200ms cubic-bezier(.22,.61,.36,1),
+              transform 2200ms cubic-bezier(.22,.61,.36,1),
+              filter 2200ms ease;
+}
+
+.viz.is-updating {
+  opacity: .35;
+  transform: translateY(-1px);
+  filter: saturate(.9);
+  pointer-events: none; /* avoids clicks mid-update */
 }
 
 /* ==========================================================================
@@ -759,4 +769,78 @@ body {
     flex: none;
     max-width: 100%;
   }
+}
+
+
+/* ============================
+   Region selector styling
+   ============================ */
+
+/* Positioning helpers (choose one on the container) */
+/* .chart-filter { position: relative; z-index: 5; }
+.chart-filter.top-right    { position: absolute; top: 10px; right: 10px; }
+.chart-filter.top-left     { position: absolute; top: 10px; left: 10px; }
+.chart-filter.bottom-right { position: absolute; bottom: 10px; right: 10px; }
+.chart-filter.bottom-left  { position: absolute; bottom: 10px; left: 10px; } */
+/* If you want it in normal flow above the chart, use .inline and place it before the chart div */
+.chart-filter.inline { position: static; margin-bottom: 10px; }
+
+/* Wrapper “pill” */
+#region-filter,
+#region-filter .vega-bindings,        /* if Vega adds a wrapper */
+#region-filter .vega-bindings-row {   /* some versions wrap rows */
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  background: var(--card-background);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  box-shadow: 0 4px 12px var(--shadow-color);
+  font-family: var(--font-family-sans);
+}
+
+/* Label text */
+#region-filter label {
+  margin: 0;
+  font-size: 1rem;
+  color: var(--heading-color);
+  font-weight: 600;
+}
+
+/* The actual <select> Vega generates */
+#region-filter select {
+  font-family: var(--font-family-sans);
+  font-size: 1rem;
+  color: var(--text-color);
+  padding: 8px 12px;
+  margin-left: 12px;
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  background: #fff;
+  outline: none;
+  cursor: pointer;
+  transition: border-color 150ms ease, box-shadow 150ms ease, transform 120ms ease;
+}
+
+/* Hover / focus polish */
+#region-filter select:hover {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(14, 165, 165, 0.10);
+}
+/* #region-filter select:focus-visible {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(14, 165, 165, 0.20);
+  transform: translateY(-1px);
+} */
+
+#region-filter option {
+  font-size: 1rem;           /* works */
+  color: var(--text-color);  /* works */
+  background: #fff;          /* works (selection highlight still OS-driven) */
+}
+
+#region-filter option:hover {
+    background: var(--primary-color);
+    color: white;
 }

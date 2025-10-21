@@ -13,6 +13,8 @@
   <script src="vega_lite.js" defer></script>
 
   <link rel="stylesheet" href="styles.css" media="all" />
+
+  <link rel="icon" href="favicon.ico">
 </head>
 
 <!-- Master Year Switcher -->
@@ -254,6 +256,9 @@
           <p class="viz-desc">
             <i>Use the region selector to display the top countries for different regions.</i>
           </p>
+
+          <!-- Control container for the Region selector -->
+          <div id="region-filter" class="chart-filter top-right" aria-label="Region filter"></div>
           <div id="countries_bar" class="viz"></div>
           
         </figure>
@@ -332,7 +337,7 @@
             <li><strong>Author: </strong>Bryan Leong Jing Ern</li>
             <li><strong>University: </strong>Monash University Malaysia</li>
             <li><strong>Course: </strong>FIT3179 Data Visualisation</li>
-            <li><strong>Contact: </strong><a href="mailto:bryanlje10@gmail.com">bryanlje10@gmail.com</a></li>
+            <li><strong>Contact: </strong><a href="mailto:bryanlje10@gmail.com" target="_blank">bryanlje10@gmail.com</a></li>
             <li><strong>Last updated: </strong><time datetime="2025-10-21">2025-10-21</time></li>
             <li><strong>Tools: <br><i style="color: white;">.</i></strong>Vega 5.20.2, <br>Vega-Lite 5.1.0, <br>vega-embed 6.17.0</li>
           </ul>
@@ -342,12 +347,13 @@
         <div>
           <h3 class="viz-title"><strong>Datasets &amp; Sources</strong></h3>
           <ul class="meta-list">
-            <li><strong>Arrivals (POE):</strong> <a href="https://www.kaggle.com/datasets/yyxian/malaysia-foreign-arrivals-by-origin-and-gender">Kaggle</a></li>
-            <li><strong>Arrivals (State):</strong> <a href="https://data.gov.my/data-catalogue/arrivals_soe">data.gov.my</a></li>
-            <li><strong>State Population:</strong><a href="https://data.gov.my/data-catalogue/population_state">data.gov.my</a></li>
-            <li><strong>Tourism Revenue:</strong><a href="https://open.dosm.gov.my/data-catalogue/gdp_state_real_supply">DOSM</a></li>
-            <li><strong>Country Codes:</strong><a href="https://www.kaggle.com/datasets/wbdill/country-codes-iso-3166">Kaggle</a></li>
-            <li><strong>Others:</strong><a href="http://www.statistics.gov.my/uploads/release-content/file_20250912110633.pdf">DOSM,<a href="https://data.tourism.gov.my/frontend/pdf/New_Final_Malaysia%20Tourism%20Statistics%20in%20Brief%202024.pdf">Tourism Malaysia</a></a></li>
+            <li><strong>Arrivals (POE):</strong> <a href="https://www.kaggle.com/datasets/yyxian/malaysia-foreign-arrivals-by-origin-and-gender" target="_blank">Kaggle</a></li>
+            <li><strong>Arrivals (State):</strong> <a href="https://data.gov.my/data-catalogue/arrivals_soe" target="_blank">data.gov.my</a></li>
+            <li><strong>Points of Entry:</strong><a href="https://www.kaggle.com/datasets/yyxian/malaysia-foreign-arrivals-by-origin-and-gender?select=poe.csv" target="_blank">Kaggle</a></li>
+            <li><strong>State Population:</strong><a href="https://data.gov.my/data-catalogue/population_state" target="_blank">data.gov.my</a></li>
+            <li><strong>Tourism Revenue:</strong><a href="https://open.dosm.gov.my/data-catalogue/gdp_state_real_supply" target="_blank">DOSM</a></li>
+            <li><strong>Country Codes:</strong><a href="https://www.kaggle.com/datasets/wbdill/country-codes-iso-3166" target="_blank">Kaggle</a></li>
+            <li><strong>Others:</strong><a href="http://www.statistics.gov.my/uploads/release-content/file_20250912110633.pdf" target="_blank">DOSM,<a href="https://data.tourism.gov.my/frontend/pdf/New_Final_Malaysia%20Tourism%20Statistics%20in%20Brief%202024.pdf" target="_blank">Tourism Malaysia</a></a></li>
           </ul>
         </div>
       </div>
