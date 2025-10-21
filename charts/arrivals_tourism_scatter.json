@@ -181,7 +181,7 @@
             "cornerRadius": 5,
             "color": "#f8fdff",
             "opacity": 0.9,
-            "stroke": "#ddd",
+            "stroke": "#6e6e6ed0",
             "strokeWidth": 1
           },
           "encoding": {
@@ -245,7 +245,7 @@
             "cornerRadius": 5,
             "color": "#f8fdff",
             "opacity": 0.9,
-            "stroke": "#ddd",
+            "stroke": "#6e6e6ed0",
             "strokeWidth": 1
           },
           "encoding": {
@@ -297,7 +297,7 @@
             "x": { "value": 250 },
             "y": { "value": 525 },
             "text": {
-              "value": "but it has a very low revenue / arrival ratio."
+              "value": "but has a very low revenue / arrival ratio."
             }
           }
         }

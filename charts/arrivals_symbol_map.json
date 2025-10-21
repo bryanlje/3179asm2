@@ -137,14 +137,53 @@
             "cornerRadius": 5,
             "color": "#f8fdff",
             "opacity": 0.95,
-            "stroke": "#c9c9c9d0",
+            "stroke": "#6e6e6ed0",
             "strokeWidth": 1
           },
           "encoding": {
             "x": { "value": 265 },
-            "y": { "value": 200 },
-            "x2": { "value": 630 },
-            "y2": { "value": 265 }
+            "y": { "value": 188 },
+            "x2": { "value": 632 },
+            "y2": { "value": 262 }
+          }
+        },
+        {
+          "data": { "values": [{}] },
+          "mark": {
+            "type": "text",
+            "align": "left",
+            "baseline": "top",
+            "fontSize": 16,
+            "fontWeight": "bold",
+            "lineHeight": 20
+          },
+          "encoding": {
+            "x": { "value": 280 },
+            "y": { "value": 205 },
+            "text": {
+              "value": [
+                "Johor"
+              ]
+            }
+          }
+        },
+        {
+          "data": { "values": [{}] },
+          "mark": {
+            "type": "text",
+            "align": "left",
+            "baseline": "top",
+            "fontSize": 16,
+            "lineHeight": 20
+          },
+          "encoding": {
+            "x": { "value": 328 },
+            "y": { "value": 205 },
+            "text": {
+              "value": [
+                "has the largest cluster of entry points,"
+              ]
+            }
           }
         },
         {
@@ -158,10 +197,9 @@
           },
           "encoding": {
             "x": { "value": 280 },
-            "y": { "value": 215 },
+            "y": { "value": 230 },
             "text": {
               "value": [
-                "Johor has the largest cluster of entry points,",
                 "except in 2021, when northern states had more."
               ]
             }

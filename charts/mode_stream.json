@@ -9,11 +9,9 @@
     "top": 10,
     "bottom": 10
   },
-
   "data": {
     "url": "https://raw.githubusercontent.com/bryanlje/3179asm2/main/data/arrivals_record.csv"
   },
-
   "params": [
     {
       "name": "Gender",
@@ -27,7 +25,6 @@
       "bind": "legend"
     }
   ],
-
   "transform": [
     {
       "calculate": "Gender === 'Male' ? datum.arrivals_male : (Gender === 'Female' ? datum.arrivals_female : datum.arrivals)",
@@ -62,11 +59,9 @@
     { "calculate": "datum.arrivals_sum / datum.month_total", "as": "share" },
     { "filter": { "param": "ModeLegend" } }
   ],
-
   "layer": [
     {
       "mark": { "type": "area", "interpolate": "monotone" },
-
       "encoding": {
         "x": {
           "field": "ym",
@@ -90,8 +85,8 @@
           "type": "nominal",
           "title": "Mode",
           "scale": {
-                "domain": ["Land", "Air", "Sea"],
-                "range": ["#E69F00", "#3da7d4", "#009E73"]
+            "domain": ["Land", "Air", "Sea"],
+            "range": ["#E69F00", "#3da7d4", "#009E73"]
           }
         },
         "opacity": {
@@ -107,7 +102,6 @@
       }
     }
   ],
-
   "config": {
     "font": "-apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
     "view": { "stroke": null },

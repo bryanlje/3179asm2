@@ -116,15 +116,15 @@
       "transform": [
         { "filter": "datum.rank == 1" },
         {
-          "calculate": "'Top Point of Entry (' + toString(Year) + ')'",
+          "calculate": "'Busiest Point of Entry in ' + toString(Year) + ':'",
           "as": "AnnTitle"
         },
         {
-          "calculate": "format(datum.TotalArrivals, ',.0f') + ' arrivals • ' + datum.type",
+          "calculate": "format(datum.TotalArrivals, ',.0f') + ' arrivals by ' + datum.type",
           "as": "AnnSub"
         },
         {
-          "calculate": "datum.poe == 'Bangunan Sultan Iskandar' ? 'It is the busiest land crossing linking Malaysia and Singapore.' : 'It is main land connection between Malaysia and Thailand.'",
+          "calculate": "datum.poe == 'Bangunan Sultan Iskandar' ? 'This is the busiest gateway between Malaysia and Singapore.' : 'This is the main land crossing between Malaysia and Thailand.'",
           "as": "descLine"
         }
       ],
@@ -136,13 +136,13 @@
             "cornerRadius": 10,
             "color": "#f8fdff",
             "opacity": 0.95,
-            "stroke": "#c9c9c9d0"
+            "stroke": "#6e6e6ed0"
           },
           "encoding": {
             "x": { "value": 380 },
-            "y": { "value": 110 },
+            "y": { "value": 108 },
             "x2": { "value": 810 },
-            "y2": { "value": 220 }
+            "y2": { "value": 222 }
           }
         },
         {
@@ -198,7 +198,7 @@
           },
           "encoding": {
             "x": { "value": 400 },
-            "y": { "value": 192 },
+            "y": { "value": 194 },
             "text": { "field": "descLine" }
           }
         }

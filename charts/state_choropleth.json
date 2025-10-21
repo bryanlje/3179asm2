@@ -142,14 +142,14 @@
             "cornerRadius": 5,
             "color": "#f8fdff",
             "opacity": 0.95,
-            "stroke": "#c9c9c9d0",
+            "stroke": "#6e6e6ed0",
             "strokeWidth": 1
           },
           "encoding": {
             "x": { "value": 270 },
-            "y": { "value": 200 },
+            "y": { "value": 185 },
             "x2": { "value": 585 },
-            "y2": { "value": 265 }
+            "y2": { "value": 250 }
           }
         },
         {
@@ -162,7 +162,7 @@
           },
           "encoding": {
             "x": { "value": 285 },
-            "y": { "value": 215 },
+            "y": { "value": 200 },
             "text": { "field": "descLine" }
           }
         }

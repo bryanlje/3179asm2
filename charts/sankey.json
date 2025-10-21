@@ -16,7 +16,7 @@
     { "name": "rightX", "update": "midX + nodeWidth + columnGap" },
 
     { "name": "width", "update": "rightX + nodeWidth + labelPadR" },
-    { "name": "height", "value": 650 },
+    { "name": "height", "value": 680 },
 
     { "name": "TopStates", "value": 4 }
   ],
