@@ -101,7 +101,8 @@ document.addEventListener('DOMContentLoaded', () => {
     'arrivals_symbol_map',  // symbol map
     'poe_bar',              // horizontal bar chart (Top 10 POE)
     'state_choropleth',     // choropleth map
-    'countries_bar'         // stacked countries bar chart
+    'countries_bar',         // stacked countries bar chart
+    // 'arrivals_tourism_scatter'
   ];
 
   // Get the elements (some pages/states might not have all)

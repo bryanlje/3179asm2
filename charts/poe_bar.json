@@ -134,71 +134,71 @@
           "mark": {
             "type": "rect",
             "cornerRadius": 10,
-            "color": "white",
+            "color": "#f8fdff",
             "opacity": 0.95,
-            "stroke": "#ddd"
+            "stroke": "#c9c9c9d0"
           },
           "encoding": {
-            "x": { "value": 440 },
-            "y": { "value": 60 },
-            "x2": { "value": 800 },
-            "y2": { "value": 165 }
-          }
-        },
-        {
-          "mark": {
-            "type": "text",
-            "fontSize": 12,
-            "fontWeight": "normal",
-            "align": "left",
-            "baseline": "top"
-          },
-          "encoding": {
-            "x": { "value": 460 },
-            "y": { "value": 75 },
-            "text": { "field": "AnnTitle" }
+            "x": { "value": 380 },
+            "y": { "value": 110 },
+            "x2": { "value": 810 },
+            "y2": { "value": 220 }
           }
         },
         {
           "mark": {
             "type": "text",
             "fontSize": 14,
+            "fontWeight": "normal",
+            "align": "left",
+            "baseline": "top"
+          },
+          "encoding": {
+            "x": { "value": 400 },
+            "y": { "value": 125 },
+            "text": { "field": "AnnTitle" }
+          }
+        },
+        {
+          "mark": {
+            "type": "text",
+            "fontSize": 16,
             "fontWeight": "bold",
             "align": "left",
             "baseline": "top",
             "fill": "#9c6b00bb"
           },
           "encoding": {
-            "x": { "value": 460 },
-            "y": { "value": 97 },
+            "x": { "value": 400 },
+            "y": { "value": 147 },
             "text": { "field": "poe" }
           }
         },
         {
           "mark": {
             "type": "text",
-            "fontSize": 12,
+            "fontSize": 14,
             "fontWeight": "normal",
             "align": "left",
             "baseline": "top"
           },
           "encoding": {
-            "x": { "value": 460 },
-            "y": { "value": 120 },
+            "x": { "value": 400 },
+            "y": { "value": 172 },
             "text": { "field": "AnnSub" }
           }
         },
         {
           "mark": {
             "type": "text",
-            "fontSize": 12,
+            "fontSize": 14,
             "fontWeight": "normal",
             "align": "left",
             "baseline": "top"
           },
           "encoding": {
-            "x": { "value": 460 },
-            "y": { "value": 138 },
+            "x": { "value": 400 },
+            "y": { "value": 192 },
             "text": { "field": "descLine" }
           }
         }

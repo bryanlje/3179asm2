@@ -6,11 +6,7 @@
   "background": "transparent",
   "projection": { "type": "mercator" },
   "view": { "stroke": "transparent" },
-
-  "params": [
-    { "name": "Year", "value": 2023 }
-  ],
-
+  "params": [{ "name": "Year", "value": 2023 }],
   "layer": [
     {
       "data": {
@@ -19,7 +15,6 @@
       },
       "mark": { "type": "geoshape", "stroke": "#d1d1d1", "strokeWidth": 0.5 }
     },
-
     {
       "data": {
         "url": "https://raw.githubusercontent.com/bryanlje/3179asm2/main/maps/output.json",
@@ -27,68 +22,66 @@
       },
       "mark": { "type": "geoshape", "fill": "#e9e9e9", "stroke": "#a9a9a9" }
     },
-
     {
       "data": {
         "url": "https://raw.githubusercontent.com/bryanlje/3179asm2/main/data/poe_without_country.csv",
         "format": { "type": "csv", "parse": { "date": "date" } }
       },
       "transform": [
-          { "calculate": "year(toDate(datum.date))", "as": "yr" },
-          { "filter": "datum.yr == Year" },
-          {
-            "lookup": "poe",
-            "from": {
-              "data": { "url": "https://raw.githubusercontent.com/bryanlje/3179asm2/main/data/points_of_entry.csv" },
-              "key": "poe",
-              "fields": ["state"]
-            }
-          },
-          { "filter": "datum.state != null" },
-          { "calculate": "replace(datum.state, '_', ' ')", "as": "state_clean" },
-          {
-            "aggregate": [
-              { "op": "sum", "field": "arrivals", "as": "total_arrivals" }
-            ],
-            "groupby": ["state_clean"]
-          },
-          
-          {
-            "calculate": "datum.state_clean + '|' + Year",
-            "as": "join_key"
-          },
-
-          { "calculate": "Year", "as": "selYear" },
-          
-          {
-            "lookup": "join_key",
-            "from": {
-              "data": { "url": "https://raw.githubusercontent.com/bryanlje/3179asm2/main/data/population_state_agg.csv" },
-              "key": "join_key",
-              "fields": ["population", "year"]
-            }
-          },
-          { "filter": "datum.population != null" },
-          {
-            "calculate": "datum.total_arrivals / datum.population",
-            "as": "arrivals_per_1000"
-          },
-          {
-            "lookup": "state_clean",
-            "from": {
-              "data": {
-                "url": "https://raw.githubusercontent.com/bryanlje/3179asm2/main/maps/output.json",
-                "format": { "type": "topojson", "feature": "my" }
-              },
-              "key": "properties.name"
+        { "calculate": "year(toDate(datum.date))", "as": "yr" },
+        { "filter": "datum.yr == Year" },
+        {
+          "lookup": "poe",
+          "from": {
+            "data": {
+              "url": "https://raw.githubusercontent.com/bryanlje/3179asm2/main/data/points_of_entry.csv"
             },
-            "as": "geo"
+            "key": "poe",
+            "fields": ["state"]
+          }
+        },
+        { "filter": "datum.state != null" },
+        { "calculate": "replace(datum.state, '_', ' ')", "as": "state_clean" },
+        {
+          "aggregate": [
+            { "op": "sum", "field": "arrivals", "as": "total_arrivals" }
+          ],
+          "groupby": ["state_clean"]
+        },
+        {
+          "calculate": "datum.state_clean + '|' + Year",
+          "as": "join_key"
+        },
+        { "calculate": "Year", "as": "selYear" },
+        {
+          "lookup": "join_key",
+          "from": {
+            "data": {
+              "url": "https://raw.githubusercontent.com/bryanlje/3179asm2/main/data/population_state_agg.csv"
+            },
+            "key": "join_key",
+            "fields": ["population", "year"]
+          }
+        },
+        { "filter": "datum.population != null" },
+        {
+          "calculate": "datum.total_arrivals / datum.population",
+          "as": "arrivals_per_1000"
+        },
+        {
+          "lookup": "state_clean",
+          "from": {
+            "data": {
+              "url": "https://raw.githubusercontent.com/bryanlje/3179asm2/main/maps/output.json",
+              "format": { "type": "topojson", "feature": "my" }
+            },
+            "key": "properties.name"
           },
-          { "filter": "datum.geo != null" }
+          "as": "geo"
+        },
+        { "filter": "datum.geo != null" }
       ],
-
       "mark": { "type": "geoshape", "stroke": "#a9a9a9" },
-
       "encoding": {
         "shape": { "field": "geo", "type": "geojson" },
         "color": {
@@ -107,14 +100,75 @@
         "tooltip": [
           { "field": "state_clean", "title": "State" },
           { "field": "selYear", "title": "Year" },
-          { "field": "total_arrivals", "type": "quantitative", "title": "Total Arrivals", "format": "," },
-          { "field": "population", "type": "quantitative", "title": "Population (Thousands)", "format": ",.2f" },
-          { "field": "arrivals_per_1000", "type": "quantitative", "title": "Arrivals per 1000 Residents", "format": ",.2f" }
+          {
+            "field": "total_arrivals",
+            "type": "quantitative",
+            "title": "Total Arrivals",
+            "format": ","
+          },
+          {
+            "field": "population",
+            "type": "quantitative",
+            "title": "Population (Thousands)",
+            "format": ",.2f"
+          },
+          {
+            "field": "arrivals_per_1000",
+            "type": "quantitative",
+            "title": "Arrivals per 1000 Residents",
+            "format": ",.2f"
+          }
         ]
       }
+    },
+    {
+      "data": {
+        "url": "https://raw.githubusercontent.com/bryanlje/3179asm2/main/data/poe_without_country.csv",
+        "format": { "type": "csv", "parse": { "date": "date" } }
+      },
+      "transform": [
+        { "calculate": "year(toDate(datum.date))", "as": "yr" },
+        { "filter": "datum.yr == Year" },
+        {
+          "calculate": "datum.yr == '2021' ? ['In 2021, Perlis led the way with 350', 'arrivals per 1000 residents.'] : ['Johor soars high above other states in', 'terms of arrivals per 1000 residents.']",
+          "as": "descLine"
+        },
+        { "sample": 1 }
+      ],
+      "layer": [
+        {
+          "mark": {
+            "type": "rect",
+            "cornerRadius": 5,
+            "color": "#f8fdff",
+            "opacity": 0.95,
+            "stroke": "#c9c9c9d0",
+            "strokeWidth": 1
+          },
+          "encoding": {
+            "x": { "value": 270 },
+            "y": { "value": 200 },
+            "x2": { "value": 585 },
+            "y2": { "value": 265 }
+          }
+        },
+        {
+          "mark": {
+            "type": "text",
+            "align": "left",
+            "baseline": "top",
+            "fontSize": 16,
+            "lineHeight": 20
+          },
+          "encoding": {
+            "x": { "value": 285 },
+            "y": { "value": 215 },
+            "text": { "field": "descLine" }
+          }
+        }
+      ]
     }
   ],
-
   "config": {
     "font": "-apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
     "view": { "stroke": null },

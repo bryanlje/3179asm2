@@ -12,7 +12,6 @@
       "value": "2020"
     }
   ],
-
   "layer": [
     {
       "data": {
@@ -21,7 +20,6 @@
       },
       "mark": { "type": "geoshape", "stroke": "#d1d1d1", "strokeWidth": 0.5 }
     },
-
     {
       "data": {
         "url": "https://raw.githubusercontent.com/bryanlje/3179asm2/main/maps/output.json",
@@ -34,7 +32,6 @@
         "strokeWidth": 1
       }
     },
-
     {
       "data": {
         "url": "https://raw.githubusercontent.com/bryanlje/3179asm2/main/data/poe_without_country.csv",
@@ -72,14 +69,12 @@
         { "filter": "isValid(datum.lat) && isValid(datum.long)" },
         { "calculate": "replace(datum.state, '_', ' ')", "as": "state_clean" }
       ],
-
       "mark": {
         "type": "circle",
         "opacity": 0.7,
         "stroke": "white",
         "strokeWidth": 0.5
       },
-
       "encoding": {
         "longitude": { "field": "long", "type": "quantitative" },
         "latitude": { "field": "lat", "type": "quantitative" },
@@ -87,8 +82,8 @@
           "field": "arrivals_total",
           "type": "quantitative",
           "title": "Arrivals",
-          "scale": { 
-            "type": "sqrt", 
+          "scale": {
+            "type": "sqrt",
             "range": [50, 1200],
             "domain": [0, 8000000]
           },
@@ -132,9 +127,49 @@
           }
         ]
       }
+    },
+    {
+      "layer": [
+        {
+          "data": { "values": [{}] },
+          "mark": {
+            "type": "rect",
+            "cornerRadius": 5,
+            "color": "#f8fdff",
+            "opacity": 0.95,
+            "stroke": "#c9c9c9d0",
+            "strokeWidth": 1
+          },
+          "encoding": {
+            "x": { "value": 270 },
+            "y": { "value": 200 },
+            "x2": { "value": 630 },
+            "y2": { "value": 265 }
+          }
+        },
+        {
+          "data": { "values": [{}] },
+          "mark": {
+            "type": "text",
+            "align": "left",
+            "baseline": "top",
+            "fontSize": 16,
+            "lineHeight": 20
+          },
+          "encoding": {
+            "x": { "value": 280 },
+            "y": { "value": 215 },
+            "text": {
+              "value": [
+                "Johor has the largest cluster of entry points,",
+                "except in 2021, when northern states had more."
+              ]
+            }
+          }
+        }
+      ]
     }
   ],
-
   "config": {
     "font": "-apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
     "view": { "stroke": null },

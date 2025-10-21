@@ -2,21 +2,9 @@
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "width": "container",
   "height": 640,
-  "padding": {
-    "top": 20,
-    "bottom": 50,
-    "left": 0,
-    "right": 0
-  },
+  "padding": { "top": 20, "bottom": 50, "left": 0, "right": 0 },
   "background": "transparent",
-
-  "params": [
-    {
-      "name": "Year",
-      "value": 2023
-    }
-  ],
-
+  "params": [{ "name": "scatterYear", "value": 2023 }],
   "data": {
     "url": "https://raw.githubusercontent.com/bryanlje/3179asm2/main/data/arrivals_soe.csv",
     "format": {
@@ -24,17 +12,16 @@
       "parse": { "year": "number", "arrivals": "number" }
     }
   },
-
   "transform": [
-    { "filter": "datum.year == Year" },
-
+    { "filter": "datum.year == scatterYear" },
     {
       "aggregate": [{ "op": "sum", "field": "arrivals", "as": "arrivals" }],
       "groupby": ["soe", "year"]
     },
-
-    { "calculate": "datum.soe + '|' + toString(Year)", "as": "join_key" },
-
+    {
+      "calculate": "datum.soe + '|' + toString(scatterYear)",
+      "as": "join_key"
+    },
     {
       "lookup": "join_key",
       "from": {
@@ -49,17 +36,14 @@
         "fields": ["gdp_p5", "state"]
       }
     },
-
     { "filter": "datum.gdp_p5 != null && datum.arrivals > 0" },
     { "filter": "datum.state != 'Supra'" },
-
     {
       "joinaggregate": [
         { "op": "sum", "field": "arrivals", "as": "TotalArrivals" },
         { "op": "sum", "field": "gdp_p5", "as": "TotalRevenue" }
       ]
     },
-
     {
       "calculate": "datum.arrivals / datum.TotalArrivals",
       "as": "arrivals_share"
@@ -73,11 +57,8 @@
       "calculate": "(datum.gdp_p5 * 1000000) / datum.arrivals",
       "as": "StateRevenuePerArrival_RM"
     },
-    {
-      "filter": "datum.arrivals_share >= 0.015"
-    }
+    { "filter": "datum.arrivals_share >= 0.015" }
   ],
-
   "layer": [
     {
       "data": {
@@ -97,7 +78,6 @@
         "y": { "field": "y", "type": "quantitative" }
       }
     },
-
     {
       "mark": {
         "type": "point",
@@ -126,9 +106,7 @@
             "tickCount": 13,
             "titlePadding": 15
           },
-          "scale": {
-            "nice": true
-          }
+          "scale": { "nice": true }
         },
         "size": {
           "field": "gdp_p5",
@@ -142,11 +120,8 @@
             "symbolFillColor": "#a3a3a3",
             "padding": 20
           },
-          "scale": {
-            "range": [50, 1200]
-          }
+          "scale": { "range": [50, 1200] }
         },
-
         "color": {
           "field": "rev_per_arrival_ratio",
           "type": "quantitative",
@@ -159,10 +134,7 @@
             "labelOffset": 15,
             "padding": 20
           },
-          "scale": {
-            "scheme": "viridis",
-            "domain": [0, 2.5]
-          }
+          "scale": { "scheme": "viridis", "domain": [0, 2.5] }
         },
         "tooltip": [
           { "field": "soe", "type": "nominal", "title": "State" },
@@ -199,9 +171,139 @@
           }
         ]
       }
+    },
+    {
+      "layer": [
+        {
+          "data": { "values": [{}] },
+          "mark": {
+            "type": "rect",
+            "cornerRadius": 5,
+            "color": "#f8fdff",
+            "opacity": 0.9,
+            "stroke": "#ddd",
+            "strokeWidth": 1
+          },
+          "encoding": {
+            "x": { "value": 20 },
+            "y": { "value": 170 },
+            "x2": { "value": 432 },
+            "y2": { "value": 252 }
+          }
+        },
+        {
+          "data": { "values": [{}] },
+          "mark": {
+            "type": "text",
+            "align": "left",
+            "baseline": "top",
+            "fontSize": 16
+          },
+          "encoding": {
+            "x": { "value": 40 },
+            "y": { "value": 190 },
+            "text": { "value": "Points above the line, like" }
+          }
+        },
+        {
+          "data": { "values": [{}] },
+          "mark": {
+            "type": "text",
+            "align": "left",
+            "baseline": "top",
+            "fontSize": 16,
+            "fontWeight": "bold"
+          },
+          "encoding": {
+            "x": { "value": 225 },
+            "y": { "value": 190 },
+            "text": { "value": "Selangor," },
+            "color": { "value": "#439400" }
+          }
+        },
+        {
+          "data": { "values": [{}] },
+          "mark": {
+            "type": "text",
+            "align": "left",
+            "baseline": "top",
+            "fontSize": 16
+          },
+          "encoding": {
+            "x": { "value": 40 },
+            "y": { "value": 215 },
+            "text": {
+              "value": "have a higher share of tourism revenue than arrivals."
+            }
+          }
+        },
+
+        {
+          "data": { "values": [{}] },
+          "mark": {
+            "type": "rect",
+            "cornerRadius": 5,
+            "color": "#f8fdff",
+            "opacity": 0.9,
+            "stroke": "#ddd",
+            "strokeWidth": 1
+          },
+          "encoding": {
+            "x": { "value": 230 },
+            "y": { "value": 480 },
+            "x2": { "value": 600 },
+            "y2": { "value": 562 }
+          }
+        },
+        {
+          "data": { "values": [{}] },
+          "mark": {
+            "type": "text",
+            "align": "left",
+            "baseline": "top",
+            "fontSize": 16,
+            "fontWeight": "bold"
+          },
+          "encoding": {
+            "x": { "value": 250 },
+            "y": { "value": 500 },
+            "text": { "value": "Johor" },
+            "color": { "value": "#b8a500" }
+          }
+        },
+        {
+          "data": { "values": [{}] },
+          "mark": {
+            "type": "text",
+            "align": "left",
+            "baseline": "top",
+            "fontSize": 16
+          },
+          "encoding": {
+            "x": { "value": 300 },
+            "y": { "value": 500 },
+            "text": { "value": "has by far the highest share of arrivals," }
+          }
+        },
+        {
+          "data": { "values": [{}] },
+          "mark": {
+            "type": "text",
+            "align": "left",
+            "baseline": "top",
+            "fontSize": 16
+          },
+          "encoding": {
+            "x": { "value": 250 },
+            "y": { "value": 525 },
+            "text": {
+              "value": "but it has a very low revenue / arrival ratio."
+            }
+          }
+        }
+      ]
     }
   ],
-
   "config": {
     "font": "-apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
     "view": { "stroke": null },

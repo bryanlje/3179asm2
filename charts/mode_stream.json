@@ -63,46 +63,50 @@
     { "filter": { "param": "ModeLegend" } }
   ],
 
-  "mark": { "type": "area", "interpolate": "monotone" },
+  "layer": [
+    {
+      "mark": { "type": "area", "interpolate": "monotone" },
 
-  "encoding": {
-    "x": {
-      "field": "ym",
-      "type": "temporal",
-      "title": null,
-      "axis": {
-        "grid": false,
-        "labelExpr": "[timeFormat(datum.value, '%b') == 'Jan' ? timeFormat(datum.value, '%b %Y') : timeFormat(datum.value, '%b')]",
-        "tickCount": {"interval": "month", "step": 3}
+      "encoding": {
+        "x": {
+          "field": "ym",
+          "type": "temporal",
+          "title": null,
+          "axis": {
+            "grid": false,
+            "labelExpr": "[timeFormat(datum.value, '%b') == 'Jan' ? timeFormat(datum.value, '%b %Y') : timeFormat(datum.value, '%b')]",
+            "tickCount": {"interval": "month", "step": 3}
+          }
+        },
+        "y": {
+          "field": "arrivals_sum",
+          "type": "quantitative",
+          "stack": "center",
+          "title": null,
+          "axis": { "grid": false, "labels": false, "ticks": false, "domain": false }
+        },
+        "color": {
+          "field": "type",
+          "type": "nominal",
+          "title": "Mode",
+          "scale": {
+                "domain": ["Land", "Air", "Sea"],
+                "range": ["#E69F00", "#3da7d4", "#009E73"]
+          }
+        },
+        "opacity": {
+          "condition": { "param": "ModeLegend", "value": 1 },
+          "value": 0.2
+        },
+        "tooltip": [
+          { "field": "ym", "type": "temporal", "title": "Month", "format": "%B %Y" },
+          { "field": "type", "title": "Mode" },
+          { "field": "arrivals_sum", "title": "Arrivals", "format": "," },
+          { "field": "share", "title": "Share", "format": ".1%" }
+        ]
       }
-    },
-    "y": {
-      "field": "arrivals_sum",
-      "type": "quantitative",
-      "stack": "center",
-      "title": null,
-      "axis": { "grid": false, "labels": false, "ticks": false, "domain": false }
-    },
-    "color": {
-      "field": "type",
-      "type": "nominal",
-      "title": "Mode",
-      "scale": {
-            "domain": ["Land", "Air", "Sea"],
-            "range": ["#E69F00", "#3da7d4", "#009E73"]
-      }
-    },
-    "opacity": {
-      "condition": { "param": "ModeLegend", "value": 1 },
-      "value": 0.2
-    },
-    "tooltip": [
-      { "field": "ym", "type": "temporal", "title": "Month", "format": "%B %Y" },
-      { "field": "type", "title": "Mode" },
-      { "field": "arrivals_sum", "title": "Arrivals", "format": "," },
-      { "field": "share", "title": "Share", "format": ".1%" }
-    ]
-  },
+    }
+  ],
 
   "config": {
     "font": "-apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
