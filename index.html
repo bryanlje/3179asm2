@@ -86,33 +86,20 @@
     <section id="act-1" class="card container">
       <header class="card-header">
         <h2>The Comeback</h2>
-        <!-- <p class="card-subtitle">
-          From the first trickle back to full holiday peaks, 
-        </p> -->
       </header>
 
       <div class="card-body">
         <figure class="viz-block" aria-labelledby="heatmap-title">
-          <!-- <figcaption id="heatmap-title" class="viz-title">Monthly Arrivals (2020-2024)</figcaption> -->
           <p class="viz-desc">
             The Movement Control Order (MCO) caused arrivals to plummet in <br> <strong>April 2020</strong>, remaining low throughout 2021.
             A clear <br> turning point arrived in <strong>April 2022</strong>, when Malaysia allowed <br> quarantine-free travel for fully-vaccinated travellers.
             The number of <br> arrivals continued increasing steadily across months until reaching <br> a full capacity of approximately 3 million arrivals per month.
           </p>
           <div id="calendar_heatmap" class="viz"></div>
-          <!-- <aside class="annotations">
-            <h4 class="annotations-title">Good annotation spots</h4>
-            <ul>
-              <li>Auto-label the darkest/lightest cells per year: <em>“Lowest month”</em>, <em>“Peak month”</em>.</li>
-              <li>Band seasonal periods (Nov–Dec, mid-year) with subtle guides.</li>
-              <li>Show a small note when a state is selected: <em>“Showing: Selangor — peaks cluster late-year.”</em></li>
-            </ul>
-          </aside> -->
         </figure>
 
         <div class="viz-split grid two-col-lg">
           <div class="split-copy">
-            <!-- <h3 class="split-title">How the mix shifted</h3> -->
             <p class="viz-desc">
               During the lockdown, <strong class="mode-air">air travel</strong> accounted for most of the limited cross-border movement. 
               However, with the reopening of borders, <strong class="mode-land">land travel</strong> surged <br> to capture a 70% share of total traffic.
@@ -125,28 +112,20 @@
           </div>
 
           <figure class="viz-block split-figure" aria-labelledby="stream-title">
-            <!-- <figcaption id="stream-title" class="viz-title">Mode Mix During Recovery (Land / Air / Sea)</figcaption> -->
             <div id="mode_stream" class="viz"></div>
           </figure>
         </div>
       </div>
 
-      <!-- <p class="transition">
-        Totals alone don’t tell the full story. Composition reveals which routes returned first.
-      </p> -->
     </section>
 
     <section id="act-2" class="card container">
       <header class="card-header">
         <h2>The Gateways</h2>
-        <!-- <p class="card-subtitle">
-          Move from “how” to “where”: see the national footprint of entry points, then zoom into the leaders by year.
-        </p> -->
       </header>
 
       <div class="card-body">
         <figure class="viz-block" aria-labelledby="map-title">
-          <!-- <figcaption id="map-title" class="viz-title">Point of Entry Symbol Map</figcaption> -->
           <p class="viz-desc">
             This symbol map illustrates the volume and mode of arrivals <br> ( land / air / sea ) for the different entry points throughout Malaysia.
           </p>
@@ -156,20 +135,9 @@
             and the <strong>northern border with Thailand</strong>.
           </p>
           <div id="arrivals_symbol_map" class="viz"></div>
-          <!-- <aside class="annotations">
-            <h4 class="annotations-title">Good annotation spots</h4>
-            <ul>
-              <li>Call out dense clusters (e.g., southern border or major airports).</li>
-              <li>Badge any POE where one mode &gt; 70%: <em>“Mostly land/air/sea.”</em></li>
-              <li>When a year is selected, show % change vs. all-years in tooltips.</li>
-            </ul>
-          </aside> -->
         </figure>
 
         <figure class="viz-block" aria-labelledby="poe-bar-title">
-          <!-- <figcaption id="poe-bar-title" class="viz-title">
-            <span id="bar-chart-title">Top 10 Points of Entry (by Year)</span>
-          </figcaption> -->
           <p class="viz-desc">
             Following land travel, <strong>major international airports</strong> are the next <br> most significant gateways. 
             The largest hub for <strong class="mode-air">air traffic</strong> is located <br> in <strong>Selangor</strong>, which handles the bulk of aviation volume.
@@ -178,29 +146,17 @@
             The top 10 points of entry below clearly show that <strong class="mode-land">Bangunan Sultan Iskandar</strong> and <strong class="mode-land">Gelang Patah</strong>, both in Johor, hold the vast majority of arrivals.
             This is followed by the <strong class="mode-air">airports in Selangor and Penang</strong>.
           </p>
+
           <div id="poe_bar" class="viz"></div>
-          <!-- <aside class="annotations">
-            <h4 class="annotations-title">Good annotation spots</h4>
-            <ul>
-              <li>Animate rank transitions on year change; tag <em>NEW</em>/<em>OUT</em>.</li>
-              <li>Highlight unexpected mode splits (e.g., land-heavy POE showing sizable air).</li>
-              <li>Optional faint reference bars: all-years average behind current year.</li>
-            </ul>
-          </aside> -->
+
         </figure>
       </div>
 
-      <!-- <p class="transition">
-        The map shows the footprint; the bars show the podium.
-      </p> -->
     </section>
 
     <section id="act-2b" class="card container">
       <header class="card-header">
         <h2>The States</h2>
-        <!-- <p class="card-subtitle">
-          Leadership isn’t static. Which states held the top spots, and which surged during the rebound?
-        </p> -->
       </header>
 
       <div class="card-body">
@@ -254,7 +210,7 @@
             Other key neighbours, <br> such as <strong>Indonesia</strong> and <strong>Thailand</strong>, also contribute substantial numbers.
           </p>
           <p class="viz-desc">
-            <i>Use the region selector to display the top countries for different regions.</i>
+            <i>Use the region selector to display top countries for different regions.</i>
           </p>
 
           <!-- Control container for the Region selector -->
@@ -288,8 +244,8 @@
       <div class="card-body">
         <figure class="viz-block" aria-labelledby="sankey-title">
           <p class="viz-desc">
-            While visitor numbers are a key metric, a deeper analysis <br> of tourism revenue reveals that not all arrivals generate <br> the same economic impact.
-            The chart below shows the <br> difference between states that attract a high <strong><i>volume</i></strong> of visitors <br> and 
+            While visitor numbers are a key metric, not all arrivals <br> generate the same economic impact.
+            The chart below shows <br> the difference between states that attract a high <strong><i>volume</i></strong> of <br> visitors and 
             those that generate high <strong><i>value</i></strong> from each arrival.
           </p>
 
@@ -297,8 +253,8 @@
 
           <p class="viz-desc">
             While <strong class="state-johor">Johor</strong> <strong>is the undisputed arrivals leader</strong> with over <br> 55% of the total share (2023), it has a disproportionately <br> small tourism revenue.
-            This suggests many lower-spending day-<br> trippers, likely from Singapore. 
-            Data from <a href="https://statistics.gov.my/uploads/release-content/file_20250619113016.pdf" target="_blank">DOSM</a> supports <br> this, showing that overnight tourists spend over 11 times more <br> than day-trippers, highlighting the limits of a volume-focused <br> model.
+            This suggests many lower-spending <br> day-trippers, likely from Singapore. 
+            Data from <a href="https://statistics.gov.my/uploads/release-content/file_20250619113016.pdf" target="_blank">DOSM</a> shows <br> that overnight tourists spend over 11 times more than <br> day-trippers, highlighting the limits of a volume-focused model.
           </p>
 
           <p class="viz-desc">

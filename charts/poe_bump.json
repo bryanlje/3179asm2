@@ -108,7 +108,7 @@
       "encoding": {
         "x": { "field": "refDate", "type": "temporal" },
         "y": { "datum": 0.6 },
-        "y2": { "datum": 5.4 }
+        "y2": { "datum": 5.5 }
       }
     },
     {
