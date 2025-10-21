@@ -173,7 +173,7 @@ body {
 }
 
 .site-header:hover::before {
-  transform: scale(1.03);
+  transform: scale(1.05);
 }
 
 .site-title {
